@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/status"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".CovidActivity">
+    <Button
+        android:id="@+id/infection"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="122dp"
+        android:gravity="center"
+        android:onClick="COVID_OnClick"
+        android:text="코로나 현황" />
+
+    <Button
+        android:id="@+id/hospital"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/infection"
+        android:layout_marginTop="122dp"
+        android:layout_marginLeft="70dp"
+        android:gravity="center"
+        android:onClick="mOnClick"
+        android:text="병원정보" />
+
+    <Button
+        android:id="@+id/mask"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/infection"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="마스크 판매처" />
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/mask"
+        android:layout_below="@+id/hospital"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="70dp"
+        android:text="재난문자" />
+
+    <Button
+        android:id="@+id/pharmacy"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mask"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:text="약국조회" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/result_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="8sp"
+            android:textStyle="bold" />
+    </ScrollView>
+
+
+</RelativeLayout>
