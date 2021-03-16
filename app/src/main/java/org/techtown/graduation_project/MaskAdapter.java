@@ -59,4 +59,16 @@ public class MaskAdapter extends RecyclerView.Adapter<MaskAdapter.CustomerViewHo
             this.ITEM_PERMIT_DATE = (TextView) itemView.findViewById(R.id.ITEM_PERMIT_DATE);
         }
     }
+
+    // search result refresh
+    public void ClearMaskList() {
+        int size = this.masklist.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                masklist.remove(0);
+            }
+
+            this.notifyItemRangeRemoved(0, size);
+        }
+    }
 }

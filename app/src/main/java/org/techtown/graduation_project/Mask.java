@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 
 import android.os.Bundle;
 import android.view.View;
@@ -55,6 +55,8 @@ public class Mask extends AppCompatActivity {
 
     }
     public void mOnClick(View v){
+
+        maskadapter.ClearMaskList();
 
         new Thread(new Runnable() {
             @Override
