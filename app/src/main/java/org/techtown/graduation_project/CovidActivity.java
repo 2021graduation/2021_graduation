@@ -26,7 +26,7 @@ public class CovidActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_covid);
 
-        text= (TextView)findViewById(R.id.result_mask);
+        //text= (TextView)findViewById(R.id.result_mask);
         hospital = findViewById(R.id.hospital);
         infection = findViewById(R.id.infection);
         mask = findViewById(R.id.mask);
