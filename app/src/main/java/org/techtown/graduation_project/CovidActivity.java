@@ -66,7 +66,6 @@ public class CovidActivity extends AppCompatActivity {
         mask = findViewById(R.id.mask);
         pharmacy = findViewById(R.id.pharmacy);
 
-
         hospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,8 +109,11 @@ public class CovidActivity extends AppCompatActivity {
     }
     public void sendRequest() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance(); // 오늘날짜
         String today = sdf.format(calendar.getTime());
+        String day = sdf2.format(calendar.getTime());
+        stateDt.setText(day);
         calendar.add(Calendar.DATE, -1);  // 오늘 날짜에서 하루를 뺌.
         String yesterday = sdf.format(calendar.getTime());
 
@@ -156,7 +158,6 @@ public class CovidActivity extends AppCompatActivity {
         println(today.accExamCnt,accExam);
         println(today.clearCnt, clearCnt);
         println(today.deathCnt, deathCnt);
-        println(today.stateDt,stateDt);
         println(today.stateTime,stateTime);
 
         int blue = ContextCompat.getColor(getApplicationContext(), R.color.blue);
