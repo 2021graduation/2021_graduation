@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="      확진자"
+            android:gravity="center"
+            android:text="     확진자"
             android:textStyle="bold" />
 
         <TextView
@@ -51,8 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.7"
-            android:text="일일확진자"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="일일확진"
             android:textColor="#FF0000"
             android:textStyle="bold" />
 
@@ -62,7 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="지역       확진자"
+            android:gravity="center"
+            android:text="지역확진"
             android:textStyle="bold" />
 
         <TextView
@@ -71,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="사망자"
             android:textStyle="bold" />
 
@@ -80,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="완치자"
             android:textStyle="bold" />
     </LinearLayout>
