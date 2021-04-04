@@ -7,14 +7,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
 
-    private static final String TABLE_NAME = "people_table";
-    private static final String COL1 = "ID";
+    private static final String TABLE_NAME = getDate();
+    private static final String COL1 = "id";
     private static final String COL2 = "name";
 
+    public static final String getDate() {
+        long time = System.currentTimeMillis();
+        SimpleDateFormat dayTime = new SimpleDateFormat("yyyy년MM월dd일");
+        String now = dayTime.format(new Date(time));
+        return now;
+    }
 
 
     public DatabaseHelper(Context context){
@@ -22,11 +31,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /*
+    CREATE TABLE TABLE_NAME(id INT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, PRIMARY KEY(id));
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COL2 + " TEXT)";
-        db.execSQL(createTable);
+        db.execSQL("CREATE TABLE "+ TABLE_NAME + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL)");
     }
 
     @Override
@@ -36,24 +46,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item){
+
+    /*
+    INSERT INTO TABLE_NAME (name) VALUES(item);
+     */
+    public void addData(String item){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL2, item);
-
-        Log.d(TAG, "addData:Adding " + item + " to " + TABLE_NAME);
-        long result = db.insert(TABLE_NAME, null, contentValues);
-
-        if(result == -1){
-            return false;
-        }else{
-            return true;
-        }
+        db.execSQL("INSERT INTO '" + TABLE_NAME + "'(name) VALUES ("+item+")");
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL2, item);
+//
+//        Log.d(TAG, "addData:Adding " + item + " to " + TABLE_NAME);
+//        long result = db.insert(TABLE_NAME, null, contentValues);
+//
+//        if(result == -1){
+//            return false;
+//        }else{
+//            return true;
+//        }
     }
 
     public Cursor getData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
+        String query = "SELECT * FROM '" + TABLE_NAME + "';";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
@@ -98,15 +113,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     -->
     DELETE FROM TABLE_NAME
-    WHERE ID = "id"
+    WHERE name = row_data
      */
-    public void deleteName(int id){
+    public void deleteName(String row_data){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + TABLE_NAME + " WHERE "
-                + COL1 + " = " + id;
-                //+ " AND " + COL2 + " = '" + name + "'";
+        String query = "DELETE FROM'" + TABLE_NAME + "'WHERE name = '" + row_data +"';";
         Log.d(TAG, "deleteName: query: " + query);
         db.execSQL(query);
     }
-
 }
