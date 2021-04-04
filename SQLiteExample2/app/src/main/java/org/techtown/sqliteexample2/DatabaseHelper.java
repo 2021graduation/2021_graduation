@@ -30,13 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, TABLE_NAME, null, 1);
     }
 
-
     /*
     CREATE TABLE TABLE_NAME(id INT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, PRIMARY KEY(id));
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+ TABLE_NAME + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL)");
+        db.execSQL("CREATE TABLE '"+ TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL)");
     }
 
     @Override
