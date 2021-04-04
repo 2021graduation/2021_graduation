@@ -42,6 +42,7 @@ public class CovidActivity extends AppCompatActivity {
     Button infection;
     Button mask;
     Button pharmacy;
+    Button MyLocation;
 
     static RequestQueue requestQueue;
 
@@ -65,6 +66,7 @@ public class CovidActivity extends AppCompatActivity {
         infection = findViewById(R.id.infection);
         mask = findViewById(R.id.mask);
         pharmacy = findViewById(R.id.pharmacy);
+        MyLocation = findViewById(R.id.MyLocation);
 
         hospital.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -276,10 +276,10 @@
         app:backgroundTintMode="add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintHorizontal_bias="0.812"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mask"
-        app:layout_constraintVertical_bias="0.124" />
+        app:layout_constraintVertical_bias="0.177" />
 
     <Button
         android:id="@+id/mask"
@@ -345,6 +345,22 @@
         app:layout_constraintHorizontal_bias="0.149"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hospital"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <Button
+        android:id="@+id/MyLocation"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape"
+        android:text="내 위치 조회"
+        android:textColor="#000000"
+        app:backgroundTint="#00FFFFFF"
+        app:backgroundTintMode="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
         app:layout_constraintVertical_bias="0.25" />
 
 
