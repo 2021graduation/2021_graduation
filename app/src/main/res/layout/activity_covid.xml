@@ -286,7 +286,7 @@
         android:layout_width="144dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_shape"
-        android:text="마스크 판매처"
+        android:text="마스크 정보"
         android:textColor="#000000"
         app:backgroundTint="#00FFFFFF"
         app:backgroundTintMode="add"

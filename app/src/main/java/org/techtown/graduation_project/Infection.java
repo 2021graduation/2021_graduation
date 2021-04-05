@@ -25,15 +25,15 @@ public class Infection extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
-    String gubnu;
-    String defCnt;
-    String incDec;
-    String localOccCnt;
-    String deathCnt;
-    String isolClearCnt;
+    String gubnu; // 지역
+    String defCnt; // 확진자
+    String incDec; // 전일대비 확진자 증감수
+    String localOccCnt; // 국내 발생 확진자
+    String deathCnt; // 사망자
+    String isolClearCnt; // 지역 완치자
 
-    TextView createDt;
-    String data;
+    TextView createDt; // 기준시간
+    String key = "pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +58,9 @@ public class Infection extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                // TODO Auto-generated method stub
                 getXmlData();
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -75,7 +76,7 @@ public class Infection extends AppCompatActivity {
     {
         StringBuffer buffer=new StringBuffer();
 
-        String queryUrl="http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
+        String queryUrl="http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey="+key;
         try{
             URL url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성.
             InputStream is= url.openStream(); //url위치로 입력스트림 연결

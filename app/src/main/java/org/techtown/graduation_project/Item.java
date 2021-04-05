@@ -5,7 +5,6 @@ public class Item {
     String accExamCnt;
     String clearCnt;
     String deathCnt;
-    String stateDt;
     String stateTime;
 }
 

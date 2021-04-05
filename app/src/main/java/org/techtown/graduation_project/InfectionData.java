@@ -20,7 +20,6 @@ public class InfectionData {
     public String getGubnu() {
         return gubnu;
     }
-
     public void setGubnu(String gubnu) {
         this.gubnu = gubnu;
     }
@@ -28,7 +27,6 @@ public class InfectionData {
     public String getDefCnt() {
         return defCnt;
     }
-
     public void setDefCnt(String defCnt) {
         this.defCnt = defCnt;
     }
@@ -36,7 +34,6 @@ public class InfectionData {
     public String getIncDec() {
         return incDec;
     }
-
     public void setIncDec(String incDec) {
         this.incDec = incDec;
     }
@@ -44,7 +41,6 @@ public class InfectionData {
     public String getLocalOccCnt() {
         return localOccCnt;
     }
-
     public void setLocalOccCnt(String localOccCnt) {
         this.localOccCnt = localOccCnt;
     }
@@ -52,7 +48,6 @@ public class InfectionData {
     public String getDeathCnt() {
         return deathCnt;
     }
-
     public void setDeathCnt(String deathCnt) {
         this.deathCnt = deathCnt;
     }
@@ -60,7 +55,6 @@ public class InfectionData {
     public String getIsolClearCnt() {
         return isolClearCnt;
     }
-
     public void setIsolClearCnt(String isolClearCnt) {
         this.isolClearCnt = isolClearCnt;
     }

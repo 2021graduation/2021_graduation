@@ -54,17 +54,6 @@ public class Hospital extends AppCompatActivity {
                 });
             }
         }).start();
-
-//        Button btn_add = (Button)findViewById(R.id.btn_add);
-//        btn_add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MainData mainData = new MainData(R.mipmap.ic_launcher, "홍드로이드", "리사이클러뷰");
-//                arrayList.add(mainData);
-//                mainAdapter.notifyDataSetChanged(); // 새로고침
-//            }
-//        });
-
     }
 
     String gethospital(){

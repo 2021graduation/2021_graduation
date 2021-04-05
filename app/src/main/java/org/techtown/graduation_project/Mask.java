@@ -31,9 +31,9 @@ public class Mask extends AppCompatActivity {
     String ENTP_NAME;
     String ITEM_PERMIT_DATE;
 
-    EditText editText;
+    EditText editText; // 마스크 이름 검색
+
     String key = "pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
-    String data;
 
 
     @Override
@@ -54,9 +54,10 @@ public class Mask extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.editText);
 
     }
+
     public void mOnClick(View v){
 
-        maskadapter.ClearMaskList();
+        maskadapter.ClearMaskList(); // 초기화
 
         new Thread(new Runnable() {
             @Override

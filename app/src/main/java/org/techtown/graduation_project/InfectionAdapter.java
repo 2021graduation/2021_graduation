@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class InfectionAdapter extends RecyclerView.Adapter<InfectionAdapter.CustomViewHolder> {
 
+    // 아이템을 담을 배열리스트
     private ArrayList<InfectionData> infectIonList;
 
     public InfectionAdapter(ArrayList<InfectionData> infectionData) {
@@ -19,6 +20,7 @@ public class InfectionAdapter extends RecyclerView.Adapter<InfectionAdapter.Cust
     }
     @NonNull
     @Override
+    // 처음으로 생성될때 생명주기를 뜻함
     public InfectionAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infection_list, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
@@ -26,6 +28,7 @@ public class InfectionAdapter extends RecyclerView.Adapter<InfectionAdapter.Cust
     }
 
     @Override
+    // 실제 추가될때에 대한 생명주기
     public void onBindViewHolder(@NonNull InfectionAdapter.CustomViewHolder holder, int position) {
         holder.gubnu.setText(infectIonList.get(position).getGubnu());
         holder.defCnt.setText(infectIonList.get(position).getDefCnt());

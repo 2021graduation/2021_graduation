@@ -18,8 +18,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,27 +29,29 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class CovidActivity extends AppCompatActivity {
 
-    TextView decide;
-    TextView accExam;
-    TextView clearCnt;
-    TextView deathCnt;
-    TextView stateDt;
-    TextView stateTime;
-    TextView Daily_decide;
-    TextView Daily_accExam;
-    TextView Daily_clear;
-    TextView Daily_death;
+    TextView decide; // 확진자 TextView
+    TextView accExam; // 누적검사 TextView
+    TextView clearCnt; // 완치 TextView
+    TextView deathCnt; // 사망 TextView
+    TextView stateDt; // 기준 일 TextView
+    TextView stateTime; // 기준 시간 TextView
+    TextView Daily_decide; // 일일 확진자 TextView
+    TextView Daily_accExam; // 일일 검사자 TextView
+    TextView Daily_clear; // 일일 확진자 TextView
+    TextView Daily_death; // 일일 사망자 TextView
 
-    Button hospital;
-    Button infection;
-    Button mask;
-    Button pharmacy;
+    Button hospital; // 병원 검색 버튼
+    Button infection; // 코로나19 시도 발생 현황 검색 버튼
+    Button mask; // 마스크 검색 버튼
+    Button pharmacy; // 약국 검색 버튼
     Button MyLocation;
 
-    static RequestQueue requestQueue;
+    static RequestQueue requestQueue; // 요청 큐
+    // 공공데이터 포털의 servicekey
+    String key = "pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected    void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_covid);
 
@@ -100,17 +104,18 @@ public class CovidActivity extends AppCompatActivity {
             }
         });
 
+
+        // RequestQueue 객체 생성하기
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
+
         sendRequest();
+
     }
+
     public void sendRequest() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 년, 월, 일 데이터 포맷형식 설정
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance(); // 오늘날짜
         String today = sdf.format(calendar.getTime());
@@ -118,33 +123,32 @@ public class CovidActivity extends AppCompatActivity {
         stateDt.setText(day);
         calendar.add(Calendar.DATE, -1);  // 오늘 날짜에서 하루를 뺌.
         String yesterday = sdf.format(calendar.getTime());
+        String url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey="
+                +key+"&startCreateDt="+yesterday+"&endCreateDt="+today;
 
-        String url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D&startCreateDt="+yesterday+"&endCreateDt="+today;
-
+        // 요청을 보내기 위한 StringRequest객체 생성
         StringRequest request = new StringRequest(
-                Request.Method.GET,
-                url,
+                Request.Method.GET, // 첫번 째 파라미터 GET 메서드
+                url, // 두 번째 파라미터 url 주소
                 new com.android.volley.Response.Listener<String>() {
-                    @Override
+                    @Override  // 세 번째 파라미터 응답받을 리스너 객체
                     public void onResponse(String response) {
                         processResponse(response);
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
-                    @Override
+                    @Override // 네 번째 파라미터 에러발생시 호출될 리스너 객체
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
                     }
                 }
         ) {
-            @Override
+            @Override // POST 방식사용시의 반환하는 HashMap 객체
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-
                 return params;
             }
         };
-
         request.setShouldCache(false);
         requestQueue.add(request);
     }
@@ -156,19 +160,38 @@ public class CovidActivity extends AppCompatActivity {
         Item today = covidList.response.body.items.item.get(0);
         Item yesterday = covidList.response.body.items.item.get(1);
 
-        println(today.decideCnt, decide);
-        println(today.accExamCnt,accExam);
-        println(today.clearCnt, clearCnt);
-        println(today.deathCnt, deathCnt);
+        DecimalFormat df = new DecimalFormat("#,###"); // 표현 패턴 설정
+
+        /* -----금일 데이터 String -> int형 변환-------*/
+        int decide_today = Integer.parseInt(today.decideCnt);
+        int accExam_today = Integer.parseInt(today.accExamCnt);
+        int clear_today = Integer.parseInt(today.clearCnt);
+        int death_today = Integer.parseInt(today.deathCnt);
+
+        /* -----전일 데이터 String -> int형 변환-------*/
+        int decide_yesterday = Integer.parseInt(yesterday.decideCnt);
+        int accExam_yesterday = Integer.parseInt(yesterday.accExamCnt);
+        int clear_yesterday = Integer.parseInt(yesterday.clearCnt);
+        int death_yesterday = Integer.parseInt(yesterday.deathCnt);
+
+        /* ----- 전일 대비 증감 -------*/
+        int dec_inter = decide_today - decide_yesterday;
+        int acc_inter = accExam_today - accExam_yesterday;
+        int clear_inter = clear_today - clear_yesterday;
+        int death_inter = death_today - death_yesterday;
+
+        /* ----- 금일 데이터 텍스트뷰에 추가 -------*/
+        println(df.format(decide_today), decide);
+        println(df.format(accExam_today),accExam);
+        println(df.format(clear_today), clearCnt);
+        println(df.format(death_today), deathCnt);
         println(today.stateTime,stateTime);
 
-        int blue = ContextCompat.getColor(getApplicationContext(), R.color.blue);
-        int red = ContextCompat.getColor(getApplicationContext(), R.color.red);
 
-        int dec_inter = Integer.parseInt(today.decideCnt)-Integer.parseInt(yesterday.decideCnt);
-        int acc_inter = Integer.parseInt(today.accExamCnt)-Integer.parseInt(yesterday.accExamCnt);
-        int clear_inter = Integer.parseInt(today.clearCnt) - Integer.parseInt(yesterday.clearCnt);
-        int death_inter = Integer.parseInt(today.deathCnt) - Integer.parseInt(yesterday.deathCnt);
+        int blue = ContextCompat.getColor(getApplicationContext(), R.color.blue); // 감소하였을 경우
+        int red = ContextCompat.getColor(getApplicationContext(), R.color.red);   // 증가하였을 경우
+
+        /* ----- 전일 대비 증감 데이터 텍스트뷰에 추가 -------*/
 
         if(dec_inter < 0){
             Daily_decide.setTextColor(blue);
@@ -178,18 +201,16 @@ public class CovidActivity extends AppCompatActivity {
             Daily_decide.setTextColor(red);
             println(dec_inter, Daily_decide);
         }
-
         if(acc_inter < 0){
             Daily_accExam.setTextColor(blue);
-            println(acc_inter, Daily_accExam);
+            println(df.format(acc_inter), Daily_accExam);
             Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
         }
         else if(acc_inter > 0) {
             Daily_accExam.setTextColor(red);
-            println(acc_inter, Daily_accExam);
+            println(df.format(acc_inter), Daily_accExam);
             Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
         }
-
         if(clear_inter < 0){
             Daily_clear.setTextColor(blue);
             println(clear_inter, Daily_clear);
