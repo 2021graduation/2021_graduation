@@ -99,6 +99,13 @@ public class ListDataActivity extends AppCompatActivity {
             }
         });
 
+        dataAdapter.setOnItemLongClickListener(new DataAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View v, int pos, TextView sData) {
+                toastMessage("롱클릭");
+            }
+        });
+
         populateListView();
     }
 

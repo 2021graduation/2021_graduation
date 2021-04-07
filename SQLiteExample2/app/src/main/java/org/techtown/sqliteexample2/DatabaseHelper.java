@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String TABLE_NAME = getDate();
+
     private static final String COL1 = "id";
     private static final String COL2 = "name";
 
@@ -31,12 +34,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    CREATE TABLE TABLE_NAME(id INT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, PRIMARY KEY(id));
-     */
+    CREATE TABLE TABLE_NAME(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    latitude decimal(18,10) NOT NULL,
+    longitude decimal(18,10) NOT NULL,
+    PRIMARY KEY(id));
+    */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE '"+ TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL)");
-    }
+        Log.d(TAG, "데이터베이스"+TABLE_NAME+"생성됨");
+        db.execSQL("CREATE TABLE '"+ TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+   }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -49,9 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     INSERT INTO TABLE_NAME (name) VALUES(item);
      */
-    public void addData(String item){
+    public void addData(LatLng Current){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO '" + TABLE_NAME + "'(name) VALUES ("+item+")");
+        db.execSQL("INSERT INTO '" + TABLE_NAME + "'(latitude, longitude) VALUES ("+Current.latitude+","+Current.longitude+")");
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(COL2, item);
 //
@@ -67,6 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getData(){
         SQLiteDatabase db = this.getWritableDatabase();
+        //String query = "SELECT name FROM sqlite_master WHERE type='table';";
         String query = "SELECT * FROM '" + TABLE_NAME + "';";
         Cursor data = db.rawQuery(query, null);
         return data;

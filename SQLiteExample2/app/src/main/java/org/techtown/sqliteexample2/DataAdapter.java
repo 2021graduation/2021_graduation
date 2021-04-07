@@ -3,7 +3,9 @@ package org.techtown.sqliteexample2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,16 +16,25 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.CustomerViewHo
 
     private ArrayList<Data> mlist;
     private OnItemClickListener mListener = null ;
+    private OnItemLongClickListener mLongListener = null;
 
     public interface OnItemClickListener {
         void onItemClick(View v, int position, TextView sData);
     }
 
+    public interface OnItemLongClickListener
+    {
+        void onItemLongClick(View v, int pos, TextView sData);
+    }
+
+
     // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener ;
     }
-
+    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+        this.mLongListener = listener;
+    }
     public DataAdapter(ArrayList<Data> Data) {
         this.mlist = Data;
     }
@@ -45,6 +56,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.CustomerViewHo
 
     @Override
     public int getItemCount() {
+
         return mlist.size();
     }
 
@@ -65,6 +77,20 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.CustomerViewHo
                             mListener.onItemClick(v,position, sData);
                         }
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+
+                    if(position != RecyclerView.NO_POSITION){
+                        if(mLongListener !=null){
+                            mLongListener.onItemLongClick(v,position,sData);
+                        }
+                    }
+                    return true;
                 }
             });
         }
