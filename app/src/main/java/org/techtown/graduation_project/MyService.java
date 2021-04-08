@@ -91,25 +91,30 @@ public class MyService extends Service {
 
         if(distance < 30){
             if(markcount == 0){
-                Cursor last = mDatabaseHelper.getLocation(TABLE_NAME);
-                last.moveToLast();
-                Location last_location = new Location(LocationManager.GPS_PROVIDER);
-                latitude = last.getDouble(1);
-                longitude = last.getDouble(2);
-                latLng = new LatLng(latitude, longitude);
-                last_location.setLatitude(latitude);
-                last_location.setLongitude(longitude);
-                Log.d(TAG, "DB 마지막 행: " + latitude + " DB 마지막 행: " + longitude);
+                if(mDatabaseHelper.dbCheck(TABLE_NAME)){ // db가 있으면
+                    Cursor last = mDatabaseHelper.getLocation(TABLE_NAME);
+                    last.moveToLast();
+                    Location last_location = new Location(LocationManager.GPS_PROVIDER);
+                    latitude = last.getDouble(1);
+                    longitude = last.getDouble(2);
+                    latLng = new LatLng(latitude, longitude);
+                    last_location.setLatitude(latitude);
+                    last_location.setLongitude(longitude);
+                    Log.d(TAG, "DB 마지막 행: " + latitude + " DB 마지막 행: " + longitude);
 
-                LatLng Current = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                if(last_location.distanceTo(mCurrentLocation) < 30){
-                    return;
-                }
-                else{
-                    mDatabaseHelper.addData(Current);
-                    Log.d(TAG, "위치 저장함");
-                    a = mCurrentLocation;
-                    markcount++;
+                    LatLng Current = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                    if(last_location.distanceTo(mCurrentLocation) < 30){
+                        return;
+                    }
+                    else{
+                        mDatabaseHelper.addData(Current);
+                        Log.d(TAG, "위치 저장함");
+                        a = mCurrentLocation;
+                        markcount++;
+                    }
+                }else{  // db가 없으면
+                    latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                    mDatabaseHelper.addData(latLng);
                 }
                 //Marker marker1 = addMarker(mCurrentLocation, marker, distance);
                 //첫번째 마커 위치 저장

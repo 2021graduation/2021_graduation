@@ -89,6 +89,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public boolean dbCheck(String table){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT name FROM sqlite_master WHERE type='table' AND name ='" + table +"';";
+        Cursor data = db.rawQuery(query, null);
+        data.moveToFirst();
+        if(data.getCount()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     /*
     DELETE FROM TABLE_NAME
     WHERE ID = "id" AND NAME = "name"
