@@ -43,6 +43,7 @@ public class MyService extends Service {
     double longitude;
     LatLng latLng;
     String date;
+    Cursor db_cursor;
 
     private static final String TABLE_NAME = getDate();
 
@@ -98,12 +99,11 @@ public class MyService extends Service {
         마커가 너무 과도하게 찍히면서, 지도가 무거워지거나 가독성이 떨어지는 것을 방지하기 위함
         */
         if (distance < 5) {  // 이전 위치와 현 위치 사이의 거리가 5미터 이하면
-            if (mDatabaseHelper.dbCheck(TABLE_NAME)) { // db가 있으면
-                Cursor last = mDatabaseHelper.getLocation(TABLE_NAME); // db를 가리키는 커서를 선언하고
-                last.moveToLast();  // db에 가장 마지막으로 저장된 (즉, 저장된 위치 중에서 제일 최근의 것) 위치를 불러옴
+            db_cursor = mDatabaseHelper.getCursor(TABLE_NAME);
+            if (db_cursor.moveToLast()) { // db가 있으면
                 Location last_location = new Location(LocationManager.GPS_PROVIDER);
-                latitude = last.getDouble(1);
-                longitude = last.getDouble(2);  // 위치를 전달하는 과정이고
+                latitude = db_cursor.getDouble(1);
+                longitude = db_cursor.getDouble(2);  // 위치를 전달하는 과정이고
                 latLng = new LatLng(latitude, longitude);   // 꺼내온 위치를 변수에다 저장함
                 last_location.setLatitude(latitude);
                 last_location.setLongitude(longitude);
@@ -247,8 +247,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        //locationRequest.setFastestInterval(2000);
+        locationRequest.setInterval(4000);
+        locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

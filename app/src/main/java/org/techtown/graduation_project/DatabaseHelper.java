@@ -78,25 +78,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getLocation(String table){
         SQLiteDatabase db =this.getReadableDatabase();
         String query = "SELECT * FROM '" + table + "';";
+        db.execSQL("CREATE TABLE IF NOT EXISTS '" + TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-    public Cursor LastRow(String table){
+    public Cursor getCursor(String table){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM '" + table + "' ORDER BY id DESC LIMIT 1";
+        String query = "SELECT * FROM '" + table +"';";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
     public boolean dbCheck(String table){
+        int count = 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT name FROM sqlite_master WHERE type='table' AND name ='" + table +"';";
-        Cursor data = db.rawQuery(query, null);
-        data.moveToFirst();
-        if(data.getCount()>0){
+        Cursor data = getLocation(table);
+        while (data.moveToNext()) {
+            count++;
+        }
+        if(count>0){
+            Log.d(TAG, "data.getCount: " + count);
             return true;
         }else{
+            Log.d(TAG, "false: data.getCount: " + count);
             return false;
         }
     }

@@ -191,7 +191,7 @@ public class CovidActivity extends AppCompatActivity {
         String today = sdf.format(calendar.getTime());
         String day = sdf2.format(calendar.getTime());
         stateDt.setText(day);
-        calendar.add(Calendar.DATE, -1);  // 오늘 날짜에서 하루를 뺌.
+        calendar.add(Calendar.DATE, -2);  // 오늘 날짜에서 하루를 뺌.
         String yesterday = sdf.format(calendar.getTime());
         String url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey="
                 +key+"&startCreateDt="+yesterday+"&endCreateDt="+today;
