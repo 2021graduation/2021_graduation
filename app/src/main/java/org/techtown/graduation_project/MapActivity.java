@@ -218,7 +218,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
 
-                Log.d(TAG, "onLocationResult : " + markerSnippet);
+                //Log.d(TAG, "onLocationResult : " + markerSnippet);
 
                 //현재 위치에 마커 생성하고 이동
                 setCurrentLocation(location, markerTitle, markerSnippet);
