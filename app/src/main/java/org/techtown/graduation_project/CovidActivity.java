@@ -1,5 +1,6 @@
 package org.techtown.graduation_project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -119,16 +120,8 @@ public class CovidActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(this, MyService.class);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            startForegroundService(intent);
-        }
-        else{
-            startService(intent);
-        }
-
-        if(ContextCompat.checkSelfPermission(
+        if(ContextCompat.checkSelfPermission(   // 위치 접근 권한 확인
                 getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(
                     CovidActivity.this,
@@ -136,6 +129,12 @@ public class CovidActivity extends AppCompatActivity {
             );
         }else{
             startLocationService();
+        }
+        int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        if(permissionCheck2 == PackageManager.PERMISSION_DENIED){ //백그라운드 위치 권한 확인
+
+            //위치 권한 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_CODE_LOCATION_PERMISSIONS);
         }
 
         // RequestQueue 객체 생성하기
@@ -145,6 +144,18 @@ public class CovidActivity extends AppCompatActivity {
 
         sendRequest();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_CODE_LOCATION_PERMISSIONS && grantResults.length>0){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                startLocationService();
+            }{
+                Toast.makeText(this, "권한이 승인됨.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private boolean isLocationServiceRunning(){
@@ -166,7 +177,9 @@ public class CovidActivity extends AppCompatActivity {
         if(!isLocationServiceRunning()){
             Intent intent = new Intent(getApplicationContext(), MyService.class);
             intent.setAction(Constants.ACTION_START_LOCATION_SERVICE);
-            startService(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(this, intent);
+            }
             Toast.makeText(this,"Location service started", Toast.LENGTH_LONG).show();
         }
     }

@@ -54,6 +54,12 @@ public class MyService extends Service {
         return now;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
+
     DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -118,7 +124,7 @@ public class MyService extends Service {
                 }
             }
         } else {
-            Log.d(TAG, "거리가 30미터 이상입니다.");
+            Log.d(TAG, "이전 위치와의 거리가 5미터 이상입니다.");
             return;
         }
     }
@@ -247,8 +253,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(2000);
+        locationRequest.setInterval(600000);
+        //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -280,7 +286,7 @@ public class MyService extends Service {
                 if(action.equals(Constants.ACTION_START_LOCATION_SERVICE)){
                     startLocationService();
                 }else if(action.equals(Constants.ACTION_STOP_LOCATION_SERVICE)){
-                    stopLocationService();
+                    //stopLocationService();
                 }
             }
         }

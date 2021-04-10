@@ -68,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MyService.class);
 
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if(permissionCheck == PackageManager.PERMISSION_DENIED){ //포그라운드 위치 권한 확인
+            //위치 권한 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+        }
+        int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        if(permissionCheck2 == PackageManager.PERMISSION_DENIED){ //백그라운드 위치 권한 확인
+
+            //위치 권한 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 0);
+        }
+        
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             startForegroundService(intent);
         }
@@ -75,15 +88,27 @@ public class MainActivity extends AppCompatActivity {
             startService(intent);
         }
 
-        if(ContextCompat.checkSelfPermission(
-                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_LOCATION_PERMISSIONS
-            );
-        }else{
-            startLocationService();
-        }
+
+
+//        if(ContextCompat.checkSelfPermission(
+//                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(
+//                    MainActivity.this,
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_LOCATION_PERMISSIONS
+//            );
+//        }else{
+//            startLocationService();
+//        }
+//
+//        if(ContextCompat.checkSelfPermission(
+//                getApplicationContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(
+//                    MainActivity.this,
+//                    new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},REQUEST_CODE_LOCATION_PERMISSIONS
+//            );
+//        }else{
+//            startLocationService();
+//        }
     }
 
     private boolean isLocationServiceRunning(){
