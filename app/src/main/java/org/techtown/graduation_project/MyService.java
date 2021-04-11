@@ -44,10 +44,10 @@ public class MyService extends Service {
     LatLng latLng;
     String date;
     Cursor db_cursor;
+    String TABLE_NAME;
 
-    private static final String TABLE_NAME = getDate();
 
-    public static final String getDate() {
+    public String getDate() {
         long time = System.currentTimeMillis();
         SimpleDateFormat dayTime = new SimpleDateFormat("yyyy년MM월dd일");
         String now = dayTime.format(new Date(time));
@@ -71,10 +71,11 @@ public class MyService extends Service {
             if (locationList.size() > 0) {
                 location = locationList.get(locationList.size() - 1);
                 mCurrentLocation = location;
+                TABLE_NAME = getDate();
 
-                if (mDatabaseHelper.dbCheck(TABLE_NAME) == false) {  // DB의 TABLE이 비어있으면
+                if (mDatabaseHelper.dbCheck() == false) {  // DB의 TABLE이 비어있으면
                     latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());   // 첫 위치 좌표
-                    mDatabaseHelper.addData(latLng);    // DB에 저장
+                    mDatabaseHelper.addData(latLng, TABLE_NAME);    // DB에 저장
                     tmp_location = mCurrentLocation;    // tmp_location 이라는 변수에 현재 위치 저장
 
                     Log.d(TAG, "데이터베이스가 비어있어서 현재 위치를 저장합니다.\n 위도: " + String.valueOf(mCurrentLocation.getLatitude()) +
@@ -120,7 +121,7 @@ public class MyService extends Service {
                     return;
                 } else {
                     Log.d(TAG, "데이터베이스에 현재 위치를 저장했습니다.");
-                    mDatabaseHelper.addData(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+                    mDatabaseHelper.addData(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), TABLE_NAME);
                 }
             }
         } else {
@@ -253,7 +254,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(600000);
+        //locationRequest.setInterval(4000);
+        locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 

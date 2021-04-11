@@ -15,9 +15,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
 
-    private static final String TABLE_NAME = getDate();
+    private static String TABLE_NAME = getDate();
+    String date;
 
-    public static final String getDate() {
+    public static String getDate() {
         long time = System.currentTimeMillis();
         SimpleDateFormat dayTime = new SimpleDateFormat("yyyy년MM월dd일");
         String now = dayTime.format(new Date(time));
@@ -61,10 +62,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     2번쿼리
     INSERT INTO TABLE_NAME (name) VALUES(item);
     */
-    public void addData(LatLng Current){
+    public void addData(LatLng Current, String date){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("CREATE TABLE IF NOT EXISTS '" + TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
-        db.execSQL("INSERT INTO '" + TABLE_NAME + "'(latitude, longitude) VALUES ("+Current.latitude+","+Current.longitude+")");
+        db.execSQL("CREATE TABLE IF NOT EXISTS '" + date + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+        db.execSQL("INSERT INTO '" + date + "'(latitude, longitude) VALUES ("+Current.latitude+","+Current.longitude+")");
     }
 
     public Cursor getTableName(){
@@ -90,10 +91,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public boolean dbCheck(String table){
+    public boolean dbCheck(){
         int count = 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = getLocation(table);
+        date = getDate();
+        db.execSQL("CREATE TABLE IF NOT EXISTS '" + date + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+        Cursor data = getLocation(date);
         while (data.moveToNext()) {
             count++;
         }
@@ -102,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }else{
             Log.d(TAG, "false: data.getCount: " + count);
-            return false;
+           return false;
         }
     }
 
