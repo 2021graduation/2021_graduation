@@ -70,6 +70,41 @@
   소스 코드는 그대로 Clone 하여 사용, 사용자가 준비해야 할 것은 공공데이터 포털의 API KEY와 구글맵 API KEY를 발급받아야 한다.
 
   + 공공데이터 포털 API KEY 발급
-    - 먼저 공공데이터 포털 https://www.data.go.kr/ 에 접속한다.
-    ![image](https://user-images.githubusercontent.com/51111183/114381669-56619e00-9bc6-11eb-9ff1-7eebeedf3f05.png)
- 
+    - 공공데이터 포털 https://www.data.go.kr/ 에 접속한다.    
+  ![image](https://user-images.githubusercontent.com/51111183/114381669-56619e00-9bc6-11eb-9ff1-7eebeedf3f05.png)
+    - 로그인을 한 뒤, 다음과 같은 API 들을 발급받는다.    
+  ![image](https://user-images.githubusercontent.com/51111183/114384185-5dd67680-9bc9-11eb-9c2c-408f6dceefda.png)
+
+    - 소스 코드 내에서 key라는 String에 발급받은 서비스 키를 삽입한다.
+    ```java
+    private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
+    static RequestQueue requestQueue; // 요청 큐
+    // 공공데이터 포털의 servicekey
+    String key = "발급받은 API키";
+    ```
+
+  + 구글맵 API KEY 발급
+    - 구글 클라우드 플랫폼 https://console.cloud.google.com/ 에 접속한다.    
+  ![image](https://user-images.githubusercontent.com/51111183/114385106-89a62c00-9bca-11eb-8625-4aa2bd13ffd1.png)
+    - 로그인을 한 뒤, API 및 서비스를 클릭한다.         
+  ![image](https://user-images.githubusercontent.com/51111183/114385259-c1ad6f00-9bca-11eb-9b57-679dc5c0aed3.png)
+    - API 및 서비스 사용 설정을 클릭한다.     
+  ![image](https://user-images.githubusercontent.com/51111183/114385735-557f3b00-9bcb-11eb-87e8-1fd9a4e82693.png)
+    - 해당 페이지에서 Maps SDK For Android를 클릭하고 사용 버튼을 누른다.    
+  ![image](https://user-images.githubusercontent.com/51111183/114386153-d0e0ec80-9bcb-11eb-8009-9e2d5683723d.png)
+    - API 및 서비스 사용 설정 페이지로 돌아와서 사용자 인증 정보 페이지로 이동한 뒤, 사용자 인증 정보 만들기를 클릭한다.    
+  ![image](https://user-images.githubusercontent.com/51111183/114386859-bb1ff700-9bcc-11eb-815a-df93c587876d.png)
+    - API키를 선택하고, 키 제한 페이지로 이동한다.
+  ![image](https://user-images.githubusercontent.com/51111183/114387098-02a68300-9bcd-11eb-8b45-6e710b8c8e45.png)
+    - 어플리케이션 제한 사항에서 안드로이드 앱을 선택하고, 필요에 따라 Andorid 앱의 사용량 제한을 설정할 수 있다.     
+   API 제한사항에서 키 제한을 선택하고 Maps SDK for Android를 선택한 뒤에 저장을 누른다.      
+  ![image](https://user-images.githubusercontent.com/51111183/114387472-70eb4580-9bcd-11eb-8bff-de0ac1a5af83.png)
+   
+    - 발급받은 키는 AndroidManifest.xml 파일에 삽입한다.
+    ```java
+    <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="발급받은 API키" />
+    ```
+
+
