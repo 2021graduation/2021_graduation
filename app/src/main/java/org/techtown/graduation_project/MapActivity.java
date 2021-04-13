@@ -14,6 +14,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -67,7 +69,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int UPDATE_INTERVAL_MS = 1000;  // 600000 = 300초
+    private static final int UPDATE_INTERVAL_MS = 600000;  // 10분
     private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
 
 
@@ -95,6 +97,18 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
+
+
+
+
+
+    private Button button;
+    private EditText editText;
+    private Geocoder geocoder;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +141,11 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         Intent intent = getIntent();
         date = intent.getStringExtra("table_name");
         Table = new ArrayList<>();
+
+
+
+        editText = (EditText) findViewById(R.id.editText);
+        button=(Button)findViewById(R.id.button);
     }
 
     // 지도 동기화 및 준비
@@ -186,6 +205,51 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             }
 
         }
+
+        geocoder = new Geocoder(this);
+        button.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String str=editText.getText().toString();
+                List<Address> addressList = null;
+                try {
+                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
+                    addressList = geocoder.getFromLocationName(
+                            str, // 주소
+                            10); // 최대 검색 결과 개수
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if(addressList.size() == 0){
+
+                }else{
+                    System.out.println(addressList.get(0).toString());
+                    // 콤마를 기준으로 split
+                    String []splitStr = addressList.get(0).toString().split(",");
+                    String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+                    System.out.println(address);
+
+                    String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+                    String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+                    System.out.println(latitude);
+                    System.out.println(longitude);
+
+                    // 좌표(위도, 경도) 생성
+                    LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                    // 마커 생성
+                    MarkerOptions mOptions2 = new MarkerOptions();
+                    mOptions2.title("search result");
+                    mOptions2.snippet(address);
+                    mOptions2.position(point);
+                    // 마커 추가
+                    mMap.addMarker(mOptions2);
+                    // 해당 좌표로 화면 줌
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15));
+                }
+            }
+        });
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -379,7 +443,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         List<Address> addresses;
 
         try {
-
             addresses = geocoder.getFromLocation(
                     latlng.latitude,
                     latlng.longitude,
@@ -391,7 +454,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
-
         }
 
 
@@ -403,7 +465,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             Address address = addresses.get(0);
             return address.getAddressLine(0).toString();
         }
-
     }
 
 
