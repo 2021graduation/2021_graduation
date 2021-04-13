@@ -29,7 +29,7 @@ public class SQLiteActivity extends AppCompatActivity {
 
     String message;
 
-    String sData;
+    String tablename;
     DatabaseHelper mDatabaseHelper;
     SwipeRefreshLayout refreshLayout;
 
@@ -63,9 +63,9 @@ public class SQLiteActivity extends AppCompatActivity {
 
         TableAdapter.setOnItemClickListener(new TableAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position, TextView sData) {
-                Log.d(TAG, "클릭됨: " + sData.getText().toString());
-                String date = sData.getText().toString();
+            public void onItemClick(View v, int position, TextView tablename) {
+                Log.d(TAG, "클릭됨: " + tablename.getText().toString());
+                String date = tablename.getText().toString();
                 Intent intent = new Intent(SQLiteActivity.this, MapActivity.class);
                 intent.putExtra("table_name",date);
                 startActivity(intent);
@@ -74,11 +74,11 @@ public class SQLiteActivity extends AppCompatActivity {
 
         TableAdapter.setOnItemLongClickListener(new TableAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(View v, int pos, TextView sData) {
-                String row_data = sData.getText().toString();
+            public void onItemLongClick(View v, int pos, TextView tablename) {
+                String row_data = tablename.getText().toString();
                 ////////////// 삭제 기능 ///////////////////
                 Log.d(TAG, "현재시각: " + mDatabaseHelper.getDate());
-                Log.d(TAG, "onItemClick: You Clicked on " + sData.getText());
+                Log.d(TAG, "onItemClick: You Clicked on " + tablename.getText());
                 AlertDialog.Builder ad = new AlertDialog.Builder(SQLiteActivity.this);
                 ad.setIcon(R.mipmap.ic_launcher_round);
                 ad.setTitle("제목");
@@ -120,13 +120,13 @@ public class SQLiteActivity extends AppCompatActivity {
 
         Cursor data = mDatabaseHelper.getTableName();
         while (data.moveToNext()) {
-            sData = data.getString(0);
-            if(sData.equals("android_metadata")){
+            tablename = data.getString(0);
+            if(tablename.equals("android_metadata")){
                 continue;
-            }else if(sData.equals("sqlite_sequence")){
+            }else if(tablename.equals("sqlite_sequence")){
                 continue;
             }
-            Table data1 = new Table(sData);
+            Table data1 = new Table(tablename);
             Table.add(data1);
         }
     }
