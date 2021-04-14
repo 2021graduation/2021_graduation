@@ -41,8 +41,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -146,6 +154,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
         editText = (EditText) findViewById(R.id.editText);
         button=(Button)findViewById(R.id.button);
+
     }
 
     // 지도 동기화 및 준비
@@ -260,6 +269,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             }
         });
         getLatLng();
+
     }
 
 
@@ -286,64 +296,9 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
                 //현재 위치에 마커 생성하고 이동
                 setCurrentLocation(location, markerTitle, markerSnippet);
-
-
-                // 위치 정보 거리 비교하는 부분 ***
-//                mCurrentLocation = location;
-//
-//
-//                if (tmp_location.getLatitude() < 1) {
-//                    // 첫 위치 저장
-//                    tmp_location = mCurrentLocation;
-//                    MarkerOptions marker = new MarkerOptions();
-//                    marker.position(new LatLng(tmp_location.getLatitude(), tmp_location.getLongitude()));
-//                    marker.visible(true);
-//                    //mMap.addMarker(marker);
-//                    Log.d(TAG, "####: tmp 위도: " + String.valueOf(tmp_location.getLatitude()) +
-//                            "경도: " + String.valueOf(tmp_location.getLongitude()));
-//                } else {
-//                    compareLocation(tmp_location, mCurrentLocation);
-//                    tmp_location = mCurrentLocation;
-//                }
             }
         }
     };
-
-
-//    private void compareLocation(Location tmp_location, Location mCurrentLocation) {
-//        MarkerOptions marker = new MarkerOptions();
-//        float distance = mCurrentLocation.distanceTo(tmp_location);
-//        Log.d(TAG, "tmp 와 Current 사이 거리: " + distance);
-//
-//        if (distance < 30) {
-//            if (markcount == 0) {
-//                LatLng Current = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-//                String markerTitle = getCurrentAddress(Current);
-//                String markerSnippet = "위도:" + String.valueOf(mCurrentLocation.getLatitude())
-//                        + " 경도:" + String.valueOf(mCurrentLocation.getLongitude());
-//                //현재 위치에 마커 생성하고 이동
-//                //addMarker(mCurrentLocation, markerTitle, markerSnippet);
-//
-//                Log.d(TAG, "마커 생성함");
-//                //Marker marker1 = addMarker(mCurrentLocation, marker, distance);
-//                //첫번째 마커 위치 저장
-//                a = mCurrentLocation;
-//                markcount++;
-//            } else {
-//                Log.d(TAG, "진입");
-//                // 두번째 마커부터 비교
-//                if (a.distanceTo(mCurrentLocation) < 30) { // 만약 첫번째 마커와 위치 차이가 5미터 이내면 (없으면),
-////                    marker1.remove();                   // 찍었던 마커를 삭제함
-//                    a = mCurrentLocation;               // 현재 위치를 이전 위치로 업데이트
-//                    Log.d(TAG, "찍지않음");
-//                } else {
-//                    Log.d(TAG, "마크 카운트 0으로 초기화함");
-//                    markcount = 0;
-//                }
-//            }
-//        }
-//    }
-
 
     private void getLatLng() {
         Log.d(TAG, "populateListView: Displaying data in the View");
@@ -355,7 +310,21 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             latLng = new LatLng(latitude, longitude);
             db_location.setLatitude(latitude);
             db_location.setLongitude(longitude);
-            Log.d(TAG, "DB에서 가져온 위도: " + latitude + " DB에서 가져온 경도: " + longitude);
+            //Log.d(TAG, "DB에서 가져온 위도: " + latitude + " DB에서 가져온 경도: " + longitude);
+
+            // split()을 이용해 ' '를 기준으로 문자열을 자른다.
+            // split()은 지정한 문자를 기준으로 문자열을 잘라 배열로 반환한다.
+            String address[] = getCurrentAddress(latLng).split(" ");
+
+            for(int i=0 ; i<address.length ; i++)
+            {
+                System.out.println("date["+i+"] : "+address[i]);
+            }
+
+            String Sigungu = address[1] + address[2];
+            Log.d(TAG, "주소: " + Sigungu);
+
+
             String markerTitle = getCurrentAddress(latLng);
             String markerSnippet = "위도:" + String.valueOf(db_location.getLatitude())
                     + " 경도:" + String.valueOf(db_location.getLongitude());
