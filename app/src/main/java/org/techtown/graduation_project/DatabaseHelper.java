@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public DatabaseHelper(Context context){
-        super(context, TABLE_NAME, null, 1);
+        super(context, "DB_Date", null, 1);
     }
 
     /*
@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "데이터베이스"+TABLE_NAME+"생성됨");
-        db.execSQL("CREATE TABLE '"+ TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS'"+ TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
     }
 
     @Override
@@ -69,10 +69,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getTableName(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT name FROM sqlite_master WHERE type='table';";
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT name FROM sqlite_master WHERE type = 'table';";
         //String query = "SELECT * FROM '" + TABLE_NAME + "';";
         Cursor data = db.rawQuery(query, null);
+        data.moveToFirst();
         return data;
     }
 
