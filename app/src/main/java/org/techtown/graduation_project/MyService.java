@@ -9,27 +9,46 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class MyService extends Service {
     String TAG = "Service";
@@ -42,10 +61,16 @@ public class MyService extends Service {
     double latitude;
     double longitude;
     LatLng latLng;
-    String date;
+    String date = getDate();
     Cursor db_cursor;
     String TABLE_NAME;
+    DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
 
+
+    public DisasterRowData row;
+
+    static RequestQueue requestQueue;
+    String key = "pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
 
     public String getDate() {
         long time = System.currentTimeMillis();
@@ -58,9 +83,139 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        if (requestQueue == null){
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            sendRequest();
+        }
+
+
+//        List<List<String>> list = readToList();
+//        for(int i=0; i<list.size(); i++) {
+//            List<String> line = list.get(i);
+//            //Log.d(TAG,"List["+i+"번째]: "+list.get(i));
+//            for(int j=0; j<1; j++) {
+//                Log.d(TAG,"List["+i+"번째]: "+line.get(j));
+//            }
+//            System.out.println();
+//        }
     }
 
-    DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
+    public void sendRequest() {
+
+        String url = "http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List?serviceKey="+key+"&numOfRows=1000";
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        processResponse(response);
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        requestQueue.add(request);
+    }
+
+    public void processResponse(String response) {
+
+        List<List<Address>> list = null;
+        Geocoder geocoder = new Geocoder(this);
+
+        XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+        Gson gson = new Gson();
+        DisasterMsg disasterList = gson.fromJson(xmlToJson.toJson().toString(), DisasterMsg.class);
+        for(int i=0;i< disasterList.DisasterMsg.row.size(); i++){
+            row = disasterList.DisasterMsg.row.get(i);
+            if(row.getLocation_name().equals("부산광역시 사하구") || row.getLocation_name().equals("부산광역시 전체")){
+                String str = row.getMsg();
+
+                Pattern pattern = Pattern.compile("[(](.*?)[)]");
+                Matcher matcher = pattern.matcher(str);
+
+                while (matcher.find()) {  // 일치하는 게 있다면
+                    //재난문자 ( ) 안 내용들 모두 들어옴
+
+                    if(matcher.group(1).length() > 2){
+                        //요일제외 2글자 이상인 재난문자 선별
+                        Pattern pattern2 = Pattern.compile(".*?(길\\b|동\\b|대로\\b|로\\b).*");
+                        Matcher matcher2 = pattern2.matcher(matcher.group(1));
+                        while(matcher2.find()){
+                            // ~길, ~동, ~대로 ~로 글자 전후로 가져옴
+                            String filter = matcher2.group();
+
+                            int target_index;
+                            if(filter.contains("소독완료")){
+                                target_index = filter.indexOf("소독완료");
+                                filter = filter.replace(filter.substring(target_index), "");
+                            }else if(filter.contains("방역완료")){
+                                target_index = filter.indexOf("방역완료");
+                                filter = filter.replace(filter.substring(target_index), "");
+                            }
+                            filter = filter.replaceAll(".*감염경로.*","");
+                            mDatabaseHelper.addCovidLatLng(getDisasterAddress(filter));
+                        }
+                    }
+                    if(matcher.group(1) ==  null)
+                        break;
+                }
+            }
+        }
+    }
+
+    public void println(Object data, TextView textView) {
+        textView.setText(data.toString());
+    }
+
+
+//    public List<List<String>> readToList() {
+//        List<List<String>> list = new ArrayList<List<String>>();
+//        BufferedReader br = null;
+//        try {
+//            InputStream in = getResources().openRawResource(R.raw.location_id);
+//            if(in != null){
+//                InputStreamReader stream = new InputStreamReader(in, "utf-8");
+//                br = new BufferedReader(stream);
+//
+//                String line = "";
+//
+//                while((line=br.readLine()) != null) {
+//                    String[] token = line.split(",");
+//                    List<String> tempList = new ArrayList<String>(Arrays.asList(token));
+//                    list.add(tempList);
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if(br != null) {br.close();}
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return list;
+//    }
+
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
@@ -131,83 +286,87 @@ public class MyService extends Service {
     }
 
 
-//            private void compareLocation (Location tmp_location, Location mCurrentLocation){
-//                MarkerOptions marker = new MarkerOptions();
-//                float distance = mCurrentLocation.distanceTo(tmp_location);
-//                Log.d(TAG, "tmp 와 Current 사이 거리: " + distance);
-//
-//        /*
-//        비슷하거나 같은 위치가 중복해서 찍히지 않게끔 만드는 조건문
-//         */
-//                if (distance < 30) {  // 이전 위치와 현 위치 사이의 거리가 30미터 이하면
-//                    if (markcount == 0) { // 디비에 저장될 수 있는 조건이 만족했을 떄, 디비에 저장함.
-//
-//                        LatLng Current = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-//                        mDatabaseHelper.addData(Current);
-//                        Log.d(TAG, "데이터베이스에 현재 위치를 저장했습니다.");
-//                        saveLocation = mCurrentLocation;
-//                        markcount++;
-//                    } else {
-//                        Log.d(TAG, "진입");
-//                        if (saveLocation.distanceTo(mCurrentLocation) < 30) {
-//                            // 디비에 가장 마지막에 저장된 위치와 현재 위치 사이의 거리가 30미터 이하면
-//                            // 근방에 있었던 걸로 간주하고 이 위치는 디비에 저장을 하지 않는다.
-//                            //
-//                            // saveLocation = mCurrentLocation;
-//                            Log.d(TAG, "중복마커입니다. 저장하지 않습니다.");
-//                        } else {
-//                            Log.d(TAG, "위치 저장을 준비합니다.");
-//                            markcount = 0;
-//                        }
-//                    }
-//                }
 
-                    /*
-                    saveLocation 과 tmp_location의 차이가 뭘까.
-                    saveLocation 은 디비에 저장될때마다 업데이트됨.
-                    tmp_location 은 새로운 위치가 들어올때마다 업데이트됨.
-                     */
+    public String getCurrentAddress(LatLng latlng) {
 
 
-//                if(mDatabaseHelper.dbCheck(TABLE_NAME)){ // db가 있으면
-//                    Cursor last = mDatabaseHelper.getLocation(TABLE_NAME); // db를 가리키는 커서를 선언하고
-//                    last.moveToLast();  // db에 가장 마지막으로 저장된 (즉, 저장된 위치 중에서 제일 최근의 것) 위치를 불러옴
-//                    Location last_location = new Location(LocationManager.GPS_PROVIDER);
-//                    latitude = last.getDouble(1);
-//                    longitude = last.getDouble(2);  // 위치를 전달하는 과정이고
-//                    latLng = new LatLng(latitude, longitude);   // 꺼내온 위치를 변수에다 저장함
-//                    last_location.setLatitude(latitude);
-//                    last_location.setLongitude(longitude);
-//                    Log.d(TAG, "DB 마지막 행: " + latitude + " DB 마지막 행: " + longitude);
-//
-//                    LatLng Current = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());   // 현재 위치 좌표
-//                    if(last_location.distanceTo(mCurrentLocation) < 30){    // 가장 마지막에 저장된 위치와 현재 위치 사이의 거리가 30미터 이하면
-//                        return;
-//                    }
-//                    else{   // 가장 마지막에 저장된 위치와 현재 위치 사이의 거리가 30미터 이상이면
-//                        mDatabaseHelper.addData(Current);
-//                        Log.d(TAG, "위치 저장함");
-//                        a = mCurrentLocation;
-//                        markcount++;
-//                    }
-//                }else{  // db가 없으면
-//                    latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-//                    mDatabaseHelper.addData(latLng);
-//                }
-//                //Marker marker1 = addMarker(mCurrentLocation, marker, distance);
-//                //첫번째 마커 위치 저장
-//            }else{
-//                Log.d(TAG, "진입");
-//                // 두번째 마커부터 비교
-//                if(a.distanceTo(mCurrentLocation) < 30){ // 만약 첫번째 마커와 위치 차이가 5미터 이내면 (없으면),
-////                    marker1.remove();                   // 찍었던 마커를 삭제함
-//                    a = mCurrentLocation;               // 현재 위치를 이전 위치로 업데이트
-//                    Log.d(TAG, "저장하지않음");
-//                }else{
-//                    Log.d(TAG, "마크 카운트 0으로 초기화함");
-//                    markcount = 0;
-//                }
-//       }
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+            addresses = geocoder.getFromLocation(
+                    latlng.latitude,
+                    latlng.longitude,
+                    1);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+        }
+
+
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            return "주소 미발견";
+
+        } else {
+            Address address = addresses.get(0);
+            return address.getAddressLine(0).toString();
+        }
+    }
+
+    public LatLng getDisasterAddress(String Sigungu) {
+
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+            addresses = geocoder.getFromLocationName(
+                    Sigungu,
+                    10);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return null;
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            return null;
+
+        } else {
+            Log.d(TAG, String.valueOf(addresses.get(0)));
+            LatLng covidlatlng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+            return covidlatlng;
+        }
+    }
+
+    private void getLatLng() {
+        Log.d(TAG, "populateListView: Displaying data in the View");
+        Location db_location = new Location(LocationManager.GPS_PROVIDER);
+        Cursor data = mDatabaseHelper.getLocation(date);
+        while (data.moveToNext()) {
+            latitude = data.getDouble(1);
+            longitude = data.getDouble(2);
+            latLng = new LatLng(latitude, longitude);
+            String Sigungu = getCurrentAddress(latLng);
+
+            Log.d(TAG, "주소: " + Sigungu);
+        }
+    }
+
+
 
     public MyService() {
     }
