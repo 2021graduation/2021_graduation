@@ -110,6 +110,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void addCovidLatLng(LatLng latLng){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("CREATE TABLE IF NOT EXISTS 코로나맵(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+        db.execSQL("INSERT INTO 코로나맵(latitude, longitude) VALUES ("+latLng.latitude+","+latLng.longitude+")");
+    }
+
     /*
     DELETE FROM TABLE_NAME
     WHERE ID = "id" AND NAME = "name"
