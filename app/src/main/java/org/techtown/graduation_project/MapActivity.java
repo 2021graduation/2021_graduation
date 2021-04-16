@@ -225,7 +225,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                     // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
                     addressList = geocoder.getFromLocationName(
                             str, // 주소
-                            10); // 최대 검색 결과 개수
+                            1); // 최대 검색 결과 개수
                 }
                 catch (IOException e) {
                     e.printStackTrace();
@@ -269,7 +269,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             }
         });
         getLatLng();
-
     }
 
 
@@ -302,14 +301,14 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
     private void getLatLng() {
         Log.d(TAG, "populateListView: Displaying data in the View");
-        Location db_location = new Location(LocationManager.GPS_PROVIDER);
+        //Location db_location = new Location(LocationManager.GPS_PROVIDER);
         Cursor data = mDatabaseHelper.getLocation(date);
         while (data.moveToNext()) {
             latitude = data.getDouble(1);
             longitude = data.getDouble(2);
             latLng = new LatLng(latitude, longitude);
-            db_location.setLatitude(latitude);
-            db_location.setLongitude(longitude);
+            //db_location.setLatitude(latitude);
+            //db_location.setLongitude(longitude);
             //Log.d(TAG, "DB에서 가져온 위도: " + latitude + " DB에서 가져온 경도: " + longitude);
 
             // split()을 이용해 ' '를 기준으로 문자열을 자른다.
@@ -322,24 +321,23 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             }
 
             String Sigungu = address[1] + address[2];
-            Log.d(TAG, "주소: " + Sigungu);
+            Log.d(TAG, "좌표: " + latLng.latitude + ", " + latLng.longitude);
 
 
             String markerTitle = getCurrentAddress(latLng);
-            String markerSnippet = "위도:" + String.valueOf(db_location.getLatitude())
-                    + " 경도:" + String.valueOf(db_location.getLongitude());
-            addMarkers(latLng, db_location, markerTitle, markerSnippet);
+            String markerSnippet = "위도:" + String.valueOf(latLng.latitude)
+                    + " 경도:" + String.valueOf(latLng.longitude);
+            addMarkers(latLng, markerTitle, markerSnippet);
         }
     }
 
-    private void addMarkers(LatLng latLng, Location location, String markerTitle, String markerSnippet) {
-        Marker Marker1 = null;
+    private void addMarkers(LatLng latLng, String markerTitle, String markerSnippet) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
-        Marker1 = mMap.addMarker(markerOptions);
+        mMap.addMarker(markerOptions);
     }
     // 위치 정보 거리 비교하는 부분 ***
 
@@ -407,7 +405,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
     public String getCurrentAddress(LatLng latlng) {
 
         //지오코더... GPS를 주소로 변환
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(this);
 
         List<Address> addresses;
 
@@ -435,7 +433,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             return address.getAddressLine(0).toString();
         }
     }
-
 
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
