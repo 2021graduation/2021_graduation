@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void processResponse(String response) {
 
-        ArrayList arrayList = new ArrayList<>();
+
 
         XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
         Gson gson = new Gson();
