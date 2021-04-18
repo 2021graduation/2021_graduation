@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public DatabaseHelper(Context context){
-        super(context, "DB_Date", null, 1);
+        super(context, "DB_Date", null, 2);
     }
 
     /*
@@ -45,7 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String upgradeTable = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        String upgradeTable = "DROP TABLE IF EXISTS '" + TABLE_NAME+"';";
         db.execSQL(upgradeTable);
         onCreate(db);
     }

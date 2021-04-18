@@ -170,7 +170,7 @@ public class MyService extends Service {
                                 filter = filter.replace(filter.substring(target_index), "");
                             }
                             filter = filter.replaceAll(".*감염경로.*","");
-                            mDatabaseHelper.addCovidLatLng(getDisasterAddress(filter));
+                            //mDatabaseHelper.addCovidLatLng(getDisasterAddress(filter));
                         }
                     }
                     if(matcher.group(1) ==  null)
@@ -323,14 +323,14 @@ public class MyService extends Service {
     public LatLng getDisasterAddress(String Sigungu) {
 
         //지오코더... GPS를 주소로 변환
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(this);
 
         List<Address> addresses;
 
         try {
             addresses = geocoder.getFromLocationName(
                     Sigungu,
-                    10);
+                    1);
         } catch (IOException ioException) {
             //네트워크 문제
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
