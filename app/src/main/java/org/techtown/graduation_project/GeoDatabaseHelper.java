@@ -47,7 +47,7 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String upgradeTable = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        String upgradeTable = "DROP TABLE IF EXISTS GeoDB";
         db.execSQL(upgradeTable);
         onCreate(db);
     }
@@ -66,9 +66,16 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     */
     public void addData(String address, LatLng Current, String dMsg){
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL("CREATE TABLE IF NOT EXISTS '" + date + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
         db.execSQL("INSERT INTO GeoDB(address, latitude, longitude, dMsg) VALUES ('"+address+"',"+Current.latitude+","+Current.longitude+",'"+dMsg+"')");
     }
+
+    public void dropTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DROP TABLE GeoDB";
+        db.execSQL(query);
+        onCreate(db);
+    }
+
 
     public Cursor getTableName(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -76,6 +83,13 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         //String query = "SELECT * FROM '" + TABLE_NAME + "';";
         Cursor data = db.rawQuery(query, null);
         data.moveToFirst();
+        return data;
+    }
+
+    public Cursor getGeoDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT address, latitude, longitude, dMsg FROM GeoDB";
+        Cursor data = db.rawQuery(query, null);
         return data;
     }
 
