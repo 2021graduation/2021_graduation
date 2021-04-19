@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.SleepClassifyEvent;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -65,6 +66,7 @@ public class MyService extends Service {
     Cursor db_cursor;
     String TABLE_NAME;
     DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
+    GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
 
 
     public DisasterRowData row;
@@ -111,8 +113,16 @@ public class MyService extends Service {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        while(response.contains("SERVICE ERROR")){
+                            try {
+                                Thread.sleep(10000);
+                                sendRequest();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         processResponse(response);
+
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -135,13 +145,14 @@ public class MyService extends Service {
     }
 
     public void processResponse(String response) {
-
+        Log.d("거기서 날아온 정보", response.toString());
         List<List<Address>> list = null;
         Geocoder geocoder = new Geocoder(this);
 
         XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
         Gson gson = new Gson();
         DisasterMsg disasterList = gson.fromJson(xmlToJson.toJson().toString(), DisasterMsg.class);
+        geoDatabaseHelper.dropTable();
         for(int i=0;i< disasterList.DisasterMsg.row.size(); i++){
             row = disasterList.DisasterMsg.row.get(i);
             if(row.getLocation_name().equals("부산광역시 사하구") || row.getLocation_name().equals("부산광역시 전체")){
@@ -170,7 +181,9 @@ public class MyService extends Service {
                                 filter = filter.replace(filter.substring(target_index), "");
                             }
                             filter = filter.replaceAll(".*감염경로.*","");
-                            //mDatabaseHelper.addCovidLatLng(getDisasterAddress(filter));
+                            if(getDisasterAddress(filter) != null){
+                                geoDatabaseHelper.addData(filter, getDisasterAddress(filter), str);
+                            }
                         }
                     }
                     if(matcher.group(1) ==  null)
