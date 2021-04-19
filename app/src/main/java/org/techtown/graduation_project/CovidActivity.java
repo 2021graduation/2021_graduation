@@ -10,8 +10,10 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,6 +54,8 @@ public class CovidActivity extends AppCompatActivity {
     Button mask; // 마스크 검색 버튼
     Button pharmacy; // 약국 검색 버튼
     Button MyLocation; // 내 위치 조회 버튼
+    Button dbSelect;
+    GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
 
     private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
     static RequestQueue requestQueue; // 요청 큐
@@ -79,6 +83,18 @@ public class CovidActivity extends AppCompatActivity {
         mask = findViewById(R.id.mask);
         pharmacy = findViewById(R.id.pharmacy);
         MyLocation = findViewById(R.id.MyLocation);
+
+        ///////////////////
+        dbSelect = findViewById(R.id.dbSelect);
+        dbSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor data = geoDatabaseHelper.getGeoDB();
+                while(data.moveToNext()){
+                    Log.d("GeoDB에서 가져온 정보: ", data.getString(0) + " | " +data.getString(1) + " | " + data.getString(2) + " | " + data.getString(3));
+                }
+            }
+        });
 
         hospital.setOnClickListener(new View.OnClickListener() {
             @Override
