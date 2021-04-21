@@ -32,10 +32,12 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    CREATE TABLE TABLE_NAME(
+    CREATE TABLE GeoDB(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    address VARCHAR(50) NOT NULL,
     latitude decimal(18,10) NOT NULL,
     longitude decimal(18,10) NOT NULL,
+    dMsg TEXT NOT NULL,
     PRIMARY KEY(id));
     */
 
@@ -54,15 +56,8 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
 
 
     /*
-    1번쿼리
-    CREATE TABLE IF NOT EXISTS TABLE_NAME(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    latitude decimal(18,10) NOT NULL,
-    longitude decimal(18,10) NOT NULL,
-    PRIMARY KEY(id));
-
     2번쿼리
-    INSERT INTO TABLE_NAME (name) VALUES(item);
+    INSERT INTO GeoDB(address, latitude, longitude, dMsg) VALUES (address,Current.latitude,Current.longitude,dMsg);
     */
     public void addData(String address, LatLng Current, String dMsg){
         SQLiteDatabase db = this.getWritableDatabase();
