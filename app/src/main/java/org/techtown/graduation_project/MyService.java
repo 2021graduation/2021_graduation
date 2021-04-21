@@ -90,17 +90,6 @@ public class MyService extends Service {
 
             sendRequest();
         }
-
-
-//        List<List<String>> list = readToList();
-//        for(int i=0; i<list.size(); i++) {
-//            List<String> line = list.get(i);
-//            //Log.d(TAG,"List["+i+"번째]: "+list.get(i));
-//            for(int j=0; j<1; j++) {
-//                Log.d(TAG,"List["+i+"번째]: "+line.get(j));
-//            }
-//            System.out.println();
-//        }
     }
 
     public void sendRequest() {
@@ -432,13 +421,6 @@ public class MyService extends Service {
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
