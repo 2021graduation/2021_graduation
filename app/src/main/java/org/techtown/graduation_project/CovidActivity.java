@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
@@ -55,7 +58,19 @@ public class CovidActivity extends AppCompatActivity {
     Button pharmacy; // 약국 검색 버튼
     Button MyLocation; // 내 위치 조회 버튼
     Button dbSelect;
+
+    DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
+
+    double tmp_latitude;
+    double tmp_longitude;
+    LatLng tmp_LatLng;
+    String tablename;
+
+    double db_latitude;
+    double db_longitude;
+    LatLng db_LatLng;
+
 
     private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
     static RequestQueue requestQueue; // 요청 큐
@@ -89,12 +104,46 @@ public class CovidActivity extends AppCompatActivity {
         dbSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Cursor geodata = geoDatabaseHelper.getGeoDB();
+//                while(geodata.moveToNext()){
+//                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3));
+//                }
                 Cursor data = geoDatabaseHelper.getGeoDB();
                 while(data.moveToNext()){
-                    Log.d("GeoDB에서 가져온 정보: ", data.getString(0) + " | " +data.getString(1) + " | " + data.getString(2) + " | " + data.getString(3));
+                    Location user_location = new Location(LocationManager.GPS_PROVIDER);
+                    tmp_latitude = data.getDouble(1);
+                    tmp_longitude = data.getDouble(2);
+                    user_location.setLatitude(tmp_latitude);
+                    user_location.setLongitude(tmp_longitude);
+                    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+                    Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+
+                    Cursor tCursor = mDatabaseHelper.getTableName();
+                    while (tCursor.moveToNext()) {
+                        tablename = tCursor.getString(0);
+                        if(tablename.equals("android_metadata")){
+                            continue;
+                        }else if(tablename.equals("sqlite_sequence")){
+                            continue;
+                        }else{
+                            Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+                            while(db_cursor.moveToNext()){
+                                Location db_location = new Location(LocationManager.GPS_PROVIDER);
+                                db_latitude = db_cursor.getDouble(0);
+                                db_longitude = db_cursor.getDouble(1);
+                                db_location.setLatitude(db_latitude);
+                                db_location.setLongitude(db_longitude);
+                                if(db_location.distanceTo(user_location) < 100){
+                                    Log.d("경보: ", tablename + "   " + data.getString(3));
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
         });
+        ///////////////////
 
         hospital.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +210,22 @@ public class CovidActivity extends AppCompatActivity {
         sendRequest();
 
     }
+
+//    public String getTableName(){
+//        Cursor tCursor = mDatabaseHelper.getTableName();
+//        while (tCursor.moveToNext()) {
+//            tablename = tCursor.getString(0);
+//            if(tablename.equals("android_metadata")){
+//                continue;
+//            }else if(tablename.equals("sqlite_sequence")){
+//                continue;
+//            }else{
+//                return tablename;
+//            }
+//        }
+//    }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
