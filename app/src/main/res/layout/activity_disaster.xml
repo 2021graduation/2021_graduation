@@ -35,7 +35,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="검색" />.
+                android:background="@drawable/button_shape"
+                android:text="검색"
+                android:textColor="#000000"
+                app:backgroundTint="#00FFFFFF"
+                app:backgroundTintMode="add" />.
 
             <Button
                 android:id="@+id/morebtn"
@@ -44,7 +48,11 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.25"
-                android:text="더보기" />
+                android:background="@drawable/button_shape"
+                android:text="더보기"
+                android:textColor="#000000"
+                app:backgroundTint="#00FFFFFF"
+                app:backgroundTintMode="add" />
 
         </LinearLayout>
     </LinearLayout>
