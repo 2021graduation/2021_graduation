@@ -85,16 +85,18 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        if (requestQueue == null){
-            requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-            sendRequest();
-        }
+//        if (requestQueue == null){
+//            requestQueue = Volley.newRequestQueue(getApplicationContext());
+//
+//            sendRequest();
+//        }
     }
 
     public void sendRequest() {
 
         String url = "http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List?serviceKey="+key+"&numOfRows=1000";
+
+
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -170,9 +172,7 @@ public class MyService extends Service {
                                 filter = filter.replace(filter.substring(target_index), "");
                             }
                             filter = filter.replaceAll(".*감염경로.*","");
-                            if(getDisasterAddress(filter) != null){
-                                geoDatabaseHelper.addData(filter, getDisasterAddress(filter), str);
-                            }
+                            getDisasterAddress(filter,str);
                         }
                     }
                     if(matcher.group(1) ==  null)
@@ -182,47 +182,10 @@ public class MyService extends Service {
         }
     }
 
-    public void println(Object data, TextView textView) {
-        textView.setText(data.toString());
-    }
-
-
-//    public List<List<String>> readToList() {
-//        List<List<String>> list = new ArrayList<List<String>>();
-//        BufferedReader br = null;
-//        try {
-//            InputStream in = getResources().openRawResource(R.raw.location_id);
-//            if(in != null){
-//                InputStreamReader stream = new InputStreamReader(in, "utf-8");
-//                br = new BufferedReader(stream);
-//
-//                String line = "";
-//
-//                while((line=br.readLine()) != null) {
-//                    String[] token = line.split(",");
-//                    List<String> tempList = new ArrayList<String>(Arrays.asList(token));
-//                    list.add(tempList);
-//                }
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if(br != null) {br.close();}
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return list;
-//    }
-
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
-
             List<Location> locationList = locationResult.getLocations();
 
             if (locationList.size() > 0) {
@@ -322,7 +285,7 @@ public class MyService extends Service {
         }
     }
 
-    public LatLng getDisasterAddress(String Sigungu) {
+    public void getDisasterAddress(String Sigungu, String str) {
 
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this);
@@ -336,21 +299,22 @@ public class MyService extends Service {
         } catch (IOException ioException) {
             //네트워크 문제
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            return null;
+            return;
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            return null;
+            return;
         }
 
 
         if (addresses == null || addresses.size() == 0) {
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-            return null;
+            return;
 
         } else {
             Log.d(TAG, String.valueOf(addresses.get(0)));
             LatLng covidlatlng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            return covidlatlng;
+            geoDatabaseHelper.addData(Sigungu, covidlatlng, str);
+            return;
         }
     }
 
@@ -415,8 +379,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        //locationRequest.setInterval(4000);
-        locationRequest.setInterval(600000);    // 10분 주기
+        locationRequest.setInterval(4000);
+        //locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 

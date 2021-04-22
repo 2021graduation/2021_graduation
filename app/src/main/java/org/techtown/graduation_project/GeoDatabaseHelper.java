@@ -71,7 +71,6 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
     public Cursor getTableName(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT name FROM sqlite_master WHERE type = 'table';";
@@ -88,20 +87,14 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor getLocation(String table){
-        SQLiteDatabase db =this.getReadableDatabase();
-        String query = "SELECT * FROM '" + table + "';";
-        db.execSQL("CREATE TABLE IF NOT EXISTS '" + TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
     public Cursor getLatLng(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT latitude, longitude FROM GeoDB";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
+
+
 
     public Cursor getCursor(String table){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -110,23 +103,23 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public boolean dbCheck(){
-        int count = 0;
-        SQLiteDatabase db = this.getWritableDatabase();
-        date = getDate();
-        db.execSQL("CREATE TABLE IF NOT EXISTS '" + date + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
-        Cursor data = getLocation(date);
-        while (data.moveToNext()) {
-            count++;
-        }
-        if(count>0){
-            Log.d(TAG, "data.getCount: " + count);
-            return true;
-        }else{
-            Log.d(TAG, "false: data.getCount: " + count);
-            return false;
-        }
-    }
+//    public boolean dbCheck(){
+//        int count = 0;
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        date = getDate();
+//        db.execSQL("CREATE TABLE IF NOT EXISTS '" + date + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+//        Cursor data = getLocation(date);
+//        while (data.moveToNext()) {
+//            count++;
+//        }
+//        if(count>0){
+//            Log.d(TAG, "data.getCount: " + count);
+//            return true;
+//        }else{
+//            Log.d(TAG, "false: data.getCount: " + count);
+//            return false;
+//        }
+//    }
 
     /*
     DELETE FROM TABLE_NAME
