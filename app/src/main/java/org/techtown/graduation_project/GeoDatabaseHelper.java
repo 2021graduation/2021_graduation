@@ -96,6 +96,13 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getLatLng(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT latitude, longitude FROM GeoDB";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
     public Cursor getCursor(String table){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM '" + table +"';";
