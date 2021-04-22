@@ -5,6 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,10 +16,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -269,7 +276,41 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             }
         });
         getLatLng();
+        getGeoDBLatLng(date);
     }
+
+    private void getGeoDBLatLng(String tablename) {
+        GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
+        Cursor data = geoDatabaseHelper.getGeoDB();
+        double tmp_latitude;
+        double tmp_longitude;
+        LatLng tmp_LatLng;
+        double db_latitude;
+        double db_longitude;
+
+        while(data.moveToNext()) {
+            Location user_location = new Location(LocationManager.GPS_PROVIDER);
+            tmp_latitude = data.getDouble(1);
+            tmp_longitude = data.getDouble(2);
+            user_location.setLatitude(tmp_latitude);
+            user_location.setLongitude(tmp_longitude);
+            tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+            Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+
+            Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+            while (db_cursor.moveToNext()) {
+                Location db_location = new Location(LocationManager.GPS_PROVIDER);
+                db_latitude = db_cursor.getDouble(0);
+                db_longitude = db_cursor.getDouble(1);
+                db_location.setLatitude(db_latitude);
+                db_location.setLongitude(db_longitude);
+                if (db_location.distanceTo(user_location) < 100) {
+                    addWarningMarkers(tmp_LatLng, data.getString(0), data.getString(3));
+                }
+            }
+        }
+    }
+
 
 
     // 위치를 호출
@@ -298,6 +339,9 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             }
         }
     };
+
+
+
 
     private void getLatLng() {
         Log.d(TAG, "populateListView: Displaying data in the View");
@@ -337,6 +381,19 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
+        mMap.addMarker(markerOptions);
+    }
+
+    private void addWarningMarkers(LatLng latLng, String markerTitle, String markerSnippet) {
+        BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.warning);
+        Bitmap b = bitmap.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 75, 75, false);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title(markerTitle);
+        markerOptions.snippet(markerSnippet);
+        markerOptions.draggable(true);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         mMap.addMarker(markerOptions);
     }
     // 위치 정보 거리 비교하는 부분 ***
