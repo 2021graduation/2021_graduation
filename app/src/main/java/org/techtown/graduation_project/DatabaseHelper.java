@@ -77,6 +77,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getLatLng(String table){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT latitude, longitude FROM '"+table+"';";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+//    public Cursor getLatLng(String table){
+//        SQLiteDatabase db =this.getReadableDatabase();
+//        String query = "SELECT * FROM '" + table + "';";
+//        db.execSQL("CREATE TABLE IF NOT EXISTS '" + TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+//        Cursor data = db.rawQuery(query, null);
+//        return data;
+//    }
+
     public Cursor getLocation(String table){
         SQLiteDatabase db =this.getReadableDatabase();
         String query = "SELECT * FROM '" + table + "';";
