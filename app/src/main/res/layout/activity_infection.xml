@@ -5,137 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Infection"
-    android:padding="10dp">
+    tools:context=".MainActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="코로나19 시도현황"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView4"
+        <Button
+            android:id="@+id/disaster"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="지역"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="@drawable/button_shape"
+            android:text="표로보기"
+            android:textColor="#000000"
+            app:backgroundTint="#00FFFFFF"
+            app:backgroundTintMode="add" />
 
-        <TextView
-            android:id="@+id/textView5"
+        <Button
+            android:id="@+id/map_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="     확진자"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="일일확진"
-            android:textColor="#FF0000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="지역확진"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="사망자"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="완치자"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button_shape"
+            android:text="지도보기"
+            android:textColor="#000000"
+            app:backgroundTint="#00FFFFFF"
+            app:backgroundTintMode="add" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
+        <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
+        </FrameLayout>
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="393dp"
-        android:layout_height="146dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.168">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="질병관리청 제공"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/createDt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="TextView" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

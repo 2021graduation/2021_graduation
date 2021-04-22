@@ -39,7 +39,7 @@
         <activity android:name=".Infection"></activity>
         <activity android:name=".Mask"></activity>
         <activity android:name=".Pharmacy"></activity>
-
+        <activity android:name=".Disaster"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".SQLiteActivity"></activity>
 

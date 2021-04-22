@@ -58,6 +58,7 @@ public class CovidActivity extends AppCompatActivity {
     Button pharmacy; // 약국 검색 버튼
     Button MyLocation; // 내 위치 조회 버튼
     Button dbSelect;
+    Button disaster;
 
     DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
@@ -98,6 +99,7 @@ public class CovidActivity extends AppCompatActivity {
         mask = findViewById(R.id.mask);
         pharmacy = findViewById(R.id.pharmacy);
         MyLocation = findViewById(R.id.MyLocation);
+        disaster = findViewById(R.id.disaster);
 
         ///////////////////
         dbSelect = findViewById(R.id.dbSelect);
@@ -181,6 +183,14 @@ public class CovidActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SQLiteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        disaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Disaster.class);
                 startActivity(intent);
             }
         });

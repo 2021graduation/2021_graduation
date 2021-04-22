@@ -385,15 +385,15 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
     }
 
     private void addWarningMarkers(LatLng latLng, String markerTitle, String markerSnippet) {
-        BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.warning);
-        Bitmap b = bitmap.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 75, 75, false);
+        //BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.warning);
+        //Bitmap b = bitmap.getBitmap();
+        //Bitmap smallMarker = Bitmap.createScaledBitmap(b, 75, 75, false);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+        //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         mMap.addMarker(markerOptions);
     }
     // 위치 정보 거리 비교하는 부분 ***

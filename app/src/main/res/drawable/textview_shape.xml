@@ -4,7 +4,7 @@
 
     <stroke
         android:width="3dp"
-        android:color="#FFC9C9C9" /> //선색
+        android:color="#FFEFEFEF" /> //선색
     <corners
         android:topLeftRadius="10dp"
         android:topRightRadius="10dp"

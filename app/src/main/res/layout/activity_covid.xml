@@ -73,7 +73,7 @@
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/shape"
+            android:background="@drawable/shpae_1"
             android:clickable="false"
             android:filterTouchesWhenObscured="false"
             android:gravity="center"
@@ -360,7 +360,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/disaster"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_shape"
