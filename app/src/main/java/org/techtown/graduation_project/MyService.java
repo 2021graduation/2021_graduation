@@ -379,8 +379,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(4000);
-        //locationRequest.setInterval(600000);    // 10분 주기
+        //locationRequest.setInterval(4000);
+        locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
