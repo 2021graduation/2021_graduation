@@ -13,10 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
+import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -28,13 +27,10 @@ import java.util.Map;
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class Disaster extends AppCompatActivity {
-    ArrayAdapter<CharSequence> adspin1, adspin2;
 
-    private ArrayList<DisasterRowData> rowData;
+    ArrayAdapter<CharSequence> adspin1, adspin2;
     private DisasterAdapter disasterAdapter;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    public DisasterRowData row;
+    private DisasterRowData row;
 
     Button morebtn;
     int pageNo = 1;
@@ -53,11 +49,12 @@ public class Disaster extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disaster);
-        recyclerView = findViewById(R.id.rv);
-        linearLayoutManager = new LinearLayoutManager(this);
+
+        RecyclerView recyclerView = findViewById(R.id.rv);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        rowData = new ArrayList<>();
+        ArrayList<DisasterRowData> rowData = new ArrayList<>();
 
         disasterAdapter = new DisasterAdapter(rowData);
         recyclerView.setAdapter(disasterAdapter);
@@ -69,17 +66,11 @@ public class Disaster extends AppCompatActivity {
 
         adspin1 = ArrayAdapter.createFromResource(Disaster.this, R.array.sido, android.R.layout.simple_spinner_dropdown_item);
         adspin1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spin1.setAdapter(adspin1);
-        spin2.setAdapter(adspin2);
-
         requestQueue = null;
 
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getApplicationContext());
-
             sendRequest(pageNo);
-
         }
 
         morebtn = findViewById(R.id.morebtn);
@@ -95,1137 +86,1116 @@ public class Disaster extends AppCompatActivity {
         StringRequest request = new StringRequest(
                 Request.Method.GET,
                 url,
-                response -> spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                response -> {
+                    spin1.setAdapter(adspin1);
+                    spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        if (adspin1.getItem(i).equals("전체")) {
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.all, android.R.layout.simple_spinner_dropdown_item);
+                            if (adspin1.getItem(i).equals("전체")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.all, android.R.layout.simple_spinner_dropdown_item);
 
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> All(response));
-                                }
-                                @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
-                                }
-                            });
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> All(response));
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("서울")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.seoul, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    seoulAll(response);
+                                                    break;
+                                                case "강남구":
+                                                    seoul_gangnam(response);
+                                                    break;
+                                                case "강동구":
+                                                    seoul_gangdong(response);
+                                                    break;
+                                                case "강북구":
+                                                    seoul_gangbuk(response);
+                                                    break;
+                                                case "강서구":
+                                                    seoul_gangseo(response);
+                                                    break;
+                                                case "관악구":
+                                                    seoul_gwanak(response);
+                                                    break;
+                                                case "광진구":
+                                                    seoul_gwangin(response);
+                                                    break;
+                                                case "구로구":
+                                                    seoul_guro(response);
+                                                    break;
+                                                case "금천구":
+                                                    seoul_geumcheon(response);
+                                                    break;
+                                                case "노원구":
+                                                    seoul_nowon(response);
+                                                    break;
+                                                case "도봉구":
+                                                    seoul_dobong(response);
+                                                    break;
+                                                case "동대문구":
+                                                    seoul_dongdaemun(response);
+                                                    break;
+                                                case "동작구":
+                                                    seoul_dongjak(response);
+                                                    break;
+                                                case "마포구":
+                                                    seoul_mapo(response);
+                                                    break;
+                                                case "서대문구":
+                                                    seoul_seodaemun(response);
+                                                    break;
+                                                case "서초구":
+                                                    seoul_seocho(response);
+                                                    break;
+                                                case "성동구":
+                                                    seoul_seongdong(response);
+                                                    break;
+                                                case "성북구":
+                                                    seoul_seongbuk(response);
+                                                    break;
+                                                case "송파구":
+                                                    seoul_songpa(response);
+                                                    break;
+                                                case "양천구":
+                                                    seoul_yangcheon(response);
+                                                    break;
+                                                case "영등포구":
+                                                    seoul_yeongdeungpo(response);
+                                                    break;
+                                                case "용산구":
+                                                    seoul_yongsan(response);
+                                                    break;
+                                                case "은평구":
+                                                    seoul_eunpyeong(response);
+                                                    break;
+                                                case "종로구":
+                                                    seoul_jongro(response);
+                                                    break;
+                                                case "중구":
+                                                    seoul_junggu(response);
+                                                    break;
+                                                case "중랑구":
+                                                    seoul_jungrang(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("부산")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.busan, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    busanAll(response);
+                                                    break;
+                                                case "강서구":
+                                                    busan_gangseo(response);
+                                                    break;
+                                                case "금정구":
+                                                    busan_geumjeong(response);
+                                                    break;
+                                                case "기장군":
+                                                    busan_gijang(response);
+                                                    break;
+                                                case "남구":
+                                                    busan_namgu(response);
+                                                    break;
+                                                case "동구":
+                                                    busan_donggu(response);
+                                                    break;
+                                                case "동래구":
+                                                    busan_dongrae(response);
+                                                    break;
+                                                case "부산진구":
+                                                    busan_busanjin(response);
+                                                    break;
+                                                case "북구":
+                                                    busan_bukgu(response);
+                                                    break;
+                                                case "사상구":
+                                                    busan_sasang(response);
+                                                    break;
+                                                case "사하구":
+                                                    busan_saha(response);
+                                                    break;
+                                                case "서구":
+                                                    busan_seogu(response);
+                                                    break;
+                                                case "수영구":
+                                                    busan_suyeong(response);
+                                                    break;
+                                                case "연제구":
+                                                    busan_yeonjae(response);
+                                                    break;
+                                                case "영도구":
+                                                    busan_yeongdo(response);
+                                                    break;
+                                                case "중구":
+                                                    busan_junggu(response);
+                                                    break;
+                                                case "해운대구":
+                                                    busan_haeeundae(response);
+                                                    break;
+                                            }
+
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("대구")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.daegu, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    daeguAll(response);
+                                                    break;
+                                                case "남구":
+                                                    daegu_namgu(response);
+                                                    break;
+                                                case "달서구":
+                                                    daegu_dalseo(response);
+                                                    break;
+                                                case "달성군":
+                                                    daegu_dalseong(response);
+                                                    break;
+                                                case "동구":
+                                                    daegu_donggu(response);
+                                                    break;
+                                                case "북구":
+                                                    daegu_bukgu(response);
+                                                    break;
+                                                case "서구":
+                                                    daegu_seogu(response);
+                                                    break;
+                                                case "수성구":
+                                                    daegu_susung(response);
+                                                    break;
+                                                case "중구":
+                                                    daegu_junggu(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("인천")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.incheon, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    incheonAll(response);
+                                                    break;
+                                                case "강화군":
+                                                    incheon_ganghwa(response);
+                                                    break;
+                                                case "계양구":
+                                                    incheon_gaeyang(response);
+                                                    break;
+                                                case "미추홀구":
+                                                    incheon_michuhol(response);
+                                                    break;
+                                                case "남동구":
+                                                    incheon_namdong(response);
+                                                    break;
+                                                case "동구":
+                                                    incheon_donggu(response);
+                                                    break;
+                                                case "부평구":
+                                                    incheon_bupyeong(response);
+                                                    break;
+                                                case "서구":
+                                                    incheon_seogu(response);
+                                                    break;
+                                                case "연수구":
+                                                    incheon_yeonsu(response);
+                                                    break;
+                                                case "옹진군":
+                                                    incheon_ongjin(response);
+                                                    break;
+                                                case "중구":
+                                                    incheon_junggu(response);
+                                                    break;
+                                            }
+                                        });
+
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("광주")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.gwangju, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    gwangjuAll(response);
+                                                    break;
+                                                case "광산구":
+                                                    gwangju_gwangsan(response);
+                                                    break;
+                                                case "남구":
+                                                    gwangju_namgu(response);
+                                                    break;
+                                                case "동구":
+                                                    gwangju_donggu(response);
+                                                    break;
+                                                case "북구":
+                                                    gwangju_bukgu(response);
+                                                    break;
+                                                case "서구":
+                                                    gwangju_seogu(response);
+                                                    break;
+                                            }
+
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("대전")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.daejeon, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    daejeonAll(response);
+                                                    break;
+                                                case "대덕구":
+                                                    daejeon_daedeok(response);
+                                                    break;
+                                                case "동구":
+                                                    daejeon_donggu(response);
+                                                    break;
+                                                case "서구":
+                                                    daejeon_seogu(response);
+                                                    break;
+                                                case "유성구":
+                                                    daejeon_yuseong(response);
+                                                    break;
+                                                case "중구":
+                                                    daejeon_junggu(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("울산")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.ulsan, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    ulsannAll(response);
+                                                    break;
+                                                case "남구":
+                                                    ulsan_namgu(response);
+                                                    break;
+                                                case "동구":
+                                                    ulsan_donggu(response);
+                                                    break;
+                                                case "북구":
+                                                    ulsan_bukgu(response);
+                                                    break;
+                                                case "울주군":
+                                                    ulsan_ulju(response);
+                                                    break;
+                                                case "중구":
+                                                    ulsan_junggu(response);
+                                                    break;
+                                            }
+
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("세종")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.sejong, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> sejongAll(response));
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("경기")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.gyeonggi, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    gyeonggiAll(response);
+                                                    break;
+                                                case "가평군":
+                                                    gyeonggi_gapyeong(response);
+                                                    break;
+                                                case "고양시":
+                                                    gyeonggi_goyang(response);
+                                                    break;
+                                                case "과천시":
+                                                    gyeonggi_gwacheon(response);
+                                                    break;
+                                                case "광명시":
+                                                    gyeonggi_gwangmyeong(response);
+                                                    break;
+                                                case "광주시":
+                                                    gyeonggi_gwangju(response);
+                                                    break;
+                                                case "구리시":
+                                                    gyeonggi_guri(response);
+                                                    break;
+                                                case "군포시":
+                                                    gyeonggi_gunpo(response);
+                                                    break;
+                                                case "김포시":
+                                                    gyeonggi_gimpo(response);
+                                                    break;
+                                                case "남양주시":
+                                                    gyeonggi_namyangju(response);
+                                                    break;
+                                                case "동두천시":
+                                                    gyeonggi_dongducheon(response);
+                                                    break;
+                                                case "부천시":
+                                                    gyeonggi_bucheon(response);
+                                                    break;
+                                                case "성남시":
+                                                    gyeonggi_seongnam(response);
+                                                    break;
+                                                case "수원시":
+                                                    gyeonggi_suwon(response);
+                                                    break;
+                                                case "시흥시":
+                                                    gyeonggi_siheung(response);
+                                                    break;
+                                                case "안산시":
+                                                    gyeonggi_ansan(response);
+                                                    break;
+                                                case "안성시":
+                                                    gyeonggi_anseong(response);
+                                                    break;
+                                                case "안양시":
+                                                    gyeonggi_anyang(response);
+                                                    break;
+                                                case "양주시":
+                                                    gyeonggi_yangju(response);
+                                                    break;
+                                                case "양평군":
+                                                    gyeonggi_yangpyeong(response);
+                                                    break;
+                                                case "여주시":
+                                                    gyeonggi_yeoju(response);
+                                                    break;
+                                                case "연천군":
+                                                    gyeonggi_yeoncheon(response);
+                                                    break;
+                                                case "오산시":
+                                                    gyeonggi_osan(response);
+                                                    break;
+                                                case "용인시":
+                                                    gyeonggi_yongin(response);
+                                                    break;
+                                                case "의왕시":
+                                                    gyeonggi_uiwang(response);
+                                                    break;
+                                                case "의정부시":
+                                                    gyeonggi_uijeongbu(response);
+                                                    break;
+                                                case "이천시":
+                                                    gyeonggi_icheon(response);
+                                                    break;
+                                                case "파주시":
+                                                    gyeonggi_paju(response);
+                                                    break;
+                                                case "평택시":
+                                                    gyeonggi_pyeongtaek(response);
+                                                    break;
+                                                case "포천시":
+                                                    gyeonggi_pocheon(response);
+                                                    break;
+                                                case "하남시":
+                                                    gyeonggi_hanam(response);
+                                                    break;
+                                                case "화성시":
+                                                    gyeonggi_hwaseong(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("강원")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.gangwon, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    gangwonAll(response);
+                                                    break;
+                                                case "강릉시":
+                                                    gangwon_gangneung(response);
+                                                    break;
+                                                case "고성군":
+                                                    gangwon_gosung(response);
+                                                    break;
+                                                case "동해시":
+                                                    gangwon_donghae(response);
+                                                    break;
+                                                case "삼척시":
+                                                    gangwon_samcheok(response);
+                                                    break;
+                                                case "속초시":
+                                                    gangwon_sokcho(response);
+                                                    break;
+                                                case "양구군":
+                                                    gangwon_yanggu(response);
+                                                    break;
+                                                case "양양군":
+                                                    gangwon_yangyang(response);
+                                                    break;
+                                                case "영월군":
+                                                    gangwon_yeongwol(response);
+                                                    break;
+                                                case "원주시":
+                                                    gangwon_wonju(response);
+                                                    break;
+                                                case "인제군":
+                                                    gangwon_inje(response);
+                                                    break;
+                                                case "정선군":
+                                                    gangwon_jeongsun(response);
+                                                    break;
+                                                case "철원군":
+                                                    gangwon_cheorwon(response);
+                                                    break;
+                                                case "춘천시":
+                                                    gangwon_chuncheon(response);
+                                                    break;
+                                                case "태백시":
+                                                    gangwon_taebaek(response);
+                                                    break;
+                                                case "평창군":
+                                                    gangwon_pyeongchang(response);
+                                                    break;
+                                                case "홍천군":
+                                                    gangwon_hongcheon(response);
+                                                    break;
+                                                case "화천군":
+                                                    gangwon_hwacheon(response);
+                                                    break;
+                                                case "횡성군":
+                                                    gangwon_hoengseong(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("충북")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.chungbuk, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    chungbukAll(response);
+                                                    break;
+                                                case "괴산군":
+                                                    chungbuk_goesan(response);
+                                                    break;
+                                                case "단양군":
+                                                    chungbuk_danyang(response);
+                                                    break;
+                                                case "보은군":
+                                                    chungbuk_boeun(response);
+                                                    break;
+                                                case "영동군":
+                                                    chungbuk_yeongdong(response);
+                                                    break;
+                                                case "옥천군":
+                                                    chungbuk_okcheon(response);
+                                                    break;
+                                                case "음성군":
+                                                    chungbuk_eumseong(response);
+                                                    break;
+                                                case "제천시":
+                                                    chungbuk_jaecheon(response);
+                                                    break;
+                                                case "증평군":
+                                                    chungbuk_jeungpyeong(response);
+                                                    break;
+                                                case "진천시":
+                                                    chungbuk_jincheon(response);
+                                                    break;
+                                                case "청주시":
+                                                    chungbuk_cheongju(response);
+                                                    break;
+                                                case "충주시":
+                                                    chungbuk_chungju(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("충남")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.chungnam, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    chungnamAll(response);
+                                                    break;
+                                                case "계룡시":
+                                                    chungnam_gyeryong(response);
+                                                    break;
+                                                case "공주시":
+                                                    chungnam_gongju(response);
+                                                    break;
+                                                case "금산군":
+                                                    chungnam_geumsan(response);
+                                                    break;
+                                                case "논산시":
+                                                    chungnam_nonsan(response);
+                                                    break;
+                                                case "당진시":
+                                                    chungnam_dangjin(response);
+                                                    break;
+                                                case "보령시":
+                                                    chungnam_boryeong(response);
+                                                    break;
+                                                case "부여군":
+                                                    chungnam_buyeo(response);
+                                                    break;
+                                                case "서산시":
+                                                    chungnam_seosan(response);
+                                                    break;
+                                                case "서천군":
+                                                    chungnam_seocheon(response);
+                                                    break;
+                                                case "아산시":
+                                                    chungnam_asan(response);
+                                                    break;
+                                                case "예산군":
+                                                    chungnam_yaesan(response);
+                                                    break;
+                                                case "천안시":
+                                                    chungnam_cheonan(response);
+                                                    break;
+                                                case "청양군":
+                                                    chungnam_chungyang(response);
+                                                    break;
+                                                case "태안군":
+                                                    chungnam_taean(response);
+                                                    break;
+                                                case "홍성군":
+                                                    chungnam_hongseong(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("전북")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.jeonbuk, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    jeonbukAll(response);
+                                                    break;
+                                                case "고창군":
+                                                    jeonbuk_gochang(response);
+                                                    break;
+                                                case "군산시":
+                                                    jeonbuk_gunsan(response);
+                                                    break;
+                                                case "김제시":
+                                                    jeonbuk_gimjae(response);
+                                                    break;
+                                                case "남원시":
+                                                    jeonbuk_namwon(response);
+                                                    break;
+                                                case "무주군":
+                                                    jeonbuk_muju(response);
+                                                    break;
+                                                case "부안군":
+                                                    jeonbuk_buan(response);
+                                                    break;
+                                                case "순창군":
+                                                    jeonbuk_sunchang(response);
+                                                    break;
+                                                case "완주군":
+                                                    jeonbuk_wanju(response);
+                                                    break;
+                                                case "익산시":
+                                                    jeonbuk_iksan(response);
+                                                    break;
+                                                case "임실군":
+                                                    jeonbuk_imsil(response);
+                                                    break;
+                                                case "장수군":
+                                                    jeonbuk_jangsu(response);
+                                                    break;
+                                                case "전주시":
+                                                    jeonbuk_jeonju(response);
+                                                    break;
+                                                case "정읍시":
+                                                    jeonbuk_jeongeup(response);
+                                                    break;
+                                                case "진안군":
+                                                    jeonbuk_jinan(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("전남")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.jeonnam, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    jeonnamAll(response);
+                                                    break;
+                                                case "강진군":
+                                                    jeonnam_gangjin(response);
+                                                    break;
+                                                case "고흥군":
+                                                    jeonnam_goheung(response);
+                                                    break;
+                                                case "곡성군":
+                                                    jeonnam_gokseung(response);
+                                                    break;
+                                                case "광양시":
+                                                    jeonnam_gwangyang(response);
+                                                    break;
+                                                case "구례군":
+                                                    jeonnam_gurae(response);
+                                                    break;
+                                                case "나주시":
+                                                    jeonnam_naju(response);
+                                                    break;
+                                                case "담양군":
+                                                    jeonnam_damyang(response);
+                                                    break;
+                                                case "목포시":
+                                                    jeonnam_mokpo(response);
+                                                    break;
+                                                case "무안군":
+                                                    jeonnam_muan(response);
+                                                    break;
+                                                case "보성군":
+                                                    jeonnam_boseung(response);
+                                                    break;
+                                                case "순천시":
+                                                    jeonnam_suncheon(response);
+                                                    break;
+                                                case "신안군":
+                                                    jeonnam_sinan(response);
+                                                    break;
+                                                case "여수시":
+                                                    jeonnam_yeosu(response);
+                                                    break;
+                                                case "영광군":
+                                                    jeonnam_yeonggwang(response);
+                                                    break;
+                                                case "영암군":
+                                                    jeonnam_yeongam(response);
+                                                    break;
+                                                case "완도군":
+                                                    jeonnam_wando(response);
+                                                    break;
+                                                case "장성군":
+                                                    jeonnam_jangseung(response);
+                                                    break;
+                                                case "장흥군":
+                                                    jeonnam_jangheung(response);
+                                                    break;
+                                                case "진도군":
+                                                    jeonnam_jindo(response);
+                                                    break;
+                                                case "함평군":
+                                                    jeonnam_hampyeong(response);
+                                                    break;
+                                                case "해남군":
+                                                    jeonnam_haenam(response);
+                                                    break;
+                                                case "화순군":
+                                                    jeonnam_hwasun(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("경북")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.gyeongbuk, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    gyeongbukAll(response);
+                                                    break;
+                                                case "경산시":
+                                                    gyeongbuk_gyeongsan(response);
+                                                    break;
+                                                case "경주시":
+                                                    gyeongbuk_gyeongju(response);
+                                                    break;
+                                                case "고령군":
+                                                    gyeongbuk_goryeong(response);
+                                                    break;
+                                                case "구미시":
+                                                    gyeongbuk_gumi(response);
+                                                    break;
+                                                case "군위군":
+                                                    gyeongbuk_gunwi(response);
+                                                    break;
+                                                case "김천시":
+                                                    gyeongbuk_gimcheon(response);
+                                                    break;
+                                                case "문경시":
+                                                    gyeongbuk_mungyeong(response);
+                                                    break;
+                                                case "봉화군":
+                                                    gyeongbuk_bonghwa(response);
+                                                    break;
+                                                case "상주시":
+                                                    gyeongbuk_sangju(response);
+                                                    break;
+                                                case "성주군":
+                                                    gyeongbuk_seungju(response);
+                                                    break;
+                                                case "안동시":
+                                                    gyeongbuk_andong(response);
+                                                    break;
+                                                case "영덕군":
+                                                    gyeongbuk_yeongdeok(response);
+                                                    break;
+                                                case "영양군":
+                                                    gyeongbuk_yeongyang(response);
+                                                    break;
+                                                case "영주시":
+                                                    gyeongbuk_yeongju(response);
+                                                    break;
+                                                case "영천시":
+                                                    gyeongbuk_yeongcheon(response);
+                                                    break;
+                                                case "예천군":
+                                                    gyeongbuk_yaecheon(response);
+                                                    break;
+                                                case "울릉군":
+                                                    gyeongbuk_ulleung(response);
+                                                    break;
+                                                case "울진군":
+                                                    gyeongbuk_uljin(response);
+                                                    break;
+                                                case "의성군":
+                                                    gyeongbuk_jusoen(response);
+                                                    break;
+                                                case "청도군":
+                                                    gyeongbuk_chungdo(response);
+                                                    break;
+                                                case "청송군":
+                                                    gyeongbuk_chungsong(response);
+                                                    break;
+                                                case "칠곡군":
+                                                    gyeongbuk_chilgok(response);
+                                                    break;
+                                                case "포항시":
+                                                    gyeongbuk_pohang(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("경남")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.gyeonnam, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    gyeongnamAll(response);
+                                                    break;
+                                                case "거제시":
+                                                    gyeongnam_geoje(response);
+                                                    break;
+                                                case "거창군":
+                                                    gyeongnam_geochang(response);
+                                                    break;
+                                                case "고성군":
+                                                    gyeongnam_goseong(response);
+                                                    break;
+                                                case "김해시":
+                                                    gyeongnam_gimhae(response);
+                                                    break;
+                                                case "남해군":
+                                                    gyeongnam_namhae(response);
+                                                    break;
+                                                case "밀양시":
+                                                    gyeongnam_milyang(response);
+                                                    break;
+                                                case "사천시":
+                                                    gyeongnam_sacheon(response);
+                                                    break;
+                                                case "산청군":
+                                                    gyeongnam_sancheong(response);
+                                                    break;
+                                                case "양산시":
+                                                    gyeongnam_yangsan(response);
+                                                    break;
+                                                case "의령군":
+                                                    gyeongnam_uiryeong(response);
+                                                    break;
+                                                case "진주시":
+                                                    gyeongnam_jinju(response);
+                                                    break;
+                                                case "창녕군":
+                                                    gyeongnam_changnyeong(response);
+                                                    break;
+                                                case "창원시":
+                                                    gyeongnam_changwon(response);
+                                                    break;
+                                                case "통영시":
+                                                    gyeongnam_tongyeong(response);
+                                                    break;
+                                                case "하동군":
+                                                    gyeongnam_hadong(response);
+                                                    break;
+                                                case "함안군":
+                                                    gyeongnam_haman(response);
+                                                    break;
+                                                case "함양군":
+                                                    gyeongnam_hamyang(response);
+                                                    break;
+                                                case "합천군":
+                                                    gyeongnam_habcheon(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else if (adspin1.getItem(i).equals("제주")) {
+                                adspin2 = ArrayAdapter.createFromResource(Disaster.this, R.array.jeju, android.R.layout.simple_spinner_dropdown_item);
+                                adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spin2.setAdapter(adspin2);
+                                spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                        disasterAdapter.Clear();
+                                        button.setOnClickListener(v -> {
+                                            String str = adspin2.getItem(i).toString();
+                                            switch (str) {
+                                                case "전체":
+                                                    jejuAll(response);
+                                                    break;
+                                                case "서귀포시":
+                                                    jeju_seogwipo(response);
+                                                    break;
+                                                case "제주시":
+                                                    jeju_jeju(response);
+                                                    break;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            }
                         }
-                        else if(adspin1.getItem(i).equals("서울")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.seoul, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                seoulAll(response);
-                                                break;
-                                            case "강남구":
-                                                seoul_gangnam(response);
-                                                break;
-                                            case "강동구":
-                                                seoul_gangdong(response);
-                                                break;
-                                            case "강북구":
-                                                seoul_gangbuk(response);
-                                                break;
-                                            case "강서구":
-                                                seoul_gangseo(response);
-                                                break;
-                                            case "관악구":
-                                                seoul_gwanak(response);
-                                                break;
-                                            case "광진구":
-                                                seoul_gwangin(response);
-                                                break;
-                                            case "구로구":
-                                                seoul_guro(response);
-                                                break;
-                                            case "금천구":
-                                                seoul_geumcheon(response);
-                                                break;
-                                            case "노원구":
-                                                seoul_nowon(response);
-                                                break;
-                                            case "도봉구":
-                                                seoul_dobong(response);
-                                                break;
-                                            case "동대문구":
-                                                seoul_dongdaemun(response);
-                                                break;
-                                            case "동작구":
-                                                seoul_dongjak(response);
-                                                break;
-                                            case "마포구":
-                                                seoul_mapo(response);
-                                                break;
-                                            case "서대문구":
-                                                seoul_seodaemun(response);
-                                                break;
-                                            case "서초구":
-                                                seoul_seocho(response);
-                                                break;
-                                            case "성동구":
-                                                seoul_seongdong(response);
-                                                break;
-                                            case "성북구":
-                                                seoul_seongbuk(response);
-                                                break;
-                                            case "송파구":
-                                                seoul_songpa(response);
-                                                break;
-                                            case "양천구":
-                                                seoul_yangcheon(response);
-                                                break;
-                                            case "영등포구":
-                                                seoul_yeongdeungpo(response);
-                                                break;
-                                            case "용산구":
-                                                seoul_yongsan(response);
-                                                break;
-                                            case "은평구":
-                                                seoul_eunpyeong(response);
-                                                break;
-                                            case "종로구":
-                                                seoul_jongro(response);
-                                                break;
-                                            case "중구":
-                                                seoul_junggu(response);
-                                                break;
-                                            case "중랑구":
-                                                seoul_jungrang(response);
-                                                break;
-                                        }
-                                    });
-                                }
 
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                                }
-                            });
                         }
-
-                        else if(adspin1.getItem(i).equals("부산")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.busan, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                busanAll(response);
-                                                break;
-                                            case "강서구":
-                                                busan_gangseo(response);
-                                                break;
-                                            case "금정구":
-                                                busan_geumjeong(response);
-                                                break;
-                                            case "기장군":
-                                                busan_gijang(response);
-                                                break;
-                                            case "남구":
-                                                busan_namgu(response);
-                                                break;
-                                            case "동구":
-                                                busan_donggu(response);
-                                                break;
-                                            case "동래구":
-                                                busan_dongrae(response);
-                                                break;
-                                            case "부산진구":
-                                                busan_busanjin(response);
-                                                break;
-                                            case "북구":
-                                                busan_bukgu(response);
-                                                break;
-                                            case "사상구":
-                                                busan_sasang(response);
-                                                break;
-                                            case "사하구":
-                                                busan_saha(response);
-                                                break;
-                                            case "서구":
-                                                busan_seogu(response);
-                                                break;
-                                            case "수영구":
-                                                busan_suyeong(response);
-                                                break;
-                                            case "연제구":
-                                                busan_yeonjae(response);
-                                                break;
-                                            case "영도구":
-                                                busan_yeongdo(response);
-                                                break;
-                                            case "중구":
-                                                busan_junggu(response);
-                                                break;
-                                            case "해운대구":
-                                                busan_haeeundae(response);
-                                                break;
-                                        }
-
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("대구")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.daegu, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                daeguAll(response);
-                                                break;
-                                            case "남구":
-                                                daegu_namgu(response);
-                                                break;
-                                            case "달서구":
-                                                daegu_dalseo(response);
-                                                break;
-                                            case "달성군":
-                                                daegu_dalseong(response);
-                                                break;
-                                            case "동구":
-                                                daegu_donggu(response);
-                                                break;
-                                            case "북구":
-                                                daegu_bukgu(response);
-                                                break;
-                                            case "서구":
-                                                daegu_seogu(response);
-                                                break;
-                                            case "수성구":
-                                                daegu_susung(response);
-                                                break;
-                                            case "중구":
-                                                daegu_junggu(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                        else if(adspin1.getItem(i).equals("인천")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.incheon, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                incheonAll(response);
-                                                break;
-                                            case "강화군":
-                                                incheon_ganghwa(response);
-                                                break;
-                                            case "계양구":
-                                                incheon_gaeyang(response);
-                                                break;
-                                            case "미추홀구":
-                                                incheon_michuhol(response);
-                                                break;
-                                            case "남동구":
-                                                incheon_namdong(response);
-                                                break;
-                                            case "동구":
-                                                incheon_donggu(response);
-                                                break;
-                                            case "부평구":
-                                                incheon_bupyeong(response);
-                                                break;
-                                            case "서구":
-                                                incheon_seogu(response);
-                                                break;
-                                            case "연수구":
-                                                incheon_yeonsu(response);
-                                                break;
-                                            case "옹진군":
-                                                incheon_ongjin(response);
-                                                break;
-                                            case "중구":
-                                                incheon_junggu(response);
-                                                break;
-                                        }
-                                    });
-
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                        else if(adspin1.getItem(i).equals("광주")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.gwangju, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                gwangjuAll(response);
-                                                break;
-                                            case "광산구":
-                                                gwangju_gwangsan(response);
-                                                break;
-                                            case "남구":
-                                                gwangju_namgu(response);
-                                                break;
-                                            case "동구":
-                                                gwangju_donggu(response);
-                                                break;
-                                            case "북구":
-                                                gwangju_bukgu(response);
-                                                break;
-                                            case "서구":
-                                                gwangju_seogu(response);
-                                                break;
-                                        }
-
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("대전")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.daejeon, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                daejeonAll(response);
-                                                break;
-                                            case "대덕구":
-                                                daejeon_daedeok(response);
-                                                break;
-                                            case "동구":
-                                                daejeon_donggu(response);
-                                                break;
-                                            case "서구":
-                                                daejeon_seogu(response);
-                                                break;
-                                            case "유성구":
-                                                daejeon_yuseong(response);
-                                                break;
-                                            case "중구":
-                                                daejeon_junggu(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("울산")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.ulsan, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                ulsannAll(response);
-                                                break;
-                                            case "남구":
-                                                ulsan_namgu(response);
-                                                break;
-                                            case "동구":
-                                                ulsan_donggu(response);
-                                                break;
-                                            case "북구":
-                                                ulsan_bukgu(response);
-                                                break;
-                                            case "울주군":
-                                                ulsan_ulju(response);
-                                                break;
-                                            case "중구":
-                                                ulsan_junggu(response);
-                                                break;
-                                        }
-
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                        else if(adspin1.getItem(i).equals("세종")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.sejong, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> sejongAll(response));
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("경기")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.gyeonggi, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                gyeonggiAll(response);
-                                                break;
-                                            case "가평군":
-                                                gyeonggi_gapyeong(response);
-                                                break;
-                                            case "고양시":
-                                                gyeonggi_goyang(response);
-                                                break;
-                                            case "과천시":
-                                                gyeonggi_gwacheon(response);
-                                                break;
-                                            case "광명시":
-                                                gyeonggi_gwangmyeong(response);
-                                                break;
-                                            case "광주시":
-                                                gyeonggi_gwangju(response);
-                                                break;
-                                            case "구리시":
-                                                gyeonggi_guri(response);
-                                                break;
-                                            case "군포시":
-                                                gyeonggi_gunpo(response);
-                                                break;
-                                            case "김포시":
-                                                gyeonggi_gimpo(response);
-                                                break;
-                                            case "남양주시":
-                                                gyeonggi_namyangju(response);
-                                                break;
-                                            case "동두천시":
-                                                gyeonggi_dongducheon(response);
-                                                break;
-                                            case "부천시":
-                                                gyeonggi_bucheon(response);
-                                                break;
-                                            case "성남시":
-                                                gyeonggi_seongnam(response);
-                                                break;
-                                            case "수원시":
-                                                gyeonggi_suwon(response);
-                                                break;
-                                            case "시흥시":
-                                                gyeonggi_siheung(response);
-                                                break;
-                                            case "안산시":
-                                                gyeonggi_ansan(response);
-                                                break;
-                                            case "안성시":
-                                                gyeonggi_anseong(response);
-                                                break;
-                                            case "안양시":
-                                                gyeonggi_anyang(response);
-                                                break;
-                                            case "양주시":
-                                                gyeonggi_yangju(response);
-                                                break;
-                                            case "양평군":
-                                                gyeonggi_yangpyeong(response);
-                                                break;
-                                            case "여주시":
-                                                gyeonggi_yeoju(response);
-                                                break;
-                                            case "연천군":
-                                                gyeonggi_yeoncheon(response);
-                                                break;
-                                            case "오산시":
-                                                gyeonggi_osan(response);
-                                                break;
-                                            case "용인시":
-                                                gyeonggi_yongin(response);
-                                                break;
-                                            case "의왕시":
-                                                gyeonggi_uiwang(response);
-                                                break;
-                                            case "의정부시":
-                                                gyeonggi_uijeongbu(response);
-                                                break;
-                                            case "이천시":
-                                                gyeonggi_icheon(response);
-                                                break;
-                                            case "파주시":
-                                                gyeonggi_paju(response);
-                                                break;
-                                            case "평택시":
-                                                gyeonggi_pyeongtaek(response);
-                                                break;
-                                            case "포천시":
-                                                gyeonggi_pocheon(response);
-                                                break;
-                                            case "하남시":
-                                                gyeonggi_hanam(response);
-                                                break;
-                                            case "화성시":
-                                                gyeonggi_hwaseong(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("강원")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.gangwon, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                gangwonAll(response);
-                                                break;
-                                            case "강릉시":
-                                                gangwon_gangneung(response);
-                                                break;
-                                            case "고성군":
-                                                gangwon_gosung(response);
-                                                break;
-                                            case "동해시":
-                                                gangwon_donghae(response);
-                                                break;
-                                            case "삼척시":
-                                                gangwon_samcheok(response);
-                                                break;
-                                            case "속초시":
-                                                gangwon_sokcho(response);
-                                                break;
-                                            case "양구군":
-                                                gangwon_yanggu(response);
-                                                break;
-                                            case "양양군":
-                                                gangwon_yangyang(response);
-                                                break;
-                                            case "영월군":
-                                                gangwon_yeongwol(response);
-                                                break;
-                                            case "원주시":
-                                                gangwon_wonju(response);
-                                                break;
-                                            case "인제군":
-                                                gangwon_inje(response);
-                                                break;
-                                            case "정선군":
-                                                gangwon_jeongsun(response);
-                                                break;
-                                            case "철원군":
-                                                gangwon_cheorwon(response);
-                                                break;
-                                            case "춘천시":
-                                                gangwon_chuncheon(response);
-                                                break;
-                                            case "태백시":
-                                                gangwon_taebaek(response);
-                                                break;
-                                            case "평창군":
-                                                gangwon_pyeongchang(response);
-                                                break;
-                                            case "홍천군":
-                                                gangwon_hongcheon(response);
-                                                break;
-                                            case "화천군":
-                                                gangwon_hwacheon(response);
-                                                break;
-                                            case "횡성군":
-                                                gangwon_hoengseong(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("충북")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.chungbuk, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                chungbukAll(response);
-                                                break;
-                                            case "괴산군":
-                                                chungbuk_goesan(response);
-                                                break;
-                                            case "단양군":
-                                                chungbuk_danyang(response);
-                                                break;
-                                            case "보은군":
-                                                chungbuk_boeun(response);
-                                                break;
-                                            case "영동군":
-                                                chungbuk_yeongdong(response);
-                                                break;
-                                            case "옥천군":
-                                                chungbuk_okcheon(response);
-                                                break;
-                                            case "음성군":
-                                                chungbuk_eumseong(response);
-                                                break;
-                                            case "제천시":
-                                                chungbuk_jaecheon(response);
-                                                break;
-                                            case "증평군":
-                                                chungbuk_jeungpyeong(response);
-                                                break;
-                                            case "진천시":
-                                                chungbuk_jincheon(response);
-                                                break;
-                                            case "청주시":
-                                                chungbuk_cheongju(response);
-                                                break;
-                                            case "충주시":
-                                                chungbuk_chungju(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                        else if(adspin1.getItem(i).equals("충남")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.chungnam, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                chungnamAll(response);
-                                                break;
-                                            case "계룡시":
-                                                chungnam_gyeryong(response);
-                                                break;
-                                            case "공주시":
-                                                chungnam_gongju(response);
-                                                break;
-                                            case "금산군":
-                                                chungnam_geumsan(response);
-                                                break;
-                                            case "논산시":
-                                                chungnam_nonsan(response);
-                                                break;
-                                            case "당진시":
-                                                chungnam_dangjin(response);
-                                                break;
-                                            case "보령시":
-                                                chungnam_boryeong(response);
-                                                break;
-                                            case "부여군":
-                                                chungnam_buyeo(response);
-                                                break;
-                                            case "서산시":
-                                                chungnam_seosan(response);
-                                                break;
-                                            case "서천군":
-                                                chungnam_seocheon(response);
-                                                break;
-                                            case "아산시":
-                                                chungnam_asan(response);
-                                                break;
-                                            case "예산군":
-                                                chungnam_yaesan(response);
-                                                break;
-                                            case "천안시":
-                                                chungnam_cheonan(response);
-                                                break;
-                                            case "청양군":
-                                                chungnam_chungyang(response);
-                                                break;
-                                            case "태안군":
-                                                chungnam_taean(response);
-                                                break;
-                                            case "홍성군":
-                                                chungnam_hongseong(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("전북")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.jeonbuk, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                jeonbukAll(response);
-                                                break;
-                                            case "고창군":
-                                                jeonbuk_gochang(response);
-                                                break;
-                                            case "군산시":
-                                                jeonbuk_gunsan(response);
-                                                break;
-                                            case "김제시":
-                                                jeonbuk_gimjae(response);
-                                                break;
-                                            case "남원시":
-                                                jeonbuk_namwon(response);
-                                                break;
-                                            case "무주군":
-                                                jeonbuk_muju(response);
-                                                break;
-                                            case "부안군":
-                                                jeonbuk_buan(response);
-                                                break;
-                                            case "순창군":
-                                                jeonbuk_sunchang(response);
-                                                break;
-                                            case "완주군":
-                                                jeonbuk_wanju(response);
-                                                break;
-                                            case "익산시":
-                                                jeonbuk_iksan(response);
-                                                break;
-                                            case "임실군":
-                                                jeonbuk_imsil(response);
-                                                break;
-                                            case "장수군":
-                                                jeonbuk_jangsu(response);
-                                                break;
-                                            case "전주시":
-                                                jeonbuk_jeonju(response);
-                                                break;
-                                            case "정읍시":
-                                                jeonbuk_jeongeup(response);
-                                                break;
-                                            case "진안군":
-                                                jeonbuk_jinan(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("전남")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.jeonnam, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                jeonnamAll(response);
-                                                break;
-                                            case "강진군":
-                                                jeonnam_gangjin(response);
-                                                break;
-                                            case "고흥군":
-                                                jeonnam_goheung(response);
-                                                break;
-                                            case "곡성군":
-                                                jeonnam_gokseung(response);
-                                                break;
-                                            case "광양시":
-                                                jeonnam_gwangyang(response);
-                                                break;
-                                            case "구례군":
-                                                jeonnam_gurae(response);
-                                                break;
-                                            case "나주시":
-                                                jeonnam_naju(response);
-                                                break;
-                                            case "담양군":
-                                                jeonnam_damyang(response);
-                                                break;
-                                            case "목포시":
-                                                jeonnam_mokpo(response);
-                                                break;
-                                            case "무안군":
-                                                jeonnam_muan(response);
-                                                break;
-                                            case "보성군":
-                                                jeonnam_boseung(response);
-                                                break;
-                                            case "순천시":
-                                                jeonnam_suncheon(response);
-                                                break;
-                                            case "신안군":
-                                                jeonnam_sinan(response);
-                                                break;
-                                            case "여수시":
-                                                jeonnam_yeosu(response);
-                                                break;
-                                            case "영광군":
-                                                jeonnam_yeonggwang(response);
-                                                break;
-                                            case "영암군":
-                                                jeonnam_yeongam(response);
-                                                break;
-                                            case "완도군":
-                                                jeonnam_wando(response);
-                                                break;
-                                            case "장성군":
-                                                jeonnam_jangseung(response);
-                                                break;
-                                            case "장흥군":
-                                                jeonnam_jangheung(response);
-                                                break;
-                                            case "진도군":
-                                                jeonnam_jindo(response);
-                                                break;
-                                            case "함평군":
-                                                jeonnam_hampyeong(response);
-                                                break;
-                                            case "해남군":
-                                                jeonnam_haenam(response);
-                                                break;
-                                            case "화순군":
-                                                jeonnam_hwasun(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-
-                        else if(adspin1.getItem(i).equals("경북")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.gyeongbuk, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                gyeongbukAll(response);
-                                                break;
-                                            case "경산시":
-                                                gyeongbuk_gyeongsan(response);
-                                                break;
-                                            case "경주시":
-                                                gyeongbuk_gyeongju(response);
-                                                break;
-                                            case "고령군":
-                                                gyeongbuk_goryeong(response);
-                                                break;
-                                            case "구미시":
-                                                gyeongbuk_gumi(response);
-                                                break;
-                                            case "군위군":
-                                                gyeongbuk_gunwi(response);
-                                                break;
-                                            case "김천시":
-                                                gyeongbuk_gimcheon(response);
-                                                break;
-                                            case "문경시":
-                                                gyeongbuk_mungyeong(response);
-                                                break;
-                                            case "봉화군":
-                                                gyeongbuk_bonghwa(response);
-                                                break;
-                                            case "상주시":
-                                                gyeongbuk_sangju(response);
-                                                break;
-                                            case "성주군":
-                                                gyeongbuk_seungju(response);
-                                                break;
-                                            case "안동시":
-                                                gyeongbuk_andong(response);
-                                                break;
-                                            case "영덕군":
-                                                gyeongbuk_yeongdeok(response);
-                                                break;
-                                            case "영양군":
-                                                gyeongbuk_yeongyang(response);
-                                                break;
-                                            case "영주시":
-                                                gyeongbuk_yeongju(response);
-                                                break;
-                                            case "영천시":
-                                                gyeongbuk_yeongcheon(response);
-                                                break;
-                                            case "예천군":
-                                                gyeongbuk_yaecheon(response);
-                                                break;
-                                            case "울릉군":
-                                                gyeongbuk_ulleung(response);
-                                                break;
-                                            case "울진군":
-                                                gyeongbuk_uljin(response);
-                                                break;
-                                            case "의성군":
-                                                gyeongbuk_jusoen(response);
-                                                break;
-                                            case "청도군":
-                                                gyeongbuk_chungdo(response);
-                                                break;
-                                            case "청송군":
-                                                gyeongbuk_chungsong(response);
-                                                break;
-                                            case "칠곡군":
-                                                gyeongbuk_chilgok(response);
-                                                break;
-                                            case "포항시":
-                                                gyeongbuk_pohang(response);
-                                                break;
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                        else if(adspin1.getItem(i).equals("경남")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.gyeonnam, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                gyeongnamAll(response);
-                                                break;
-                                            case "거제시":
-                                                gyeongnam_geoje(response);
-                                                break;
-                                            case "거창군":
-                                                gyeongnam_geochang(response);
-                                                break;
-                                            case "고성군":
-                                                gyeongnam_goseong(response);
-                                                break;
-                                            case "김해시":
-                                                gyeongnam_gimhae(response);
-                                                break;
-                                            case "남해군":
-                                                gyeongnam_namhae(response);
-                                                break;
-                                            case "밀양시":
-                                                gyeongnam_milyang(response);
-                                                break;
-                                            case "사천시":
-                                                gyeongnam_sacheon(response);
-                                                break;
-                                            case "산청군":
-                                                gyeongnam_sancheong(response);
-                                                break;
-                                            case "양산시":
-                                                gyeongnam_yangsan(response);
-                                                break;
-                                            case "의령군":
-                                                gyeongnam_uiryeong(response);
-                                                break;
-                                            case "진주시":
-                                                gyeongnam_jinju(response);
-                                                break;
-                                            case "창녕군":
-                                                gyeongnam_changnyeong(response);
-                                                break;
-                                            case "창원시":
-                                                gyeongnam_changwon(response);
-                                                break;
-                                            case "통영시":
-                                                gyeongnam_tongyeong(response);
-                                                break;
-                                            case "하동군":
-                                                gyeongnam_hadong(response);
-                                                break;
-                                            case "함안군":
-                                                gyeongnam_haman(response);
-                                                break;
-                                            case "함양군":
-                                                gyeongnam_hamyang(response);
-                                                break;
-                                            case "합천군":
-                                                gyeongnam_habcheon(response);
-                                                break;
-                                        }
-                                    });
-                                }
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                        else if(adspin1.getItem(i).equals("제주")){
-                            adspin2 = ArrayAdapter.createFromResource(Disaster.this,R.array.jeju, android.R.layout.simple_spinner_dropdown_item);
-                            adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spin2.setAdapter(adspin2);
-                            spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                    disasterAdapter.Clear();
-                                    button.setOnClickListener(v -> {
-                                        String str = adspin2.getItem(i).toString();
-                                        switch (str) {
-                                            case "전체":
-                                                jejuAll(response);
-                                                break;
-                                            case "서귀포시":
-                                                jeju_seogwipo(response);
-                                                break;
-                                            case "제주시":
-                                                jeju_jeju(response);
-                                                break;
-                                        }
-                                    });
-                                }
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                        }
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                }),
-                error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT)
+                    });
+                },
+                (Response.ErrorListener) error -> Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT)
         ) {
             @Override
             protected Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<>();
 
-                return params;
+                return new HashMap<>();
             }
         };
         request.setShouldCache(false);
