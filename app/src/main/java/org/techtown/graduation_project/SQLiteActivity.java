@@ -3,6 +3,8 @@ package org.techtown.graduation_project;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class SQLiteActivity extends AppCompatActivity {
@@ -30,6 +34,10 @@ public class SQLiteActivity extends AppCompatActivity {
     String message;
 
     String tablename;
+    String latlng_count;
+    String disaster_count;
+
+
     DatabaseHelper mDatabaseHelper;
     SwipeRefreshLayout refreshLayout;
 
@@ -118,18 +126,62 @@ public class SQLiteActivity extends AppCompatActivity {
     private void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the View");
 
-        Cursor data = mDatabaseHelper.getTableName();
-        while (data.moveToNext()) {
-            tablename = data.getString(0);
+        Cursor tCursor = mDatabaseHelper.getTableName();
+        while (tCursor.moveToNext()) {
+            tablename = tCursor.getString(0);
+
+
             if(tablename.equals("android_metadata")){
                 continue;
             }else if(tablename.equals("sqlite_sequence")){
                 continue;
+            }else{
+                latlng_count = String.valueOf(mDatabaseHelper.dbCheck(tablename));
+                disaster_count = String.valueOf(get_disaster_count(tablename));
+                Table data1 = new Table(tablename, latlng_count, disaster_count);
+                Table.add(data1);
             }
-            Table data1 = new Table(tablename);
-            Table.add(data1);
         }
     }
+
+    public int get_disaster_count(String tablename) {
+        GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
+        Cursor data = geoDatabaseHelper.getGeoDB();
+        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
+        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
+        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
+        double db_latitude;         // 사용자 DB에서 조회한 위도
+        double db_longitude;        // 사용자 DB에서 조회한 경도
+        int i = 0;
+
+
+        while(data.moveToNext()) {
+            Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
+            tmp_latitude = data.getDouble(1);
+            tmp_longitude = data.getDouble(2);
+            /*
+            거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
+             */
+            GeoDB_location.setLatitude(tmp_latitude);
+            GeoDB_location.setLongitude(tmp_longitude);
+            tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+            Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+
+            Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+            while (db_cursor.moveToNext()) {
+                Location db_location = new Location(LocationManager.GPS_PROVIDER);
+                db_latitude = db_cursor.getDouble(0);
+                db_longitude = db_cursor.getDouble(1);
+                db_location.setLatitude(db_latitude);
+                db_location.setLongitude(db_longitude);
+                if (db_location.distanceTo(GeoDB_location) < 100) {
+                    i++;
+                }
+            }
+        }
+        return i;
+    }
+
 
     private void toastMessage (String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

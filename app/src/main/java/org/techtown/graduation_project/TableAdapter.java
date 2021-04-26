@@ -38,6 +38,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomerView
     public void setOnItemLongClickListener(OnItemLongClickListener listener){
         this.mLongListener = listener;
     }
+
     public TableAdapter(ArrayList<Table> Table) {
         this.mlist = Table;
     }
@@ -46,7 +47,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomerView
     @Override
     public TableAdapter.CustomerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.table_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_list, parent, false);
         CustomerViewHolder holder = new CustomerViewHolder(view);
 
         return holder;
@@ -55,6 +56,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomerView
     @Override
     public void onBindViewHolder(@NonNull TableAdapter.CustomerViewHolder holder, int position) {
         holder.table.setText(mlist.get(position).getDate());
+        holder.MyLatLng.setText(mlist.get(position).getLatlng_count());
+        holder.disasterLatLng.setText(mlist.get(position).getDisaster_count());
     }
 
     @Override
@@ -65,10 +68,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomerView
 
     public class CustomerViewHolder extends RecyclerView.ViewHolder {
         protected TextView table;
+        protected TextView MyLatLng;
+        protected TextView disasterLatLng;
 
         public CustomerViewHolder(@NonNull View itemView) {
             super(itemView);
             this.table = (TextView) itemView.findViewById(R.id.table_name);
+            this.MyLatLng = (TextView) itemView.findViewById(R.id.latlng_count);
+            this.disasterLatLng = (TextView) itemView.findViewById(R.id.disaster_count);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -104,25 +104,16 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
     LatLng currentPosition;
 
-
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Location location;
 
-
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
-
-
-
-
 
     private Button button;
     private EditText editText;
     private Geocoder geocoder;
-
-
-
 
 
     @Override
@@ -279,21 +270,25 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         getGeoDBLatLng(date);
     }
 
+    // GeoDB에 저장된 위치랑 내 위치 비교 후 경고 마커를 찍는 함수
     private void getGeoDBLatLng(String tablename) {
         GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
         Cursor data = geoDatabaseHelper.getGeoDB();
-        double tmp_latitude;
-        double tmp_longitude;
-        LatLng tmp_LatLng;
-        double db_latitude;
-        double db_longitude;
+        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
+        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
+        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
+        double db_latitude;         // 사용자 DB에서 조회한 위도
+        double db_longitude;        // 사용자 DB에서 조회한 경도
 
         while(data.moveToNext()) {
-            Location user_location = new Location(LocationManager.GPS_PROVIDER);
+            Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
             tmp_latitude = data.getDouble(1);
             tmp_longitude = data.getDouble(2);
-            user_location.setLatitude(tmp_latitude);
-            user_location.setLongitude(tmp_longitude);
+            /*
+            거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
+             */
+            GeoDB_location.setLatitude(tmp_latitude);
+            GeoDB_location.setLongitude(tmp_longitude);
             tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
             Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
 
@@ -304,7 +299,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                 db_longitude = db_cursor.getDouble(1);
                 db_location.setLatitude(db_latitude);
                 db_location.setLongitude(db_longitude);
-                if (db_location.distanceTo(user_location) < 100) {
+                if (db_location.distanceTo(GeoDB_location) < 100) {
                     addWarningMarkers(tmp_LatLng, data.getString(0), data.getString(3));
                 }
             }
@@ -376,11 +371,15 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
     }
 
     private void addMarkers(LatLng latLng, String markerTitle, String markerSnippet) {
+        BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.mylatlng);
+        Bitmap b = bitmap.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 75, 75, false);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         mMap.addMarker(markerOptions);
     }
 
