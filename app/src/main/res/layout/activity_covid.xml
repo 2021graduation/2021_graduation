@@ -51,7 +51,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:text="000000000"
-            android:textColor="#000000"
+            android:textColor="#818181"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -130,7 +130,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="00000000"
-                android:textColor="#000000"
+                android:textColor="#818181"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -169,7 +169,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="00000000"
-                android:textColor="#000000"
+                android:textColor="#818181"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -206,7 +206,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="00000000"
-                android:textColor="#000000"
+                android:textColor="#818181"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -252,21 +252,13 @@
             android:layout_marginStart="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:text="일" />
+            android:layout_marginRight="5dp" />
 
         <TextView
             android:id="@+id/stateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/time_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:text="분" />
     </LinearLayout>
 
     <LinearLayout
@@ -299,7 +291,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginLeft="25dp"
-                    android:background="@drawable/textview_shape"
+                    android:background="@drawable/button_shape2"
                     android:gravity="center"
                     android:text="코로나 시도현황"
                     android:textColor="#000000"
@@ -318,7 +310,7 @@
                     android:id="@+id/mask"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/textview_shape"
+                    android:background="@drawable/button_shape2"
                     android:text="마스크검색"
                     android:textColor="#000000"
                     app:backgroundTint="#00FFFFFF"
@@ -345,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginLeft="25dp"
-                    android:background="@drawable/textview_shape"
+                    android:background="@drawable/button_shape2"
                     android:text="내 위치 조회"
                     android:textColor="#000000"
                     app:backgroundTint="#00FFFFFF"
@@ -363,7 +355,7 @@
                     android:id="@+id/disaster"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/textview_shape"
+                    android:background="@drawable/button_shape2"
                     android:text="재난문자"
                     android:textColor="#000000"
                     app:backgroundTint="#00FFFFFF"

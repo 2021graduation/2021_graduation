@@ -128,7 +128,7 @@ public class Mask extends AppCompatActivity {
                     case XmlPullParser.END_TAG:
                         tag= xpp.getName(); //테그 이름 얻어오기
                         if(tag.equals("item")) {
-                            MaskData mask_Data = new MaskData(R.mipmap.ic_launcher, ITEM_NAME, ENTP_NAME, ITEM_PERMIT_DATE);
+                            MaskData mask_Data = new MaskData(ITEM_NAME, ENTP_NAME, ITEM_PERMIT_DATE);
                             maskData.add(mask_Data);
                             buffer.append("\n");
                         }

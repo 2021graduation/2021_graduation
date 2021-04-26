@@ -33,7 +33,6 @@ public class MaskAdapter extends RecyclerView.Adapter<MaskAdapter.CustomerViewHo
     @Override
     public void onBindViewHolder(@NonNull MaskAdapter.CustomerViewHolder holder, int position) {
 
-        holder.iv_profile.setImageResource(masklist.get(position).getIv_profile());
         holder.ITEM_NAME.setText(masklist.get(position).getITEM_NAME());
         holder.ENTP_NAME.setText(masklist.get(position).getENTP_NAME());
         holder.ITEM_PERMIT_DATE.setText(masklist.get(position).getITEM_PERMIT_DATE());
@@ -46,14 +45,12 @@ public class MaskAdapter extends RecyclerView.Adapter<MaskAdapter.CustomerViewHo
     }
 
     public class CustomerViewHolder extends RecyclerView.ViewHolder {
-        protected ImageView iv_profile;
         protected TextView ITEM_NAME;
         protected TextView ENTP_NAME;
         protected TextView ITEM_PERMIT_DATE;
 
         public CustomerViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.iv_profile = (ImageView) itemView.findViewById(R.id.profile);
             this.ITEM_NAME = (TextView) itemView.findViewById(R.id.ITEM_NAME);
             this.ENTP_NAME = (TextView) itemView.findViewById(R.id.ENTP_NAME);
             this.ITEM_PERMIT_DATE = (TextView) itemView.findViewById(R.id.ITEM_PERMIT_DATE);

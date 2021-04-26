@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#77CDE3F4"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -18,7 +19,7 @@
             android:id="@+id/disaster"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/button_shape"
+            android:background="@drawable/button_shape2"
             android:text="표로보기"
             android:textColor="#000000"
             app:backgroundTint="#00FFFFFF"
@@ -30,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/button_shape"
+            android:background="@drawable/button_shape2"
             android:text="지도보기"
             android:textColor="#000000"
             app:backgroundTint="#00FFFFFF"
