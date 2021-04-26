@@ -26,7 +26,6 @@ public class Infection extends AppCompatActivity {
                 tran = getSupportFragmentManager().beginTransaction();
                 sidomap = new SidomapFragment();
                 tran.replace(R.id.frame, sidomap);
-                tran.addToBackStack(null);
                 tran.commit();
             }
         });
@@ -36,7 +35,6 @@ public class Infection extends AppCompatActivity {
                 tran = getSupportFragmentManager().beginTransaction();
                 sidotable = new SidotableFragment();
                 tran.replace(R.id.frame, sidotable);
-                tran.addToBackStack(null);
                 tran.commit();
             }
         });
