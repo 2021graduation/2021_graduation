@@ -94,10 +94,8 @@ public class CovidActivity extends AppCompatActivity {
         Daily_clear = (TextView) findViewById(R.id.Daily_clear);
         Daily_death = (TextView) findViewById(R.id.Daily_death);
 
-        hospital = findViewById(R.id.hospital);
         infection = findViewById(R.id.infection);
         mask = findViewById(R.id.mask);
-        pharmacy = findViewById(R.id.pharmacy);
         MyLocation = findViewById(R.id.MyLocation);
         disaster = findViewById(R.id.disaster);
 
@@ -106,54 +104,46 @@ public class CovidActivity extends AppCompatActivity {
         dbSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Cursor geodata = geoDatabaseHelper.getGeoDB();
-//                while(geodata.moveToNext()){
-//                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3));
-//                }
-                Cursor data = geoDatabaseHelper.getGeoDB();
-                while(data.moveToNext()){
-                    Location user_location = new Location(LocationManager.GPS_PROVIDER);
-                    tmp_latitude = data.getDouble(1);
-                    tmp_longitude = data.getDouble(2);
-                    user_location.setLatitude(tmp_latitude);
-                    user_location.setLongitude(tmp_longitude);
-                    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                    Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                    Cursor tCursor = mDatabaseHelper.getTableName();
-                    while (tCursor.moveToNext()) {
-                        tablename = tCursor.getString(0);
-                        if(tablename.equals("android_metadata")){
-                            continue;
-                        }else if(tablename.equals("sqlite_sequence")){
-                            continue;
-                        }else{
-                            Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                            while(db_cursor.moveToNext()){
-                                Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                                db_latitude = db_cursor.getDouble(0);
-                                db_longitude = db_cursor.getDouble(1);
-                                db_location.setLatitude(db_latitude);
-                                db_location.setLongitude(db_longitude);
-                                if(db_location.distanceTo(user_location) < 100){
-                                    Log.d("경보: ", tablename + "   " + data.getString(3));
-                                }
-                            }
-                        }
-                    }
-
+                Cursor geodata = geoDatabaseHelper.getGeoDB();
+                while(geodata.moveToNext()){
+                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3));
                 }
+//                Cursor data = geoDatabaseHelper.getGeoDB();
+//                while(data.moveToNext()){
+//                    Location user_location = new Location(LocationManager.GPS_PROVIDER);
+//                    tmp_latitude = data.getDouble(1);
+//                    tmp_longitude = data.getDouble(2);
+//                    user_location.setLatitude(tmp_latitude);
+//                    user_location.setLongitude(tmp_longitude);
+//                    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+//                    Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+//
+//                    Cursor tCursor = mDatabaseHelper.getTableName();
+//                    while (tCursor.moveToNext()) {
+//                        tablename = tCursor.getString(0);
+//                        if(tablename.equals("android_metadata")){
+//                            continue;
+//                        }else if(tablename.equals("sqlite_sequence")){
+//                            continue;
+//                        }else{
+//                            Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+//                            while(db_cursor.moveToNext()){
+//                                Location db_location = new Location(LocationManager.GPS_PROVIDER);
+//                                db_latitude = db_cursor.getDouble(0);
+//                                db_longitude = db_cursor.getDouble(1);
+//                                db_location.setLatitude(db_latitude);
+//                                db_location.setLongitude(db_longitude);
+//                                if(db_location.distanceTo(user_location) < 100){
+//                                    Log.d("경보: ", tablename + "   " + data.getString(3));
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                }
             }
         });
         ///////////////////
-
-        hospital.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(getApplicationContext(), Hospital.class);
-                startActivity(intent);
-            }
-        });
 
         infection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,14 +158,6 @@ public class CovidActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mask_intent = new Intent(getApplicationContext(), Mask.class);
                 startActivity(mask_intent);
-            }
-        });
-
-        pharmacy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pharmacy_intent = new Intent(getApplicationContext(), Pharmacy.class);
-                startActivity(pharmacy_intent);
             }
         });
 
