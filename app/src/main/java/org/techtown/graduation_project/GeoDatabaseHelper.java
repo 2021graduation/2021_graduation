@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class GeoDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = "DatabaseHelper";
+    private static final String TAG = "GeoDatabaseHelper";
 
     private static String TABLE_NAME = getDate();
     String date;
@@ -63,6 +63,21 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO GeoDB(address, latitude, longitude, dMsg) VALUES ('"+address+"',"+Current.latitude+","+Current.longitude+",'"+dMsg+"')");
     }
+
+    public boolean GeoDB_Check(String Msg) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT dMsg FROM GeoDB";
+        Cursor data = db.rawQuery(query, null);
+        while (data.moveToNext()) {
+            if (data.getString(0).equals(Msg)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     public void dropTable(){
         SQLiteDatabase db = this.getWritableDatabase();
