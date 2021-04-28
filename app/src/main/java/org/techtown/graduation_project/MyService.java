@@ -105,8 +105,6 @@ public class MyService extends Service {
 
         String url = "https://apixml-5d25d-default-rtdb.firebaseio.com/Msg.json";
 
-
-
         StringRequest request = new StringRequest(
                 Request.Method.GET,
                 url,
