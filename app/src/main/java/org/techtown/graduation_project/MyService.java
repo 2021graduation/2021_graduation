@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,12 +68,11 @@ public class MyService extends Service {
     String TABLE_NAME;
     DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
-
+    SigunguDatabaseHelper sigunguDatabaseHelper = new SigunguDatabaseHelper(this);
 
     public DisasterRowData row;
 
     static RequestQueue requestQueue;
-    String key = "pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
 
     public String getDate() {
         long time = System.currentTimeMillis();
@@ -84,17 +84,26 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        geoDatabaseHelper.dropTable();
 
-//        if (requestQueue == null){
-//            requestQueue = Volley.newRequestQueue(getApplicationContext());
-//
-//            sendRequest();
+        if (requestQueue == null){
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            sendRequest();
+        }
+
+        sigunguDatabaseHelper.dropTable();
+        getMySigungu();
+
+//        Cursor sigunguCursor = sigunguDatabaseHelper.getSigungu();
+//        while(sigunguCursor.moveToNext()){
+//            Log.d("시군구 테이블: ", sigunguCursor.getString(0) + " " + sigunguCursor.getString(1));
 //        }
     }
 
     public void sendRequest() {
 
-        String url = "http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List?serviceKey="+key+"&numOfRows=1000";
+        String url = "https://apixml-5d25d-default-rtdb.firebaseio.com/Msg.json";
 
 
 
@@ -104,14 +113,7 @@ public class MyService extends Service {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        while(response.contains("SERVICE ERROR")){
-                            try {
-                                Thread.sleep(10000);
-                                sendRequest();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
+
                         processResponse(response);
 
                     }
@@ -136,49 +138,86 @@ public class MyService extends Service {
     }
 
     public void processResponse(String response) {
-        Log.d("거기서 날아온 정보", response.toString());
         List<List<Address>> list = null;
         Geocoder geocoder = new Geocoder(this);
 
-        XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
         Gson gson = new Gson();
-        DisasterMsg disasterList = gson.fromJson(xmlToJson.toJson().toString(), DisasterMsg.class);
-        geoDatabaseHelper.dropTable();
+        DisasterMsg disasterList = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterList.DisasterMsg.row.size(); i++){
             row = disasterList.DisasterMsg.row.get(i);
-            if(row.getLocation_name().equals("부산광역시 사하구") || row.getLocation_name().equals("부산광역시 전체")){
-                String str = row.getMsg();
+            String str = row.getMsg();
+            // 요청하는 재난문자를 분류하기 위해 시군구 데이터베이스를 만들었음.
+            // 시군구 데이터베이스에는 사용자가 방문했던 장소들의 시군구가 기록되어있음.
+            Cursor sigunguCursor = sigunguDatabaseHelper.getSigungu();
+            while(sigunguCursor.moveToNext()) {
+                //Log.d("현재 파싱하는 테이블: ", sigunguCursor.getString(0) + " " + sigunguCursor.getString(1));
+                if (row.getLocation_name().equals(sigunguCursor.getString(0) + " 전체") ||
+                        row.getLocation_name().equals(sigunguCursor.getString(1))) {
+                    if (geoDatabaseHelper.GeoDB_Check(row.getMsg()) == false){
+                        Pattern pattern = Pattern.compile("[(](.*?)[)]");
+                        Matcher matcher = pattern.matcher(str);
 
-                Pattern pattern = Pattern.compile("[(](.*?)[)]");
-                Matcher matcher = pattern.matcher(str);
+                        while (matcher.find()) {  // 일치하는 게 있다면
+                            //재난문자 ( ) 안 내용들 모두 들어옴
 
-                while (matcher.find()) {  // 일치하는 게 있다면
-                    //재난문자 ( ) 안 내용들 모두 들어옴
+                            if (matcher.group(1).length() > 2) {
+                                //요일제외 2글자 이상인 재난문자 선별
+                                Pattern pattern2 = Pattern.compile(".*?(길\\b|동\\b|대로\\b|로\\b).*");
+                                Matcher matcher2 = pattern2.matcher(matcher.group(1));
+                                while (matcher2.find()) {
+                                    // ~길, ~동, ~대로 ~로 글자 전후로 가져옴
+                                    String filter = matcher2.group();
 
-                    if(matcher.group(1).length() > 2){
-                        //요일제외 2글자 이상인 재난문자 선별
-                        Pattern pattern2 = Pattern.compile(".*?(길\\b|동\\b|대로\\b|로\\b).*");
-                        Matcher matcher2 = pattern2.matcher(matcher.group(1));
-                        while(matcher2.find()){
-                            // ~길, ~동, ~대로 ~로 글자 전후로 가져옴
-                            String filter = matcher2.group();
-
-                            int target_index;
-                            if(filter.contains("소독완료")){
-                                target_index = filter.indexOf("소독완료");
-                                filter = filter.replace(filter.substring(target_index), "");
-                            }else if(filter.contains("방역완료")){
-                                target_index = filter.indexOf("방역완료");
-                                filter = filter.replace(filter.substring(target_index), "");
+                                    int target_index;
+                                    if (filter.contains("소독완료")) {
+                                        target_index = filter.indexOf("소독완료");
+                                        filter = filter.replace(filter.substring(target_index), "");
+                                    } else if (filter.contains("방역완료")) {
+                                        target_index = filter.indexOf("방역완료");
+                                        filter = filter.replace(filter.substring(target_index), "");
+                                    }
+                                    filter = filter.replaceAll(".*감염경로.*", "");
+                                    getDisasterAddress(filter, str);
+                                }
                             }
-                            filter = filter.replaceAll(".*감염경로.*","");
-                            getDisasterAddress(filter,str);
+                            if (matcher.group(1) == null)
+                                break;
                         }
                     }
-                    if(matcher.group(1) ==  null)
-                        break;
                 }
             }
+            sigunguCursor.close();
+//            if(row.getLocation_name().equals("경기도 시흥시")){
+//                Pattern pattern = Pattern.compile("[(](.*?)[)]");
+//                Matcher matcher = pattern.matcher(str);
+//
+//                while (matcher.find()) {  // 일치하는 게 있다면
+//                    //재난문자 ( ) 안 내용들 모두 들어옴
+//
+//                    if(matcher.group(1).length() > 2){
+//                        //요일제외 2글자 이상인 재난문자 선별
+//                        Pattern pattern2 = Pattern.compile(".*?(길\\b|동\\b|대로\\b|로\\b).*");
+//                        Matcher matcher2 = pattern2.matcher(matcher.group(1));
+//                        while(matcher2.find()){
+//                            // ~길, ~동, ~대로 ~로 글자 전후로 가져옴
+//                            String filter = matcher2.group();
+//
+//                            int target_index;
+//                            if(filter.contains("소독완료")){
+//                                target_index = filter.indexOf("소독완료");
+//                                filter = filter.replace(filter.substring(target_index), "");
+//                            }else if(filter.contains("방역완료")){
+//                                target_index = filter.indexOf("방역완료");
+//                                filter = filter.replace(filter.substring(target_index), "");
+//                            }
+//                            filter = filter.replaceAll(".*감염경로.*","");
+//                            getDisasterAddress(filter,str);
+//                        }
+//                    }
+//                    if(matcher.group(1) ==  null)
+//                        break;
+//                }
+//            }
         }
     }
 
@@ -255,7 +294,7 @@ public class MyService extends Service {
     public String getCurrentAddress(LatLng latlng) {
 
 
-        //지오코더... GPS를 주소로 변환
+        //지오코더 GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
         List<Address> addresses;
@@ -281,13 +320,23 @@ public class MyService extends Service {
 
         } else {
             Address address = addresses.get(0);
-            return address.getAddressLine(0).toString();
+//            Log.d("전체 주소: ", address.getAddressLine(0));
+            String[] tmp = address.getAddressLine(0).split(" ");
+
+            if(sigunguDatabaseHelper.Sigungu_Check(tmp[1], tmp[2]) == false){
+                //Log.d("추가된 주소: ", Sigungu);
+                sigunguDatabaseHelper.addSigungu(tmp[1], tmp[2]);
+            }
+            String tmp_add = tmp[1] + " " + tmp[2];
+//            Log.d(TAG, tmp_add);
+//            Log.d("분리됨", tmp_add);
+            return tmp_add;
         }
     }
 
-    public void getDisasterAddress(String Sigungu, String str) {
+    public void getDisasterAddress(String Sigungu, String Msg) {
 
-        //지오코더... GPS를 주소로 변환
+        //지오코더 주소를 GPS로 변환
         Geocoder geocoder = new Geocoder(this);
 
         List<Address> addresses;
@@ -313,24 +362,98 @@ public class MyService extends Service {
         } else {
             Log.d(TAG, String.valueOf(addresses.get(0)));
             LatLng covidlatlng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            geoDatabaseHelper.addData(Sigungu, covidlatlng, str);
+            Msg = Msg.replaceAll("\'", "");
+            geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
+//            if(geoDatabaseHelper.GeoDB_Check(Msg)){
+//                geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
+//                Log.d(TAG, String.valueOf(addresses.get(0)));
+//            }
             return;
         }
     }
 
-    private void getLatLng() {
-        Log.d(TAG, "populateListView: Displaying data in the View");
-        Location db_location = new Location(LocationManager.GPS_PROVIDER);
-        Cursor data = mDatabaseHelper.getLocation(date);
-        while (data.moveToNext()) {
-            latitude = data.getDouble(1);
-            longitude = data.getDouble(2);
-            latLng = new LatLng(latitude, longitude);
-            String Sigungu = getCurrentAddress(latLng);
 
-            Log.d(TAG, "주소: " + Sigungu);
+    // 사용자 DB에서 사용자 위치의 행정구역을 뽑아내는 코드
+    private void getMySigungu(){
+        Cursor tCursor = mDatabaseHelper.getTableName();
+        String Usertable;   // 테이블 이름을 조회해
+        double db_latitude;         // 사용자 DB에서 조회한 위도
+        double db_longitude;        // 사용자 DB에서 조회한 경도
+        LatLng db_latlng;
+
+        while (tCursor.moveToNext()) {
+            Usertable = tCursor.getString(0);
+            if(Usertable.equals("android_metadata")){
+                continue;
+            }else if(Usertable.equals("sqlite_sequence")){
+                continue;
+            }else{
+                Cursor db_cursor = mDatabaseHelper.getLatLng(Usertable);    // 테이블 안에 접근해
+                while (db_cursor.moveToNext()) {    // 위도 경도 빼와
+                    db_latitude = db_cursor.getDouble(0);
+                    db_longitude = db_cursor.getDouble(1);
+                    db_latlng = new LatLng(db_latitude, db_longitude);
+                    getCurrentAddress(db_latlng);
+
+//                    if(sigunguDatabaseHelper.Sigungu_Check(Sigungu) == false){
+//                        //Log.d("추가된 주소: ", Sigungu);
+//                        sigunguDatabaseHelper.addSigungu(Sigungu);
+//                    }
+                    //Log.d("시군구:", Sigungu);
+                }
+            }
         }
     }
+
+//GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
+//        Cursor data = geoDatabaseHelper.getGeoDB();
+//        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
+//        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
+//        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
+//
+//        int i = 0;
+//
+//        while(data.moveToNext()) {
+//            Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
+//            tmp_latitude = data.getDouble(1);
+//            tmp_longitude = data.getDouble(2);
+//            /*
+//            거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
+//             */
+//            GeoDB_location.setLatitude(tmp_latitude);
+//            GeoDB_location.setLongitude(tmp_longitude);
+//    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+//            Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+//
+//    Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+//            while (db_cursor.moveToNext()) {
+//        Location db_location = new Location(LocationManager.GPS_PROVIDER);
+//        db_latitude = db_cursor.getDouble(0);
+//        db_longitude = db_cursor.getDouble(1);
+//        db_location.setLatitude(db_latitude);
+//        db_location.setLongitude(db_longitude);
+//        if (db_location.distanceTo(GeoDB_location) < 100) {
+//            i++;
+//        }
+//    }
+//}
+
+
+
+//    private void getLatLng() {
+//        Log.d(TAG, "populateListView: Displaying data in the View");
+//        Location db_location = new Location(LocationManager.GPS_PROVIDER);
+//        Cursor tCursor = mDatabaseHelper.getTableName();
+//        Cursor data = mDatabaseHelper.getLocation(date);
+//        while (data.moveToNext()) {
+//            latitude = data.getDouble(1);
+//            longitude = data.getDouble(2);
+//            latLng = new LatLng(latitude, longitude);
+//            String Sigungu = getCurrentAddress(latLng);
+//
+//            Log.d(TAG, "주소: " + Sigungu);
+//        }
+//    }
 
 
 
@@ -379,8 +502,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        //locationRequest.setInterval(4000);
-        locationRequest.setInterval(600000);    // 10분 주기
+        locationRequest.setInterval(4000);
+        //locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
