@@ -48,7 +48,10 @@ public class Disaster extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disaster);
         recyclerView = findViewById(R.id.rv);
-        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true);
+
+
         recyclerView.setLayoutManager(linearLayoutManager);
 
         rowData = new ArrayList<>();
@@ -1202,7 +1205,6 @@ public class Disaster extends AppCompatActivity {
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
-
             disasterAdapter.addItem(row);
         }
         disasterAdapter.notifyDataSetChanged();
