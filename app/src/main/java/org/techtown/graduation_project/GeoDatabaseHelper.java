@@ -44,7 +44,9 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "GeoDB 생성됨");
-        db.execSQL("CREATE TABLE IF NOT EXISTS GeoDB(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, address VARCHAR(50) NOT NULL,latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL, dMsg TEXT NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS GeoDB(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                "startDay VARCHAR(30), endDay VARCHAR(30), " +
+                "address VARCHAR(50) NOT NULL, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL, dMsg TEXT NOT NULL)");
     }
 
     @Override
