@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -362,6 +363,12 @@ public class MyService extends Service {
             LatLng covidlatlng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
             Msg = Msg.replaceAll("\'", "");
             geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
+            try {
+                MsgDrawDate(Msg);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 //            if(geoDatabaseHelper.GeoDB_Check(Msg)){
 //                geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
 //                Log.d(TAG, String.valueOf(addresses.get(0)));
@@ -370,6 +377,74 @@ public class MyService extends Service {
         }
     }
 
+    public void MsgDrawDate(String Msg) throws ParseException {
+        Pattern datepattern = Pattern.compile("[0-9]+\\.[0-9]{1,2}|[0-9]\\월 +[0-9]{1,2}\\일|[0-9]\\월+[0-9]{1,2}\\일|[0-9]/[0-9]{1,2}");
+        Matcher datematcher = datepattern.matcher(Msg);
+        int flag = 0;
+        String startDay = null;
+        String endDay = null;
+        while (datematcher.find()){
+            if (flag == 0) {  // 날짜가 하나도 저장되어 있지 않으면
+                String datefilter = datematcher.group();
+                datefilter = datefilter.replaceAll("\\월|\\일|\\/", ".");
+                long time = System.currentTimeMillis();
+                SimpleDateFormat dayTime = new SimpleDateFormat("yyyy");
+                String now = dayTime.format(new Date(time));
+
+                SimpleDateFormat beforedayTime = new SimpleDateFormat("MM.dd");
+                SimpleDateFormat afterdayTime = new SimpleDateFormat(now + "년MM월dd일");
+                java.util.Date tempDate = null;
+                try {
+                    tempDate = beforedayTime.parse(datefilter);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                startDay = afterdayTime.format(tempDate);
+                Log.d("저장하기 직전의 날짜: ", startDay);
+                geoDatabaseHelper.addstartDay(startDay);
+            }
+            else if (flag >= 1) {  // 이미 1개가 저장되어 있다면
+                String datefilter = datematcher.group();
+                datefilter = datefilter.replaceAll("\\월|\\일|\\/", ".");
+                long time = System.currentTimeMillis();
+                SimpleDateFormat dayTime = new SimpleDateFormat("yyyy");
+                String now = dayTime.format(new Date(time));
+
+                SimpleDateFormat beforedayTime = new SimpleDateFormat("MM.dd");
+                SimpleDateFormat afterdayTime = new SimpleDateFormat(now + "년MM월dd일");
+                java.util.Date tempDate = null;
+                try {
+                    tempDate = beforedayTime.parse(datefilter);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                endDay = afterdayTime.format(tempDate);
+                // DB endDay 저장코드
+                geoDatabaseHelper.addendDay(endDay);
+                // DB (endDay - startDay) 저장코드
+            }
+            flag += 1;
+        }
+        if(flag > 1){   // 최소 날짜가 2개 이상 기록됐다면
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            // startDay, endDay 두 날짜를 parse()를 통해 Date형으로 변환.
+            Date FirstDate = format.parse(startDay);
+            Date SecondDate = format.parse(endDay);
+
+            // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
+            // 연산결과 -950400000. long type 으로 return 된다.
+            long calDate = FirstDate.getTime() - SecondDate.getTime();
+
+            // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
+            // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
+            long calDateDays = calDate / ( 24*60*60*1000);
+
+            calDateDays = Math.abs(calDateDays);
+
+            geoDatabaseHelper.addterm(String.valueOf(calDateDays));
+
+        }
+    }
 
     // 사용자 DB에서 사용자 위치의 행정구역을 뽑아내는 코드
     private void getMySigungu(){

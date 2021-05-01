@@ -28,7 +28,7 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public GeoDatabaseHelper(Context context){
-        super(context, "GeoDB", null, 1);
+        super(context, "GeoDB", null, 2);
     }
 
     /*
@@ -45,7 +45,7 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "GeoDB 생성됨");
         db.execSQL("CREATE TABLE IF NOT EXISTS GeoDB(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                "startDay VARCHAR(30), endDay VARCHAR(30), " +
+                "startDay VARCHAR(30), endDay VARCHAR(30), term VARCHAR(20)," +
                 "address VARCHAR(50) NOT NULL, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL, dMsg TEXT NOT NULL)");
     }
 
@@ -64,7 +64,24 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     public void addData(String address, LatLng Current, String dMsg){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO GeoDB(address, latitude, longitude, dMsg) VALUES ('"+address+"',"+Current.latitude+","+Current.longitude+",'"+dMsg+"')");
+        Log.d("저장 작업이 끝났슴", "ㅇㅇ");
     }
+
+    public void addstartDay(String startDay){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO GeoDB(startDay) VALUES ('"+startDay+"')");
+    }
+
+    public void addendDay(String endDay){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO GeoDB(endDay) VALUES ('"+endDay+"')");
+    }
+
+    public void addterm(String term) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO GeoDB(term) VALUES ('"+term+"')");
+    }
+
 
     public boolean GeoDB_Check(String Msg) {
         SQLiteDatabase db = this.getReadableDatabase();
