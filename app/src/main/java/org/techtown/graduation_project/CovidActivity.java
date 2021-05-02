@@ -526,7 +526,7 @@ public class CovidActivity extends AppCompatActivity {
         lineChart.clear();
         lineChart.setTouchEnabled(false);
 
-
+        /*설명문 없애기*/
         Description description = new Description();
         description.setText("");
         lineChart.setDescription(description);
