@@ -1200,10 +1200,11 @@ public class Disaster extends AppCompatActivity {
 
     // 전체 재난문자 호출
     public void All(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
+
             row = disasterMsg.DisasterMsg.row.get(i);
             disasterAdapter.addItem(row);
         }
@@ -1211,7 +1212,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*서울*/
     public void seoulAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1224,7 +1225,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_gangnam(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1237,7 +1238,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_gangdong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1250,7 +1251,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_gangbuk(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1263,7 +1264,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_gangseo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1276,7 +1277,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_gwanak(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1289,7 +1290,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_gwangin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1302,7 +1303,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_guro(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1315,7 +1316,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_geumcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1328,7 +1329,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_nowon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1341,7 +1342,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_dobong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1354,7 +1355,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_dongdaemun(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1367,7 +1368,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_dongjak(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1380,7 +1381,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_mapo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1393,7 +1394,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_seodaemun(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1406,7 +1407,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_seocho(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1419,7 +1420,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_seongdong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1432,7 +1433,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_seongbuk(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1445,7 +1446,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_songpa(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1458,7 +1459,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_yangcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1471,7 +1472,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_yeongdeungpo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1484,7 +1485,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_yongsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1497,7 +1498,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_eunpyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1510,7 +1511,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_jongro(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1523,7 +1524,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_junggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1536,7 +1537,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void seoul_jungrang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1550,7 +1551,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*부산*/
     public void busanAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1563,7 +1564,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_gangseo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1576,7 +1577,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_geumjeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1589,7 +1590,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_gijang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1602,7 +1603,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_namgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1615,7 +1616,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_donggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1628,7 +1629,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_dongrae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1641,7 +1642,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_busanjin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1654,7 +1655,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_bukgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1667,7 +1668,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_sasang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1680,7 +1681,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_saha(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1693,7 +1694,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_seogu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1706,7 +1707,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_suyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1719,7 +1720,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_yeonjae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1732,7 +1733,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_yeongdo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1745,7 +1746,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_junggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1758,7 +1759,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void busan_haeeundae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1772,7 +1773,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*대구*/
     public void daeguAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1785,7 +1786,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_namgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1798,7 +1799,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_dalseo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1811,7 +1812,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_dalseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1824,7 +1825,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_donggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1837,7 +1838,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_bukgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1850,7 +1851,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_seogu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1863,7 +1864,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_susung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1876,7 +1877,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daegu_junggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1890,7 +1891,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*인천*/
     public void incheonAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1903,7 +1904,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_ganghwa(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1916,7 +1917,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_gaeyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1929,7 +1930,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_michuhol(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1942,7 +1943,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_namdong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1955,7 +1956,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_donggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1968,7 +1969,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_bupyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1981,7 +1982,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_seogu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -1994,7 +1995,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_yeonsu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2007,7 +2008,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_ongjin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2020,7 +2021,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void incheon_junggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2034,7 +2035,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*광주*/
     public void gwangjuAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2047,7 +2048,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gwangju_gwangsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2060,7 +2061,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gwangju_namgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2073,7 +2074,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gwangju_donggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2086,7 +2087,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gwangju_bukgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2099,7 +2100,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gwangju_seogu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2113,7 +2114,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*대전*/
     public void daejeonAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2126,7 +2127,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daejeon_daedeok(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2139,7 +2140,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daejeon_donggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2152,7 +2153,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daejeon_seogu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2165,7 +2166,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daejeon_yuseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2178,7 +2179,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void daejeon_junggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2192,7 +2193,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*울산*/
     public void ulsannAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2205,7 +2206,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void ulsan_namgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2218,7 +2219,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void ulsan_donggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2231,7 +2232,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void ulsan_bukgu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2244,7 +2245,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void ulsan_ulju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2257,7 +2258,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void ulsan_junggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2271,7 +2272,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*세종*/
     public void sejongAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2285,7 +2286,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*경기*/
     public void gyeonggiAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2298,7 +2299,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_gapyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2311,7 +2312,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_goyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2324,7 +2325,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_gwacheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2337,7 +2338,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_gwangmyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2350,7 +2351,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_gwangju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2363,7 +2364,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_guri(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2376,7 +2377,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_gunpo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2389,7 +2390,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_gimpo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2402,7 +2403,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_namyangju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2415,7 +2416,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_dongducheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2428,7 +2429,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_bucheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2441,7 +2442,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_seongnam(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2454,7 +2455,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_suwon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2467,7 +2468,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_siheung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2480,7 +2481,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_ansan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2493,7 +2494,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_anseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2506,7 +2507,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_anyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2519,7 +2520,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_yangju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2532,7 +2533,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_yangpyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2545,7 +2546,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_yeoju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2558,7 +2559,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_yeoncheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2571,7 +2572,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_osan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2584,7 +2585,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_yongin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2597,7 +2598,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_uiwang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2610,7 +2611,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_uijeongbu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2623,7 +2624,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_icheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2636,7 +2637,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_paju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2649,7 +2650,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_pyeongtaek(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2662,7 +2663,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_pocheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2675,7 +2676,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_hanam(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2688,7 +2689,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeonggi_hwaseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2702,7 +2703,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*강원*/
     public void gangwonAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2715,7 +2716,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_gangneung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2728,7 +2729,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_gosung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2741,7 +2742,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_donghae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2754,7 +2755,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_samcheok(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2767,7 +2768,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_sokcho(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2780,7 +2781,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_yanggu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2793,7 +2794,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_yangyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2806,7 +2807,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_yeongwol(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2819,7 +2820,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_wonju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2832,7 +2833,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_inje(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2845,7 +2846,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_jeongsun(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2858,7 +2859,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_cheorwon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2871,7 +2872,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_chuncheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2884,7 +2885,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_taebaek(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2897,7 +2898,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_pyeongchang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2910,7 +2911,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_hongcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2923,7 +2924,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_hwacheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2936,7 +2937,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gangwon_hoengseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2950,7 +2951,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*충북*/
     public void chungbukAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2963,7 +2964,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_goesan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2976,7 +2977,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_danyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -2989,7 +2990,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_boeun(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3002,7 +3003,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_yeongdong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3015,7 +3016,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_okcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3028,7 +3029,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_eumseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3041,7 +3042,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_jaecheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3054,7 +3055,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_jeungpyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3067,7 +3068,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_jincheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3080,7 +3081,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_cheongju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3093,7 +3094,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungbuk_chungju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3107,7 +3108,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*충남*/
     public void chungnamAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3120,7 +3121,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_gyeryong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3133,7 +3134,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_gongju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3146,7 +3147,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_geumsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3159,7 +3160,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_nonsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3172,7 +3173,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_dangjin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3185,7 +3186,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_boryeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3198,7 +3199,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_buyeo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3211,7 +3212,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_seosan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3224,7 +3225,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_seocheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3237,7 +3238,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_asan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3250,7 +3251,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_yaesan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3263,7 +3264,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_cheonan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3276,7 +3277,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_chungyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3289,7 +3290,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_taean(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3302,7 +3303,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void chungnam_hongseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3316,7 +3317,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*전북*/
     public void jeonbukAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3329,7 +3330,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_gochang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3342,7 +3343,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_gunsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3355,7 +3356,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_gimjae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3368,7 +3369,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_namwon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3381,7 +3382,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_muju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3394,7 +3395,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_buan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3407,7 +3408,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_sunchang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3420,7 +3421,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_wanju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3433,7 +3434,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_iksan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3446,7 +3447,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_imsil(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3459,7 +3460,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_jangsu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3472,7 +3473,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_jeonju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3485,7 +3486,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_jeongeup(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3498,7 +3499,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonbuk_jinan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3512,7 +3513,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*전남*/
     public void jeonnamAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3525,7 +3526,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_gangjin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3538,7 +3539,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_goheung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3551,7 +3552,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_gokseung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3564,7 +3565,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_gwangyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3577,7 +3578,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_gurae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3590,7 +3591,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_naju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3603,7 +3604,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_damyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3616,7 +3617,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_mokpo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3629,7 +3630,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_muan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3642,7 +3643,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_boseung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3655,7 +3656,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_suncheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3668,7 +3669,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_sinan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3681,7 +3682,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_yeosu(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3694,7 +3695,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_yeonggwang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3707,7 +3708,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_yeongam(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3720,7 +3721,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_wando(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3733,7 +3734,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_jangseung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3746,7 +3747,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_jangheung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3759,7 +3760,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_jindo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3772,7 +3773,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_hampyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3785,7 +3786,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_haenam(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3798,7 +3799,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeonnam_hwasun(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3812,7 +3813,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*경북*/
     public void gyeongbukAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3825,7 +3826,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_gyeongsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3838,7 +3839,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_gyeongju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3851,7 +3852,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_goryeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3864,7 +3865,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_gumi(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3877,7 +3878,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_gunwi(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3890,7 +3891,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_gimcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3903,7 +3904,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_mungyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3916,7 +3917,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_bonghwa(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3929,7 +3930,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_sangju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3942,7 +3943,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_seungju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3955,7 +3956,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_andong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3968,7 +3969,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_yeongdeok(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3981,7 +3982,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_yeongyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -3994,7 +3995,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_yeongju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4007,7 +4008,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_yeongcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4020,7 +4021,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_yaecheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4033,7 +4034,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_ulleung(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4046,7 +4047,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_uljin(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4059,7 +4060,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_jusoen(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4072,7 +4073,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_chungdo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4085,7 +4086,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_chungsong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4098,7 +4099,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_chilgok(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4111,7 +4112,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongbuk_pohang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4125,7 +4126,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*경남*/
     public void gyeongnamAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4138,7 +4139,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_geoje(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4151,7 +4152,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_geochang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4164,7 +4165,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_goseong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4177,7 +4178,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_gimhae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4190,7 +4191,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_namhae(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4203,7 +4204,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_milyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4216,7 +4217,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_sacheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4229,7 +4230,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_sancheong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4242,7 +4243,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_yangsan(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4255,7 +4256,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_uiryeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4268,7 +4269,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_jinju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4281,7 +4282,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_changnyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4294,7 +4295,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_changwon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4307,7 +4308,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_tongyeong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4320,7 +4321,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_hadong(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4333,7 +4334,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_haman(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4346,7 +4347,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_hamyang(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4359,7 +4360,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void gyeongnam_habcheon(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4373,7 +4374,7 @@ public class Disaster extends AppCompatActivity {
     }
     /*제주*/
     public void jejuAll(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4386,7 +4387,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeju_seogwipo(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
@@ -4399,7 +4400,7 @@ public class Disaster extends AppCompatActivity {
         disasterAdapter.notifyDataSetChanged();
     }
     public void jeju_jeju(String response) {
-        
+
         Gson gson = new Gson();
         DisasterMsg disasterMsg = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){

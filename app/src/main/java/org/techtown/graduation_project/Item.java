@@ -6,5 +6,6 @@ public class Item {
     String clearCnt;
     String deathCnt;
     String stateTime;
+    String stateDt;
 }
 
