@@ -128,7 +128,7 @@ public class CovidActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Cursor geodata = geoDatabaseHelper.getGeoDB();
                 while(geodata.moveToNext()){
-                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3));
+                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3) + " | " + geodata.getString(4) + " | " + geodata.getString(5));
                 }
 //                Cursor data = geoDatabaseHelper.getGeoDB();
 //                while(data.moveToNext()){
