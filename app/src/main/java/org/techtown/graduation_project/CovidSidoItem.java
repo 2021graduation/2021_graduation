@@ -8,6 +8,7 @@ public class CovidSidoItem {
     String createDt;
     String localOccCnt;
     String overFlowCnt;
+    String isolIngCnt;
 
     public String getCreateDt() {
         return createDt;

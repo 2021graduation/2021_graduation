@@ -50,14 +50,13 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 public class CovidActivity extends AppCompatActivity {
 
     TextView decide; // 확진자 TextView
-    TextView accExam; // 누적검사 TextView
+    TextView ingCnt; // 격리중 환자 TextView
     TextView clearCnt; // 완치 TextView
     TextView deathCnt; // 사망 TextView
-    TextView stateDt; // 기준 일 TextView
-    TextView stateTime; // 기준 시간 TextView
+    TextView createDt; // 기준시간 TextView
     TextView Daily_decide; // 일일 확진자 TextView
-    TextView Daily_accExam; // 일일 검사자 TextView
-    TextView Daily_clear; // 일일 확진자 TextView
+    TextView Daily_ingCnt; // 일일 격리중 환자 TextView
+    TextView Daily_clear; // 일일 완치자 TextView
     TextView Daily_death; // 일일 사망자 TextView
     TextView local_cnt;  // 국내 일일 확진자 TextView
     TextView over_cnt; // 해외 유입 일일 확진자 TextView
@@ -94,17 +93,17 @@ public class CovidActivity extends AppCompatActivity {
         setContentView(R.layout.activity_covid);
 
         decide = (TextView) findViewById(R.id.decide);
-        accExam = (TextView) findViewById(R.id.accExam);
+        ingCnt = (TextView) findViewById(R.id.ingCnt);
         clearCnt = (TextView) findViewById(R.id.clearCnt);
         deathCnt = (TextView) findViewById(R.id.deathCnt);
         Daily_decide = (TextView) findViewById(R.id.Daily_decide);
-        Daily_accExam = (TextView) findViewById(R.id.Daily_accExam);
+        Daily_ingCnt = (TextView) findViewById(R.id.Daily_ingCnt);
         Daily_clear = (TextView) findViewById(R.id.Daily_clear);
         Daily_death = (TextView) findViewById(R.id.Daily_death);
         local_cnt = (TextView) findViewById(R.id.local_cnt);
         over_cnt = (TextView) findViewById(R.id.over_cnt);
-        stateDt = (TextView) findViewById(R.id.stateDt);
-        stateTime = (TextView) findViewById(R.id.stateTime);
+        createDt = (TextView) findViewById(R.id.createDt);
+
 
 
         infection = findViewById(R.id.infection);
@@ -213,7 +212,7 @@ public class CovidActivity extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        covid19();
+        //covid19();
         covidChartRequest();
 
     }
@@ -285,154 +284,154 @@ public class CovidActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void covid19() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 년, 월, 일 데이터 포맷형식 설정
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance(); // 오늘날짜
-        String today = sdf.format(calendar.getTime());
-        calendar.add(Calendar.DATE, -8);  // 오늘 날짜에서 2일치를 뺌
-        String dayinter = sdf.format(calendar.getTime());
-        String url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey="
-                +key+"&startCreateDt="+dayinter+"&endCreateDt="+today;
-
-
-
-        // 요청을 보내기 위한 StringRequest객체 생성
-        StringRequest request = new StringRequest(
-                Request.Method.GET, // 첫번 째 파라미터 GET 메서드
-                url, // 두 번째 파라미터 url 주소
-                new com.android.volley.Response.Listener<String>() {
-                    @Override  // 세 번째 파라미터 응답받을 리스너 객체
-                    public void onResponse(String response) {
-                        covidResponse(response);
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override // 네 번째 파라미터 에러발생시 호출될 리스너 객체
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
-                    }
-                }
-        ) {
-            @Override // POST 방식사용시의 반환하는 HashMap 객체
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                return params;
-            }
-        };
-        // 요청을 보내기 위한 StringRequest객체 생성
-        StringRequest request2 = new StringRequest(
-                Request.Method.GET, // 첫번 째 파라미터 GET 메서드
-                url, // 두 번째 파라미터 url 주소
-                new com.android.volley.Response.Listener<String>() {
-                    @Override  // 세 번째 파라미터 응답받을 리스너 객체
-                    public void onResponse(String response) {
-                        covidResponse(response);
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override // 네 번째 파라미터 에러발생시 호출될 리스너 객체
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
-                    }
-                }
-        ) {
-            @Override // POST 방식사용시의 반환하는 HashMap 객체
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                return params;
-            }
-        };
-        request.setShouldCache(false);
-        requestQueue.add(request);
-    }
-
-    public void covidResponse(String response) {
-        XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
-        Gson gson = new Gson();
-        CovidLocal covidList = gson.fromJson(xmlToJson.toJson().toString(), CovidLocal.class);
-        Item today = covidList.response.body.items.item.get(0);
-        Item yesterday = covidList.response.body.items.item.get(1);
-
-        DecimalFormat df = new DecimalFormat("#,###"); // 표현 패턴 설정
-
-        /*기준 시간 추가*/
-        StringBuffer dt = new StringBuffer();
-        dt.append(today.stateDt);
-        dt.insert(4,".");
-        dt.insert(7,".");
-        println(dt, stateDt);
-        println(today.stateTime, stateTime);
-
-        /* -----금일 데이터 String -> int형 변환-------*/
-        int decide_today = Integer.parseInt(today.decideCnt);
-        int accExam_today = Integer.parseInt(today.accExamCnt);
-        int clear_today = Integer.parseInt(today.clearCnt);
-        int death_today = Integer.parseInt(today.deathCnt);
-
-        /* -----전일 데이터 String -> int형 변환-------*/
-        int decide_yesterday = Integer.parseInt(yesterday.decideCnt);
-        int accExam_yesterday = Integer.parseInt(yesterday.accExamCnt);
-        int clear_yesterday = Integer.parseInt(yesterday.clearCnt);
-        int death_yesterday = Integer.parseInt(yesterday.deathCnt);
-
-        /* ----- 전일 대비 증감 -------*/
-        int dec_inter = decide_today - decide_yesterday;
-        int acc_inter = accExam_today - accExam_yesterday;
-        int clear_inter = clear_today - clear_yesterday;
-        int death_inter = death_today - death_yesterday;
-
-        /* ----- 금일 데이터 텍스트뷰에 추가 -------*/
-        println(df.format(decide_today), decide);
-        println(df.format(accExam_today),accExam);
-        println(df.format(clear_today), clearCnt);
-        println(df.format(death_today), deathCnt);
-
-
-        int blue = ContextCompat.getColor(getApplicationContext(), R.color.blue); // 감소하였을 경우
-        int red = ContextCompat.getColor(getApplicationContext(), R.color.red);   // 증가하였을 경우
-
-        /* ----- 전일 대비 증감 데이터 텍스트뷰에 추가 -------*/
-
-        if(dec_inter < 0){
-            Daily_decide.setTextColor(blue);
-            println(dec_inter, Daily_decide);
-        }
-        else if(dec_inter > 0) {
-            Daily_decide.setTextColor(red);
-            println(dec_inter, Daily_decide);
-        }
-        if(acc_inter < 0){
-            Daily_accExam.setTextColor(blue);
-            println(df.format(acc_inter), Daily_accExam);
-            Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
-        }
-        else if(acc_inter > 0) {
-            Daily_accExam.setTextColor(red);
-            println(df.format(acc_inter), Daily_accExam);
-            Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
-        }
-        if(clear_inter < 0){
-            Daily_clear.setTextColor(blue);
-            println(clear_inter, Daily_clear);
-            Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
-        }
-        else if(clear_inter > 0) {
-            Daily_clear.setTextColor(red);
-            println(clear_inter, Daily_clear);
-            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
-        }
-        if(death_inter < 0){
-            Daily_death.setTextColor(blue);
-            println(death_inter, Daily_death);
-            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
-        }
-        else if(death_inter > 0) {
-            Daily_death.setTextColor(red);
-            println(death_inter, Daily_death);
-            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
-        }
-    }
+//    public void covid19() {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 년, 월, 일 데이터 포맷형식 설정
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+//        Calendar calendar = Calendar.getInstance(); // 오늘날짜
+//        String today = sdf.format(calendar.getTime());
+//        calendar.add(Calendar.DATE, -8);  // 오늘 날짜에서 2일치를 뺌
+//        String dayinter = sdf.format(calendar.getTime());
+//        String url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey="
+//                +key+"&startCreateDt="+dayinter+"&endCreateDt="+today;
+//
+//
+//
+//        // 요청을 보내기 위한 StringRequest객체 생성
+//        StringRequest request = new StringRequest(
+//                Request.Method.GET, // 첫번 째 파라미터 GET 메서드
+//                url, // 두 번째 파라미터 url 주소
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override  // 세 번째 파라미터 응답받을 리스너 객체
+//                    public void onResponse(String response) {
+//                        covidResponse(response);
+//                    }
+//                },
+//                new com.android.volley.Response.ErrorListener() {
+//                    @Override // 네 번째 파라미터 에러발생시 호출될 리스너 객체
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
+//                    }
+//                }
+//        ) {
+//            @Override // POST 방식사용시의 반환하는 HashMap 객체
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<String, String>();
+//                return params;
+//            }
+//        };
+//        // 요청을 보내기 위한 StringRequest객체 생성
+//        StringRequest request2 = new StringRequest(
+//                Request.Method.GET, // 첫번 째 파라미터 GET 메서드
+//                url, // 두 번째 파라미터 url 주소
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override  // 세 번째 파라미터 응답받을 리스너 객체
+//                    public void onResponse(String response) {
+//                        covidResponse(response);
+//                    }
+//                },
+//                new com.android.volley.Response.ErrorListener() {
+//                    @Override // 네 번째 파라미터 에러발생시 호출될 리스너 객체
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
+//                    }
+//                }
+//        ) {
+//            @Override // POST 방식사용시의 반환하는 HashMap 객체
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<String, String>();
+//                return params;
+//            }
+//        };
+//        request.setShouldCache(false);
+//        requestQueue.add(request);
+//    }
+//
+//    public void covidResponse(String response) {
+//        XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+//        Gson gson = new Gson();
+//        CovidLocal covidList = gson.fromJson(xmlToJson.toJson().toString(), CovidLocal.class);
+//        Item today = covidList.response.body.items.item.get(0);
+//        Item yesterday = covidList.response.body.items.item.get(1);
+//
+//        DecimalFormat df = new DecimalFormat("#,###"); // 표현 패턴 설정
+//
+////        /*기준 시간 추가*/
+////        StringBuffer dt = new StringBuffer();
+////        dt.append(today.stateDt);
+////        dt.insert(4,".");
+////        dt.insert(7,".");
+////        println(dt, stateDt);
+////        println(today.stateTime, stateTime);
+//
+//        /* -----금일 데이터 String -> int형 변환-------*/
+//        int decide_today = Integer.parseInt(today.decideCnt);
+//        int accExam_today = Integer.parseInt(today.accExamCnt);
+//        int clear_today = Integer.parseInt(today.clearCnt);
+//        int death_today = Integer.parseInt(today.deathCnt);
+//
+//        /* -----전일 데이터 String -> int형 변환-------*/
+//        int decide_yesterday = Integer.parseInt(yesterday.decideCnt);
+//        int accExam_yesterday = Integer.parseInt(yesterday.accExamCnt);
+//        int clear_yesterday = Integer.parseInt(yesterday.clearCnt);
+//        int death_yesterday = Integer.parseInt(yesterday.deathCnt);
+//
+//        /* ----- 전일 대비 증감 -------*/
+////        int dec_inter = decide_today - decide_yesterday;
+//        int acc_inter = accExam_today - accExam_yesterday;
+//        int clear_inter = clear_today - clear_yesterday;
+//        int death_inter = death_today - death_yesterday;
+//
+//        /* ----- 금일 데이터 텍스트뷰에 추가 -------*/
+//        println(df.format(decide_today), decide);
+////        println(df.format(accExam_today),accExam);
+//        println(df.format(clear_today), clearCnt);
+//        println(df.format(death_today), deathCnt);
+//
+//
+//        int blue = ContextCompat.getColor(getApplicationContext(), R.color.blue); // 감소하였을 경우
+//        int red = ContextCompat.getColor(getApplicationContext(), R.color.red);   // 증가하였을 경우
+//
+//        /* ----- 전일 대비 증감 데이터 텍스트뷰에 추가 -------*/
+//
+////        if(dec_inter < 0){
+////            Daily_decide.setTextColor(blue);
+////            println(dec_inter, Daily_decide);
+////        }
+////        else if(dec_inter > 0) {
+////            Daily_decide.setTextColor(red);
+////            println(dec_inter, Daily_decide);
+////        }
+////        if(acc_inter < 0){
+////            Daily_accExam.setTextColor(blue);
+////            println(df.format(acc_inter), Daily_accExam);
+////            Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+////        }
+////        else if(acc_inter > 0) {
+////            Daily_accExam.setTextColor(red);
+////            println(df.format(acc_inter), Daily_accExam);
+////            Daily_accExam.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+////        }
+//        if(clear_inter < 0){
+//            Daily_clear.setTextColor(blue);
+//            println(clear_inter, Daily_clear);
+//            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+//        }
+//        else if(clear_inter > 0) {
+//            Daily_clear.setTextColor(red);
+//            println(clear_inter, Daily_clear);
+//            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+//        }
+//        if(death_inter < 0){
+//            Daily_death.setTextColor(blue);
+//            println(death_inter, Daily_death);
+//            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+//        }
+//        else if(death_inter > 0) {
+//            Daily_death.setTextColor(red);
+//            println(death_inter, Daily_death);
+//            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+//        }
+//    }
     public void covidChartRequest() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 년, 월, 일 데이터 포맷형식 설정
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -482,10 +481,97 @@ public class CovidActivity extends AppCompatActivity {
         CovidSidoItem item5 = covidList.response.body.items.item.get(113); // 5일전
         CovidSidoItem item6 = covidList.response.body.items.item.get(132); // 6일전
 
-        /*국내 일일, 해외 유입 일일 확진자*/
-        println(item0.localOccCnt, local_cnt);
-        println(item0.overFlowCnt, over_cnt);
+        DecimalFormat df = new DecimalFormat("#,###"); // 표현 패턴 설정
 
+        /*
+        파싱할 데이터
+        1. 일일 확진자 (incDec) -> 전일 대비 증감
+        2. 국내 발생(localOccCnt), 해외 유입(overFlowCnt)
+        3. 누적 확진자 (defCnt)
+        4. 격리중환자(확진환자) (isolingCnt) -> 전일 대비 증감 (item0.isolingCnt) - (item1.isolingCnt)
+        5. 완치(isolClearCnt) -> 전일 대비 증감 (item0.isolClearCnt) - (item1.isolClearCnt)
+        6. 사망자(deathCnt) -> 전일 대비 증감 (item0.deathCnt) - (item1.deathCnt)
+        7. 기준시간(createDt)
+         */
+
+
+        /*금일 코로나19현황 데이터*/
+        int localcnt = Integer.parseInt(item0.localOccCnt); // 국내 일일 확진자 형 변환
+        int overcnt = Integer.parseInt(item0.overFlowCnt); // 해외 유입 일일 확진자 형 변화
+        int incDec_inter = Integer.parseInt(item0.incDec); // 총 일일 확진자 형 변환
+        int defcnt = Integer.parseInt(item0.defCnt); // 누적 확진자 형 변환
+        int ingcnt = Integer.parseInt(item0.isolIngCnt); // 격리중 환자 형 변환
+        int clearcnt = Integer.parseInt(item0.isolClearCnt); // 완치 환자 형 변환
+        int deatcnt = Integer.parseInt(item0.deathCnt); // 사망 환자 형 변환
+        String create = item0.createDt.substring(0, 10).replace("-","."); // 발생 날짜
+
+        /*전일 코로나19현황 데이터*/
+        int yesterday_ingcnt = Integer.parseInt(item1.isolIngCnt);
+        int yesterday_clearcnt = Integer.parseInt(item1.isolClearCnt);
+        int yesterday_deathcnt = Integer.parseInt(item1.deathCnt);
+
+        /*전일 대비 증감 코로나19현황 데이터*/
+        int daily_ingcnt = ingcnt - yesterday_ingcnt;
+        int daily_clearcnt = clearcnt - yesterday_clearcnt;
+        int daily_deathcnt = deatcnt - yesterday_deathcnt;
+
+        /*금일 코로나19현황 데이터 텍스트뷰 추가*/
+        println(df.format(defcnt), decide);  // 누적 확진자
+        println(df.format(localcnt), local_cnt); // 국내 일일
+        println(df.format(overcnt), over_cnt); // 해외 유입 일일
+        println(df.format(ingcnt), ingCnt); // 격리중 환자
+        println(df.format(clearcnt), clearCnt); // 완치 환자
+        println(df.format(deatcnt), deathCnt); // 사망 환자
+        println(create, createDt); // 발생 시간
+
+        int blue = ContextCompat.getColor(getApplicationContext(), R.color.blue); // 감소하였을 경우
+        int red = ContextCompat.getColor(getApplicationContext(), R.color.red);   // 증가하였을 경우
+
+        /*전일 대비 코로나19현황 데이터*/
+        if(incDec_inter < 0){ // 총 일일 확진자가 0보다 작을 경우 파란색설정
+            Daily_decide.setTextColor(blue);
+            println(df.format(incDec_inter), Daily_decide);
+        }
+        else if(incDec_inter > 0){ // 총 일일 확진자가 0보다 클 경우 빨간색설정
+            Daily_decide.setTextColor(red);
+            println(df.format(incDec_inter), Daily_decide);
+        }
+        if(daily_ingcnt < 0) // 격리 중 환자의 수가 0 보다 작을 경우 파란색설정
+        {
+            Daily_ingCnt.setTextColor(blue);
+            println(daily_ingcnt, Daily_ingCnt);
+            Daily_ingCnt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+        }
+        else if(daily_ingcnt > 0) // 격리 중 환자의 수가 0보다 클 경우 빨간색 설정
+        {
+            Daily_ingCnt.setTextColor(red);
+            println(daily_ingcnt, Daily_ingCnt);
+            Daily_ingCnt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+        }
+        if(daily_clearcnt < 0){
+            Daily_clear.setTextColor(blue);
+            println(daily_clearcnt, Daily_clear);
+            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+        }
+        else if(daily_clearcnt > 0) {
+            Daily_clear.setTextColor(red);
+            println(daily_clearcnt, Daily_clear);
+            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+        }
+        if(daily_deathcnt < 0){
+            Daily_death.setTextColor(blue);
+            println(daily_deathcnt, Daily_death);
+            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+        }
+        else if(daily_deathcnt > 0) {
+            Daily_death.setTextColor(red);
+            println(daily_deathcnt, Daily_death);
+            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+        }
+        /***************************************************/
+
+
+        /************차트시작************/
         /*일주일치 일일 확진자의 수를 구하기 위한 리스트*/
         ArrayList dailyList = new ArrayList();
         dailyList.add(item0.incDec);
@@ -515,10 +601,9 @@ public class CovidActivity extends AppCompatActivity {
 
         LineChart lineChart = findViewById(R.id.chart);
         lineChart.invalidate(); // 차트 초기화 작업
-        lineChart.clear();
         lineChart.setTouchEnabled(false);
 
-        /*설명문 없애기*/
+        /*Description 설정*/
         Description description = new Description();
         description.setText("");
         lineChart.setDescription(description);
@@ -567,17 +652,22 @@ public class CovidActivity extends AppCompatActivity {
 
         });
 
+        /*****************************************************/
+
+        /*Y축 왼쪽 설정*/
         YAxis yAxisLeft = lineChart.getAxisLeft();
         yAxisLeft.setTextSize(12f);
         yAxisLeft.setAxisMinimum(0f);
         yAxisLeft.setAxisMaximum(1000f);
         //yAxisLeft.setLabelCount(11,true);
 
+        /*Y축 오른쪽 설정*/
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setDrawLabels(false);
         yAxisRight.setDrawAxisLine(true);
         yAxisRight.setDrawGridLines(false);
 
+        /*범례설정*/
         Legend legend = lineChart.getLegend();
         legend.setEnabled(false);
 
