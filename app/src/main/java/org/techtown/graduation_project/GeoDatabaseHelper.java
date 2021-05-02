@@ -67,19 +67,19 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
         Log.d("저장 작업이 끝났슴", "ㅇㅇ");
     }
 
-    public void addstartDay(String startDay){
+    public void addstartDay(String startDay, String Msg){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO GeoDB(startDay) VALUES ('"+startDay+"')");
+        db.execSQL("Update GeoDB set startDay = '" + startDay + "'where dMsg = '" + Msg +"';");
     }
 
-    public void addendDay(String endDay){
+    public void addendDay(String endDay, String Msg){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO GeoDB(endDay) VALUES ('"+endDay+"')");
+        db.execSQL("Update GeoDB set endDay = '" + endDay + "'where dMsg = '" + Msg +"';");
     }
 
-    public void addterm(String term) {
+    public void addterm(String term, String Msg) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO GeoDB(term) VALUES ('"+term+"')");
+        db.execSQL("Update GeoDB set term = '" + term + "'where dMsg = '" + Msg +"';");
     }
 
 

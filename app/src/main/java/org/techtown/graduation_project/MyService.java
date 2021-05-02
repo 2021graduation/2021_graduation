@@ -359,9 +359,10 @@ public class MyService extends Service {
             return;
 
         } else {
-            Log.d(TAG, String.valueOf(addresses.get(0)));
+
             LatLng covidlatlng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
             Msg = Msg.replaceAll("\'", "");
+            Log.d(TAG, Msg);
             geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
             try {
                 MsgDrawDate(Msg);
@@ -400,8 +401,8 @@ public class MyService extends Service {
                     e.printStackTrace();
                 }
                 startDay = afterdayTime.format(tempDate);
-                Log.d("저장하기 직전의 날짜: ", startDay);
-                geoDatabaseHelper.addstartDay(startDay);
+                Log.d("시작날짜: ", startDay);
+                geoDatabaseHelper.addstartDay(startDay, Msg);
             }
             else if (flag >= 1) {  // 이미 1개가 저장되어 있다면
                 String datefilter = datematcher.group();
@@ -419,14 +420,15 @@ public class MyService extends Service {
                     e.printStackTrace();
                 }
                 endDay = afterdayTime.format(tempDate);
+                Log.d("끝 날짜: ", endDay);
                 // DB endDay 저장코드
-                geoDatabaseHelper.addendDay(endDay);
+                geoDatabaseHelper.addendDay(endDay, Msg);
                 // DB (endDay - startDay) 저장코드
             }
             flag += 1;
         }
         if(flag > 1){   // 최소 날짜가 2개 이상 기록됐다면
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy년mm월dd일");
             // startDay, endDay 두 날짜를 parse()를 통해 Date형으로 변환.
             Date FirstDate = format.parse(startDay);
             Date SecondDate = format.parse(endDay);
@@ -441,7 +443,7 @@ public class MyService extends Service {
 
             calDateDays = Math.abs(calDateDays);
 
-            geoDatabaseHelper.addterm(String.valueOf(calDateDays));
+            geoDatabaseHelper.addterm(String.valueOf(calDateDays), Msg);
 
         }
     }
