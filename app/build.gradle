@@ -63,4 +63,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
     implementation 'com.google.firebase:firebase-analytics'
 
+    /*chart 관련*/
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }
