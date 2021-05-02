@@ -4,13 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#77CDE3F4"
     android:orientation="vertical"
     tools:context=".Mask">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#485598">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="마스크조회"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <EditText
@@ -26,11 +46,12 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/button_shape2"
+            android:background="@drawable/button_fill"
+            android:fontFamily="@font/bmjua_ttf"
             android:onClick="mOnClick"
             android:text="검색"
-            android:textColor="#000000"
-            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             app:backgroundTint="#00FFFFFF"
             app:backgroundTintMode="add" />
 

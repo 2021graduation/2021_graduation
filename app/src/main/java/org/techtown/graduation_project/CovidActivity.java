@@ -12,8 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,20 +26,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
@@ -49,7 +42,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,7 +110,7 @@ public class CovidActivity extends AppCompatActivity {
         infection = findViewById(R.id.infection);
         mask = findViewById(R.id.mask);
         MyLocation = findViewById(R.id.MyLocation);
-        disaster = findViewById(R.id.disaster);
+        disaster = findViewById(R.id.table_button);
 
 
         ///////////////////
@@ -562,6 +554,7 @@ public class CovidActivity extends AppCompatActivity {
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(12f);
         xAxis.setTextColor(Color.BLACK);
         xAxis.setDrawAxisLine(true);   // x축의 시작선 보이게
         xAxis.setDrawGridLines(false); // x축 선을 안보이게
@@ -575,6 +568,7 @@ public class CovidActivity extends AppCompatActivity {
         });
 
         YAxis yAxisLeft = lineChart.getAxisLeft();
+        yAxisLeft.setTextSize(12f);
         yAxisLeft.setAxisMinimum(0f);
         yAxisLeft.setAxisMaximum(1000f);
         //yAxisLeft.setLabelCount(11,true);

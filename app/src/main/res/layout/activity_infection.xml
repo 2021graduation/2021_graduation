@@ -4,9 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#77CDE3F4"
+    android:background="#77FFFFFF"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#485598">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="시도현황"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <LinearLayout
@@ -16,14 +36,16 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/disaster"
+            android:id="@+id/table_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/button_shape2"
-            android:text="표로보기"
-            android:textColor="#000000"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/button_fill"
+            android:fontFamily="@font/bmjua_ttf"
+            android:text="표로보기"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             app:backgroundTint="#00FFFFFF"
             app:backgroundTintMode="add" />
 
@@ -33,11 +55,13 @@
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/button_shape2"
-            android:text="지도보기"
-            android:textColor="#000000"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/button_fill"
+            android:fontFamily="@font/bmjua_ttf"
+            android:text="지도보기"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             app:backgroundTint="#00FFFFFF"
             app:backgroundTintMode="add" />
     </LinearLayout>

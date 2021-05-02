@@ -25,7 +25,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.45">
+            app:layout_constraintVertical_bias="0.5">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -53,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
                     android:textColor="#F44336"
@@ -223,7 +224,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95">
+            app:layout_constraintVertical_bias="0.98">
 
             <TextView
                 android:id="@+id/standard_text"
@@ -267,7 +268,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8">
+            app:layout_constraintVertical_bias="0.85">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -284,7 +285,7 @@
                     android:gravity="center"
                     android:text="누적검사"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -295,7 +296,7 @@
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -305,7 +306,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -325,7 +326,7 @@
                     android:gravity="center"
                     android:text="완치"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -336,7 +337,7 @@
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -345,7 +346,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/bmjua_ttf"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -364,7 +365,7 @@
                     android:gravity="center"
                     android:text="사망"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -375,7 +376,7 @@
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -384,7 +385,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/bmjua_ttf"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
             </LinearLayout>
         </LinearLayout>
@@ -397,14 +398,14 @@
             android:gravity="center"
             android:text="코로나19 현황"
             android:textColor="#FFFFFF"
-            android:textSize="40sp"
+            android:textSize="45sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.108" />
+            app:layout_constraintVertical_bias="0.12" />
 
         <Button
             android:id="@+id/dbSelect"
@@ -425,7 +426,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.6"
         android:background="#FFFFFF"
         android:visibility="visible" />
 
@@ -443,6 +444,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -469,6 +471,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:text="시도현황"
                     android:textColor="#000000"
                     android:textSize="12sp" />
@@ -496,6 +499,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:text="마스크조회"
                     android:textColor="#000000"
                     android:textSize="12sp" />
@@ -524,6 +528,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:text="동선조회"
                     android:textColor="#000000"
                     android:textSize="12sp" />
@@ -538,7 +543,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/disaster"
+                    android:id="@+id/table_button"
                     android:layout_width="45dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -552,6 +557,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:text="재난문자"
                     android:textColor="#000000"
                     android:textSize="12sp" />
