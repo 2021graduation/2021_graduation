@@ -186,37 +186,6 @@ public class MyService extends Service {
                 }
             }
             sigunguCursor.close();
-//            if(row.getLocation_name().equals("경기도 시흥시")){
-//                Pattern pattern = Pattern.compile("[(](.*?)[)]");
-//                Matcher matcher = pattern.matcher(str);
-//
-//                while (matcher.find()) {  // 일치하는 게 있다면
-//                    //재난문자 ( ) 안 내용들 모두 들어옴
-//
-//                    if(matcher.group(1).length() > 2){
-//                        //요일제외 2글자 이상인 재난문자 선별
-//                        Pattern pattern2 = Pattern.compile(".*?(길\\b|동\\b|대로\\b|로\\b).*");
-//                        Matcher matcher2 = pattern2.matcher(matcher.group(1));
-//                        while(matcher2.find()){
-//                            // ~길, ~동, ~대로 ~로 글자 전후로 가져옴
-//                            String filter = matcher2.group();
-//
-//                            int target_index;
-//                            if(filter.contains("소독완료")){
-//                                target_index = filter.indexOf("소독완료");
-//                                filter = filter.replace(filter.substring(target_index), "");
-//                            }else if(filter.contains("방역완료")){
-//                                target_index = filter.indexOf("방역완료");
-//                                filter = filter.replace(filter.substring(target_index), "");
-//                            }
-//                            filter = filter.replaceAll(".*감염경로.*","");
-//                            getDisasterAddress(filter,str);
-//                        }
-//                    }
-//                    if(matcher.group(1) ==  null)
-//                        break;
-//                }
-//            }
         }
     }
 
@@ -423,7 +392,6 @@ public class MyService extends Service {
                 Log.d("끝 날짜: ", endDay);
                 // DB endDay 저장코드
                 geoDatabaseHelper.addendDay(endDay, Msg);
-                // DB (endDay - startDay) 저장코드
             }
             flag += 1;
         }
@@ -469,68 +437,10 @@ public class MyService extends Service {
                     db_longitude = db_cursor.getDouble(1);
                     db_latlng = new LatLng(db_latitude, db_longitude);
                     getCurrentAddress(db_latlng);
-
-//                    if(sigunguDatabaseHelper.Sigungu_Check(Sigungu) == false){
-//                        //Log.d("추가된 주소: ", Sigungu);
-//                        sigunguDatabaseHelper.addSigungu(Sigungu);
-//                    }
-                    //Log.d("시군구:", Sigungu);
                 }
             }
         }
     }
-
-//GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
-//        Cursor data = geoDatabaseHelper.getGeoDB();
-//        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
-//        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
-//        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
-//
-//        int i = 0;
-//
-//        while(data.moveToNext()) {
-//            Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-//            tmp_latitude = data.getDouble(1);
-//            tmp_longitude = data.getDouble(2);
-//            /*
-//            거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-//             */
-//            GeoDB_location.setLatitude(tmp_latitude);
-//            GeoDB_location.setLongitude(tmp_longitude);
-//    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-//            Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-//
-//    Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-//            while (db_cursor.moveToNext()) {
-//        Location db_location = new Location(LocationManager.GPS_PROVIDER);
-//        db_latitude = db_cursor.getDouble(0);
-//        db_longitude = db_cursor.getDouble(1);
-//        db_location.setLatitude(db_latitude);
-//        db_location.setLongitude(db_longitude);
-//        if (db_location.distanceTo(GeoDB_location) < 100) {
-//            i++;
-//        }
-//    }
-//}
-
-
-
-//    private void getLatLng() {
-//        Log.d(TAG, "populateListView: Displaying data in the View");
-//        Location db_location = new Location(LocationManager.GPS_PROVIDER);
-//        Cursor tCursor = mDatabaseHelper.getTableName();
-//        Cursor data = mDatabaseHelper.getLocation(date);
-//        while (data.moveToNext()) {
-//            latitude = data.getDouble(1);
-//            longitude = data.getDouble(2);
-//            latLng = new LatLng(latitude, longitude);
-//            String Sigungu = getCurrentAddress(latLng);
-//
-//            Log.d(TAG, "주소: " + Sigungu);
-//        }
-//    }
-
-
 
     public MyService() {
     }
@@ -577,8 +487,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(4000);
-        //locationRequest.setInterval(600000);    // 10분 주기
+        //locationRequest.setInterval(4000);
+        locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
