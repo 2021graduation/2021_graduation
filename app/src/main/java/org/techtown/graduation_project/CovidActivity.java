@@ -71,8 +71,6 @@ public class CovidActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
     static RequestQueue requestQueue; // 요청 큐
-    // 공공데이터 포털의 servicekey
-    String key = "pPaSpIZ%2BXFweoQb0rmHH5gguuqHRO00DHw7CgOuW9wZ2c5HDm%2BwqWpv%2B29V9NIHAcggmnJz3ztzM8206Hkkw7A%3D%3D";
 
     @Override
     protected    void onCreate(Bundle savedInstanceState) {
