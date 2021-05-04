@@ -61,26 +61,13 @@ public class CovidActivity extends AppCompatActivity {
     TextView local_cnt;  // 국내 일일 확진자 TextView
     TextView over_cnt; // 해외 유입 일일 확진자 TextView
 
-    Button hospital; // 병원 검색 버튼
     Button infection; // 코로나19 시도 발생 현황 검색 버튼
     Button mask; // 마스크 검색 버튼
-    Button pharmacy; // 약국 검색 버튼
     Button MyLocation; // 내 위치 조회 버튼
     Button dbSelect;
     Button disaster;
 
-    DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
-
-    double tmp_latitude;
-    double tmp_longitude;
-    LatLng tmp_LatLng;
-    String tablename;
-
-    double db_latitude;
-    double db_longitude;
-    LatLng db_LatLng;
-
 
     private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
     static RequestQueue requestQueue; // 요청 큐
@@ -121,39 +108,6 @@ public class CovidActivity extends AppCompatActivity {
                 while(geodata.moveToNext()){
                     Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3) + " | " + geodata.getString(4) + " | " + geodata.getString(5));
                 }
-//                Cursor data = geoDatabaseHelper.getGeoDB();
-//                while(data.moveToNext()){
-//                    Location user_location = new Location(LocationManager.GPS_PROVIDER);
-//                    tmp_latitude = data.getDouble(1);
-//                    tmp_longitude = data.getDouble(2);
-//                    user_location.setLatitude(tmp_latitude);
-//                    user_location.setLongitude(tmp_longitude);
-//                    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-//                    Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-//
-//                    Cursor tCursor = mDatabaseHelper.getTableName();
-//                    while (tCursor.moveToNext()) {
-//                        tablename = tCursor.getString(0);
-//                        if(tablename.equals("android_metadata")){
-//                            continue;
-//                        }else if(tablename.equals("sqlite_sequence")){
-//                            continue;
-//                        }else{
-//                            Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-//                            while(db_cursor.moveToNext()){
-//                                Location db_location = new Location(LocationManager.GPS_PROVIDER);
-//                                db_latitude = db_cursor.getDouble(0);
-//                                db_longitude = db_cursor.getDouble(1);
-//                                db_location.setLatitude(db_latitude);
-//                                db_location.setLongitude(db_longitude);
-//                                if(db_location.distanceTo(user_location) < 100){
-//                                    Log.d("경보: ", tablename + "   " + data.getString(3));
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                }
             }
         });
         ///////////////////
@@ -216,22 +170,6 @@ public class CovidActivity extends AppCompatActivity {
         covidChartRequest();
 
     }
-
-//    public String getTableName(){
-//        Cursor tCursor = mDatabaseHelper.getTableName();
-//        while (tCursor.moveToNext()) {
-//            tablename = tCursor.getString(0);
-//            if(tablename.equals("android_metadata")){
-//                continue;
-//            }else if(tablename.equals("sqlite_sequence")){
-//                continue;
-//            }else{
-//                return tablename;
-//            }
-//        }
-//    }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
