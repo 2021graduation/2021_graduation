@@ -68,13 +68,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
-    /*
-    새롭게 추가한 부분
-     */
-    ////////////////////////////////////////////////////////////////
-    private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
-    ////////////////////////////////////////////////////////////////
-
     private ArrayList<Table> Table;
     DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     double latitude;
@@ -99,12 +92,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
 
-
-    Location mCurrentLocation;
-    Location tmp_location = new Location("");
-    int markcount = 0;
-    Location a = new Location("");
-
     LatLng currentPosition;
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -113,10 +100,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
-
-    private Button button;
-    private EditText editText;
-    private Geocoder geocoder;
 
 
     @Override
@@ -150,12 +133,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         Intent intent = getIntent();
         date = intent.getStringExtra("table_name");
         Table = new ArrayList<>();
-
-
-
-        editText = (EditText) findViewById(R.id.editText);
-//        button=(Button)findViewById(R.id.button);
-
     }
 
     // 지도 동기화 및 준비
@@ -165,12 +142,11 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
         mMap = googleMap;
 
-        //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
-        //지도의 초기위치를 서울로 이동
+        // 지도의 초기위치를 서울로 이동
         setDefaultLocation();
 
 
-        //런타임 퍼미션 처리
+        // 런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -216,51 +192,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
         }
 
-        geocoder = new Geocoder(this);
-//        button.setOnClickListener(new Button.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                String str=editText.getText().toString();
-//                List<Address> addressList = null;
-//                try {
-//                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
-//                    addressList = geocoder.getFromLocationName(
-//                            str, // 주소
-//                            1); // 최대 검색 결과 개수
-//                }
-//                catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                if(addressList.size() == 0){
-//
-//                }else{
-//                    System.out.println(addressList.get(0).toString());
-//                    // 콤마를 기준으로 split
-//                    String []splitStr = addressList.get(0).toString().split(",");
-//                    String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-//                    System.out.println(address);
-//
-//                    String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-//                    String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-//                    System.out.println(latitude);
-//                    System.out.println(longitude);
-//
-//                    // 좌표(위도, 경도) 생성
-//                    LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-//                    // 마커 생성
-//                    MarkerOptions mOptions2 = new MarkerOptions();
-//                    mOptions2.title("search result");
-//                    mOptions2.snippet(address);
-//                    mOptions2.position(point);
-//                    // 마커 추가
-//                    mMap.addMarker(mOptions2);
-//                    // 해당 좌표로 화면 줌
-//                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15));
-//                }
-//            }
-//        });
-
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -281,12 +212,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         String tmp_startDay;        // GeoDB에서 가져온 시작 날짜를 저장할 변수
         String tmp_endDay;          // GeoDB에서 가져온 끝 날짜를 저장할 변수
 
-        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
-        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
-        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
-        double db_latitude;         // 사용자 DB에서 조회한 위도
-        double db_longitude;        // 사용자 DB에서 조회한 경도
-
         while(data.moveToNext()) {
 
             tmp_startDay = data.getString(0);
@@ -298,53 +223,11 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
                     Date UserDB_Date = simpleDateFormat.parse(tablename);
                     if (UserDB_Date.after(startDate) || UserDB_Date.compareTo(startDate) == 0) {
-                        Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-                        tmp_latitude = data.getDouble(3);
-                        tmp_longitude = data.getDouble(4);
-                        /*
-                        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-                         */
-                        GeoDB_location.setLatitude(tmp_latitude);
-                        GeoDB_location.setLongitude(tmp_longitude);
-                        tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                        Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                        Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                        while (db_cursor.moveToNext()) {
-                            Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                            db_latitude = db_cursor.getDouble(0);
-                            db_longitude = db_cursor.getDouble(1);
-                            db_location.setLatitude(db_latitude);
-                            db_location.setLongitude(db_longitude);
-                            if (db_location.distanceTo(GeoDB_location) < 100) {
-                                addWarningMarkers(tmp_LatLng, data.getString(2), data.getString(5));
-                            }
-                        }
+                        CompareWithGeoDB(data, tablename);
                     }
                 }
                 else if(tmp_startDay == null && tmp_endDay == null){ // 둘다 없으면
-                    Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-                    tmp_latitude = data.getDouble(3);
-                    tmp_longitude = data.getDouble(4);
-                        /*
-                        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-                         */
-                    GeoDB_location.setLatitude(tmp_latitude);
-                    GeoDB_location.setLongitude(tmp_longitude);
-                    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                    Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                    Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                    while (db_cursor.moveToNext()) {
-                        Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                        db_latitude = db_cursor.getDouble(0);
-                        db_longitude = db_cursor.getDouble(1);
-                        db_location.setLatitude(db_latitude);
-                        db_location.setLongitude(db_longitude);
-                        if (db_location.distanceTo(GeoDB_location) < 100) {
-                            addWarningMarkers(tmp_LatLng, data.getString(2), data.getString(5));
-                        }
-                    }
+                    CompareWithGeoDB(data, tablename);
                 }
                 else if(tmp_startDay != null && tmp_endDay != null){   // GeoDB에 endDay 가 존재한다면
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
@@ -353,28 +236,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
 
                     if(UserDB_Date.after(startDate) && UserDB_Date.before(endDate)
                             || UserDB_Date.compareTo(startDate) == 0 || UserDB_Date.compareTo(endDate) == 0){
-                        Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-                        tmp_latitude = data.getDouble(3);
-                        tmp_longitude = data.getDouble(4);
-                        /*
-                        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-                         */
-                        GeoDB_location.setLatitude(tmp_latitude);
-                        GeoDB_location.setLongitude(tmp_longitude);
-                        tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                        Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                        Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                        while (db_cursor.moveToNext()) {
-                            Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                            db_latitude = db_cursor.getDouble(0);
-                            db_longitude = db_cursor.getDouble(1);
-                            db_location.setLatitude(db_latitude);
-                            db_location.setLongitude(db_longitude);
-                            if (db_location.distanceTo(GeoDB_location) < 100) {
-                                addWarningMarkers(tmp_LatLng, data.getString(2), data.getString(5));
-                            }
-                        }
+                        CompareWithGeoDB(data, tablename);
                     }
                 }
             }catch (ParseException e) {
@@ -383,6 +245,43 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         }
     }
 
+    private void CompareWithGeoDB(Cursor data, String tablename){
+
+        /*
+        사용자 위치와 GeoDB 위치를 비교하는 코드
+        Cursor data <= GeoDB Cursor
+        tablename <= mDatabaseHelper tablename
+         */
+
+        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
+        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
+        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
+        double db_latitude;         // 사용자 DB에서 조회한 위도
+        double db_longitude;        // 사용자 DB에서 조회한 경도
+
+        Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
+        tmp_latitude = data.getDouble(3);
+        tmp_longitude = data.getDouble(4);
+        /*
+        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
+         */
+        GeoDB_location.setLatitude(tmp_latitude);
+        GeoDB_location.setLongitude(tmp_longitude);
+        tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+        Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+
+        Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+        while (db_cursor.moveToNext()) {
+            Location db_location = new Location(LocationManager.GPS_PROVIDER);
+            db_latitude = db_cursor.getDouble(0);
+            db_longitude = db_cursor.getDouble(1);
+            db_location.setLatitude(db_latitude);
+            db_location.setLongitude(db_longitude);
+            if (db_location.distanceTo(GeoDB_location) < 100) {
+                addWarningMarkers(tmp_LatLng, data.getString(2), data.getString(5));
+            }
+        }
+    }
 
 
     // 위치를 호출
@@ -423,20 +322,8 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             latitude = data.getDouble(1);
             longitude = data.getDouble(2);
             latLng = new LatLng(latitude, longitude);
-            //db_location.setLatitude(latitude);
-            //db_location.setLongitude(longitude);
-            //Log.d(TAG, "DB에서 가져온 위도: " + latitude + " DB에서 가져온 경도: " + longitude);
-
-            // split()을 이용해 ' '를 기준으로 문자열을 자른다.
-            // split()은 지정한 문자를 기준으로 문자열을 잘라 배열로 반환한다.
-//            String address[] = getCurrentAddress(latLng).split(" ");
-//
-//            for(int i=0 ; i<address.length ; i++)
-//            {
-//                System.out.println("date["+i+"] : "+address[i]);
-//            }
-
             Log.d(TAG, "좌표: " + latLng.latitude + ", " + latLng.longitude);
+
             String markerTitle = getCurrentAddress(latLng);
             String markerSnippet = "위도:" + String.valueOf(latLng.latitude)
                     + " 경도:" + String.valueOf(latLng.longitude);
@@ -470,6 +357,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         mMap.addMarker(markerOptions);
     }
     // 위치 정보 거리 비교하는 부분 ***
+
 
     // 위치 업데이트 시작
     private void startLocationUpdates() {
