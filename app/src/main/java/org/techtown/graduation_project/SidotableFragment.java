@@ -1,5 +1,7 @@
 package org.techtown.graduation_project;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -30,6 +32,8 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 
 public class SidotableFragment extends Fragment {
+    /*sido TextView*/
+    TextView seoul, gyeonggi, incheon, busan, daegu, ulsan, gyeongbuk, gyeongnam, daegeon, sejong, chungbuk, chungnam, gwangju, jeonbuk, jeonnam, jeju, gangwon, geomyeog;
     /*daily_def TextView*/
     TextView seoul_daily, gyeongi_daily, incheon_daily, busan_daily, daegu_daily, ulsan_daily, gyeongbuk_daily, gyeongnam_daily, daegeon_daily, sejong_daily, chungbuk_daily, chungnam_daily, gwangju_daily, jeonbuk_daily, jeonnam_daily, jeju_daily, gangwon_daily, geomyeog_daily;
     /*def TextView*/
@@ -48,6 +52,8 @@ public class SidotableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sidotable, container, false);
+        /*sido*/
+        seoul = view.findViewById(R.id.seoul); gyeonggi = view.findViewById(R.id.gyeonggi); incheon = view.findViewById(R.id.incheon); busan = view.findViewById(R.id.busan); daegu = view.findViewById(R.id.daegeon); ulsan = view.findViewById(R.id.ulsan); gyeongbuk = view.findViewById(R.id.gyeongbuk); gyeongnam = view.findViewById(R.id.gyeongnam); daegeon = view.findViewById(R.id.daegeon); sejong = view.findViewById(R.id.sejong); chungbuk = view.findViewById(R.id.chungbuk); chungnam = view.findViewById(R.id.chungnam); gwangju = view.findViewById(R.id.gwangju); jeonbuk = view.findViewById(R.id.jeonbuk); jeonnam = view.findViewById(R.id.jeonnam); jeju = view.findViewById(R.id.jeju); gangwon = view.findViewById(R.id.gangwon); geomyeog = view.findViewById(R.id.geomyeog);
         /*daily_def id*/
         seoul_daily = view.findViewById(R.id.seoul_daily); gyeongi_daily = view.findViewById(R.id.gyeongi_daily); incheon_daily = view.findViewById(R.id.incheon_daily); busan_daily = view.findViewById(R.id.busan_daily); daegu_daily = view.findViewById(R.id.daegu_daily); ulsan_daily = view.findViewById(R.id.ulsan_daily); gyeongbuk_daily = view.findViewById(R.id.gyeongbuk_daily); gyeongnam_daily = view.findViewById(R.id.gyeongnam_daily); daegeon_daily = view.findViewById(R.id.daegeon_daily); sejong_daily = view.findViewById(R.id.sejong_daily); chungbuk_daily = view.findViewById(R.id.chungbuk_daily); chungnam_daily = view.findViewById(R.id.chungnam_daily); gwangju_daily = view.findViewById(R.id.gwangju_daily); jeonbuk_daily = view.findViewById(R.id.jeonbuk_daily); jeonnam_daily = view.findViewById(R.id.jeonnam_daily); jeju_daily = view.findViewById(R.id.jeju_daily); gangwon_daily = view.findViewById(R.id.gangwon_daily); geomyeog_daily = view.findViewById(R.id.geomyeog_daily);
         /*def id*/
@@ -55,25 +61,15 @@ public class SidotableFragment extends Fragment {
         /*death id*/
         seoul_dea = view.findViewById(R.id.seoul_dea); gyeongi_dea = view.findViewById(R.id.gyeongi_dea); incheon_dea = view.findViewById(R.id.incheon_dea); busan_dea = view.findViewById(R.id.busan_dea); daegu_dea = view.findViewById(R.id.daegu_dea); ulsan_dea = view.findViewById(R.id.ulsan_dea); gyeongbuk_dea = view.findViewById(R.id.gyeongbuk_dea); gyeongnam_dea = view.findViewById(R.id.gyeongnam_dea); daegeon_dea = view.findViewById(R.id.daegeon_dea); sejong_dea = view.findViewById(R.id.sejong_dea); chungbuk_dea = view.findViewById(R.id.chungbuk_dea); chungnam_dea = view.findViewById(R.id.chungnam_dea); gwangju_dea = view.findViewById(R.id.gwangju_dea); jeonbuk_dea = view.findViewById(R.id.jeonbuk_dea); jeonnam_dea = view.findViewById(R.id.jeonnam_dea); jeju_dea = view.findViewById(R.id.jeju_dea); gangwon_dea = view.findViewById(R.id.gangwon_dea); geomyeog_dea = view.findViewById(R.id.geomyeog_dea);
         /*clear id*/
-        seoul_clear = view.findViewById(R.id.seoul_clear);
-        gyeongi_clear = view.findViewById(R.id.gyeongi_clear);
-        incheon_clear = view.findViewById(R.id.incheon_clear);
-        busan_clear = view.findViewById(R.id.busan_clear);
-        ulsan_clear = view.findViewById(R.id.ulsan_clear);
-        daegu_clear = view.findViewById(R.id.daegu_clear);
-        gyeongbuk_clear = view.findViewById(R.id.gyeongbuk_clear);
-        gyeongnam_clear = view.findViewById(R.id.gyeongnam_clear);
-        daegeon_clear = view.findViewById(R.id.daegeon_clear);
-        sejong_clear = view.findViewById(R.id.sejong_clear);
-        chungbuk_clear = view.findViewById(R.id.chungbuk_clear);
-        chungnam_clear = view.findViewById(R.id.chungnam_clear);
-        gwangju_clear = view.findViewById(R.id.gwangju_clear);
-        jeonbuk_clear = view.findViewById(R.id.jeonbuk_clear);
-        jeonnam_clear = view.findViewById(R.id.jeonnam_clear);
-        jeju_clear = view.findViewById(R.id.jeju_clear);
-        gangwon_clear = view.findViewById(R.id.gangwon_clear);
-        geomyeog_clear = view.findViewById(R.id.geomyeog_clear);
+        seoul_clear = view.findViewById(R.id.seoul_clear);gyeongi_clear = view.findViewById(R.id.gyeongi_clear);incheon_clear = view.findViewById(R.id.incheon_clear);busan_clear = view.findViewById(R.id.busan_clear);ulsan_clear = view.findViewById(R.id.ulsan_clear);daegu_clear = view.findViewById(R.id.daegu_clear);gyeongbuk_clear = view.findViewById(R.id.gyeongbuk_clear);gyeongnam_clear = view.findViewById(R.id.gyeongnam_clear);daegeon_clear = view.findViewById(R.id.daegeon_clear);sejong_clear = view.findViewById(R.id.sejong_clear);chungbuk_clear = view.findViewById(R.id.chungbuk_clear);chungnam_clear = view.findViewById(R.id.chungnam_clear);gwangju_clear = view.findViewById(R.id.gwangju_clear);jeonbuk_clear = view.findViewById(R.id.jeonbuk_clear);jeonnam_clear = view.findViewById(R.id.jeonnam_clear);jeju_clear = view.findViewById(R.id.jeju_clear);gangwon_clear = view.findViewById(R.id.gangwon_clear);geomyeog_clear = view.findViewById(R.id.geomyeog_clear);
 
+        seoul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent seoul = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.seoul.go.kr/coronaV/coronaStatus.do"));
+                startActivity(seoul);
+            }
+        });
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         }

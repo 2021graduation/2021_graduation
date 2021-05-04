@@ -60,7 +60,7 @@
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
                     android:textColor="#F44336"
-                    android:textSize="30sp"
+                    android:textSize="40sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -133,7 +133,7 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_width="2dp"
+                    android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="#FFFFFF" />
 
@@ -406,8 +406,6 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
@@ -434,16 +432,15 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
                 android:layout_marginBottom="3dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/infection"
-                    android:layout_width="45dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_baseline_search_24"
@@ -464,16 +461,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
                 android:layout_marginBottom="3dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/mask"
-                    android:layout_width="45dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/mask_search"
@@ -485,6 +481,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/bmjua_ttf"
                     android:text="마스크조회"
                     android:textColor="#000000"
@@ -492,16 +489,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
                 android:layout_marginBottom="3dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/MyLocation"
-                    android:layout_width="45dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/mylocation"
@@ -522,15 +518,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="50dp"
                 android:layout_marginBottom="3dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/table_button"
-                    android:layout_width="45dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/disaster_search"

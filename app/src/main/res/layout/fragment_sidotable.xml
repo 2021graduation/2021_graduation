@@ -31,9 +31,9 @@
 
                     <TextView
 
+                        android:id="@+id/seoul"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="서울"
                         android:textColor="#000000"
@@ -186,6 +186,7 @@
 
                     <TextView
 
+                        android:id="@+id/gyeonggi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -350,6 +351,7 @@
 
                     <TextView
 
+                        android:id="@+id/incheon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -506,6 +508,7 @@
 
                     <TextView
 
+                        android:id="@+id/busan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -669,6 +672,7 @@
 
                     <TextView
 
+                        android:id="@+id/daegu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -825,6 +829,7 @@
 
                     <TextView
 
+                        android:id="@+id/ulsan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -988,6 +993,7 @@
 
                     <TextView
 
+                        android:id="@+id/gyeongbuk"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1144,6 +1150,7 @@
 
                     <TextView
 
+                        android:id="@+id/gyeongnam"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1307,6 +1314,7 @@
 
                     <TextView
 
+                        android:id="@+id/daegeon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1463,6 +1471,7 @@
 
                     <TextView
 
+                        android:id="@+id/sejong"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1626,6 +1635,7 @@
 
                     <TextView
 
+                        android:id="@+id/chungbuk"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1782,6 +1792,7 @@
 
                     <TextView
 
+                        android:id="@+id/chungnam"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1945,6 +1956,7 @@
 
                     <TextView
 
+                        android:id="@+id/gwangju"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -2101,6 +2113,7 @@
 
                     <TextView
 
+                        android:id="@+id/jeonbuk"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -2264,6 +2277,7 @@
 
                     <TextView
 
+                        android:id="@+id/jeonnam"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -2420,6 +2434,7 @@
 
                     <TextView
 
+                        android:id="@+id/jeju"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -2583,6 +2598,7 @@
 
                     <TextView
 
+                        android:id="@+id/gangwon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -2739,6 +2755,7 @@
 
                     <TextView
 
+                        android:id="@+id/geomyeog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

@@ -540,33 +540,33 @@ public class CovidActivity extends AppCompatActivity {
         {
             Daily_ingCnt.setTextColor(blue);
             println(daily_ingcnt, Daily_ingCnt);
-            Daily_ingCnt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+            //Daily_ingCnt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
         }
         else if(daily_ingcnt > 0) // 격리 중 환자의 수가 0보다 클 경우 빨간색 설정
         {
             Daily_ingCnt.setTextColor(red);
             println(daily_ingcnt, Daily_ingCnt);
-            Daily_ingCnt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+            //Daily_ingCnt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
         }
         if(daily_clearcnt < 0){
             Daily_clear.setTextColor(blue);
             println(daily_clearcnt, Daily_clear);
-            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+            //Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
         }
         else if(daily_clearcnt > 0) {
             Daily_clear.setTextColor(red);
             println(daily_clearcnt, Daily_clear);
-            Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+            //Daily_clear.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
         }
         if(daily_deathcnt < 0){
             Daily_death.setTextColor(blue);
             println(daily_deathcnt, Daily_death);
-            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
+            //Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down,0,0,0);
         }
         else if(daily_deathcnt > 0) {
             Daily_death.setTextColor(red);
             println(daily_deathcnt, Daily_death);
-            Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
+            //Daily_death.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up,0,0,0);
         }
         /***************************************************/
 
@@ -638,11 +638,12 @@ public class CovidActivity extends AppCompatActivity {
         xAxisLabel.add(cre[0]);
 
         XAxis xAxis = lineChart.getXAxis();
+        xAxis.setAxisMinimum(-0.2f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(12f);
         xAxis.setTextColor(Color.BLACK);
-        xAxis.setDrawAxisLine(true);   // x축의 시작선 보이게
-        xAxis.setDrawGridLines(false); // x축 선을 안보이게
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
 
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
@@ -664,7 +665,7 @@ public class CovidActivity extends AppCompatActivity {
         /*Y축 오른쪽 설정*/
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setDrawLabels(false);
-        yAxisRight.setDrawAxisLine(true);
+        yAxisRight.setDrawAxisLine(false);
         yAxisRight.setDrawGridLines(false);
 
         /*범례설정*/
