@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class SQLiteActivity extends AppCompatActivity {
@@ -146,6 +145,7 @@ public class SQLiteActivity extends AppCompatActivity {
                 Table.add(data1);
             }
         }
+        tCursor.close();
     }
 
     public int get_disaster_count(String tablename) {
@@ -155,12 +155,7 @@ public class SQLiteActivity extends AppCompatActivity {
         String tmp_startDay;        // GeoDB에서 가져온 시작 날짜를 저장할 변수
         String tmp_endDay;          // GeoDB에서 가져온 끝 날짜를 저장할 변수
 
-        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
-        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
-        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
-        double db_latitude;         // 사용자 DB에서 조회한 위도
-        double db_longitude;        // 사용자 DB에서 조회한 경도
-        int i = 0;
+        int disaster_count = 0;
 
         while(data.moveToNext()) {
 
@@ -173,53 +168,11 @@ public class SQLiteActivity extends AppCompatActivity {
                     Date UserDB_Date = simpleDateFormat.parse(tablename);
                     if(UserDB_Date.after(startDate) || UserDB_Date.compareTo(startDate) == 0){
                         // 유저 디비에 저장된 날짜가 재난문자의 시작 날짜보다 뒤에 있거나 같으면
-                        Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-                        tmp_latitude = data.getDouble(3);
-                        tmp_longitude = data.getDouble(4);
-                        /*
-                        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-                         */
-                        GeoDB_location.setLatitude(tmp_latitude);
-                        GeoDB_location.setLongitude(tmp_longitude);
-                        tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                        Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                        Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                        while (db_cursor.moveToNext()) {
-                            Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                            db_latitude = db_cursor.getDouble(0);
-                            db_longitude = db_cursor.getDouble(1);
-                            db_location.setLatitude(db_latitude);
-                            db_location.setLongitude(db_longitude);
-                            if (db_location.distanceTo(GeoDB_location) < 100) {
-                                i++;
-                            }
-                        }
+                        disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
                     }
                 }
                 else if(tmp_startDay == null && tmp_endDay == null){ // 둘다 없으면
-                    Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-                    tmp_latitude = data.getDouble(3);
-                    tmp_longitude = data.getDouble(4);
-                        /*
-                        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-                         */
-                    GeoDB_location.setLatitude(tmp_latitude);
-                    GeoDB_location.setLongitude(tmp_longitude);
-                    tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                    Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                    Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                    while (db_cursor.moveToNext()) {
-                        Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                        db_latitude = db_cursor.getDouble(0);
-                        db_longitude = db_cursor.getDouble(1);
-                        db_location.setLatitude(db_latitude);
-                        db_location.setLongitude(db_longitude);
-                        if (db_location.distanceTo(GeoDB_location) < 100) {
-                            i++;
-                        }
-                    }
+                    disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
                 }
                 else if(tmp_startDay != null && tmp_endDay != null){   // GeoDB에 endDay 가 존재한다면
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
@@ -228,35 +181,60 @@ public class SQLiteActivity extends AppCompatActivity {
 
                     if(UserDB_Date.after(startDate) && UserDB_Date.before(endDate)
                             || UserDB_Date.compareTo(startDate) == 0 || UserDB_Date.compareTo(endDate) == 0){
-                        Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
-                        tmp_latitude = data.getDouble(3);
-                        tmp_longitude = data.getDouble(4);
-                        /*
-                        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
-                         */
-                        GeoDB_location.setLatitude(tmp_latitude);
-                        GeoDB_location.setLongitude(tmp_longitude);
-                        tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
-                        Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
-
-                        Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
-                        while (db_cursor.moveToNext()) {
-                            Location db_location = new Location(LocationManager.GPS_PROVIDER);
-                            db_latitude = db_cursor.getDouble(0);
-                            db_longitude = db_cursor.getDouble(1);
-                            db_location.setLatitude(db_latitude);
-                            db_location.setLongitude(db_longitude);
-                            if (db_location.distanceTo(GeoDB_location) < 100) {
-                                i++;
-                            }
-                        }
+                        disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
                     }
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        return i;
+        data.close();
+
+        return disaster_count;
+    }
+
+
+    private int CompareWithGeoDB(Cursor data, String tablename, int disaster_count){
+
+        /*
+        사용자 위치와 GeoDB 위치를 비교하는 코드
+        Cursor data <= GeoDB Cursor
+        tablename <= mDatabaseHelper tablename
+
+        MapActivity 에 있는 것과는 다른 점이
+        int 형의 데이터를 반환함
+         */
+
+        double tmp_latitude;        // GeoDB에서 가져온 위도를 저장할 변수
+        double tmp_longitude;       // GeoDB에서 가져온 경도를 저장할 변수
+        LatLng tmp_LatLng;          // 위도, 경도를 합친 좌표
+        double db_latitude;         // 사용자 DB에서 조회한 위도
+        double db_longitude;        // 사용자 DB에서 조회한 경도
+
+        Location GeoDB_location = new Location(LocationManager.GPS_PROVIDER);
+        tmp_latitude = data.getDouble(3);
+        tmp_longitude = data.getDouble(4);
+        /*
+        거리 비교를 위해 location 변수에 GeoDB에서 가져온 위도 경도 세팅
+         */
+        GeoDB_location.setLatitude(tmp_latitude);
+        GeoDB_location.setLongitude(tmp_longitude);
+        tmp_LatLng = new LatLng(tmp_latitude, tmp_longitude);
+        Log.d("GeoDB에서 가져온 LatLng", String.valueOf(tmp_LatLng));
+
+        Cursor db_cursor = mDatabaseHelper.getLatLng(tablename);
+        while (db_cursor.moveToNext()) {
+            Location db_location = new Location(LocationManager.GPS_PROVIDER);
+            db_latitude = db_cursor.getDouble(0);
+            db_longitude = db_cursor.getDouble(1);
+            db_location.setLatitude(db_latitude);
+            db_location.setLongitude(db_longitude);
+            if (db_location.distanceTo(GeoDB_location) < 1000) {
+                disaster_count++;
+            }
+        }
+
+        return disaster_count;
     }
 
 
