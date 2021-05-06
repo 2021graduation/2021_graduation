@@ -101,7 +101,6 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +144,35 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         // 지도의 초기위치를 서울로 이동
         setDefaultLocation();
 
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                LinearLayout info = new LinearLayout(MapActivity.this);
+                info.setOrientation(LinearLayout.VERTICAL);
+
+                TextView title = new TextView(MapActivity.this);
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setTypeface(null, Typeface.BOLD);
+                title.setText(marker.getTitle());
+
+                TextView snippet = new TextView(MapActivity.this);
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+
+                info.addView(title);
+                info.addView(snippet);
+
+                return info;
+            }
+        });
 
         // 런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
@@ -202,6 +230,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
         });
         getLatLng();
         getGeoDBLatLng(date);
+
     }
 
     // GeoDB에 저장된 위치랑 내 위치 비교 후 경고 마커를 찍는 함수
@@ -277,12 +306,11 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             db_longitude = db_cursor.getDouble(1);
             db_location.setLatitude(db_latitude);
             db_location.setLongitude(db_longitude);
-            if (db_location.distanceTo(GeoDB_location) < 100) {
+            if (db_location.distanceTo(GeoDB_location) < 1000) {
                 addWarningMarkers(tmp_LatLng, data.getString(2), data.getString(5));
             }
         }
     }
-
 
     // 위치를 호출
     LocationCallback locationCallback = new LocationCallback() {
