@@ -90,7 +90,7 @@ public class MyService extends Service {
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-            sendRequest();
+            //sendRequest();
         }
 
         sigunguDatabaseHelper.dropTable();
