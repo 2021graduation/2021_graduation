@@ -85,21 +85,9 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        geoDatabaseHelper.dropTable();
 
-        if (requestQueue == null){
-            requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-            //sendRequest();
-        }
 
-        sigunguDatabaseHelper.dropTable();
-        getMySigungu();
-
-//        Cursor sigunguCursor = sigunguDatabaseHelper.getSigungu();
-//        while(sigunguCursor.moveToNext()){
-//            Log.d("시군구 테이블: ", sigunguCursor.getString(0) + " " + sigunguCursor.getString(1));
-//        }
     }
 
     public void sendRequest() {
@@ -207,12 +195,14 @@ public class MyService extends Service {
 
                     Log.d(TAG, "데이터베이스가 비어있어서 현재 위치를 저장합니다.\n 위도: " + String.valueOf(mCurrentLocation.getLatitude()) +
                             "경도: " + String.valueOf(mCurrentLocation.getLongitude()));
+                    getMySigungu();
                 } else {
                     // 두번째 위치 좌표부터
                     // 이전 위치인 tmp_location과 현재 위치인 mCurrentLocation을 비교한다.
                     compareLocation(tmp_location, mCurrentLocation);
                     // 비교가 끝나면 현 위치를 이전 위치로 지정
                     tmp_location = mCurrentLocation;
+                    getMySigungu();
                 }
             }
         }
@@ -292,7 +282,7 @@ public class MyService extends Service {
             String[] tmp = address.getAddressLine(0).split(" ");
 
             if(sigunguDatabaseHelper.Sigungu_Check(tmp[1], tmp[2]) == false){
-                //Log.d("추가된 주소: ", Sigungu);
+                Log.d("추가된 주소: ", tmp[1] + tmp[2]);
                 sigunguDatabaseHelper.addSigungu(tmp[1], tmp[2]);
             }
             String tmp_add = tmp[1] + " " + tmp[2];
@@ -438,8 +428,10 @@ public class MyService extends Service {
                     db_latlng = new LatLng(db_latitude, db_longitude);
                     getCurrentAddress(db_latlng);
                 }
+                db_cursor.close();
             }
         }
+        tCursor.close();
     }
 
     public MyService() {
@@ -487,8 +479,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        //locationRequest.setInterval(4000);
-        locationRequest.setInterval(600000);    // 10분 주기
+        locationRequest.setInterval(4000);
+        //locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
