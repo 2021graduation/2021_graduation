@@ -457,7 +457,7 @@ public class MyService extends Service {
                 getApplicationContext(),
                 channelId
         );
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.mipmap.corona_round);
         builder.setContentTitle("Location Service");
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setContentText("Running");
