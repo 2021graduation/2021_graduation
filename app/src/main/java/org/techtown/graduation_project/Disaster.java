@@ -97,7 +97,10 @@ public class Disaster extends AppCompatActivity {
                                     @Override
                                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                         disasterAdapter.Clear();
-                                        button.setOnClickListener(v -> All(response));
+                                        button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
+                                            All(response);
+                                        });
                                     }
 
                                     @Override
@@ -113,6 +116,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -211,6 +215,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -283,6 +288,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -330,6 +336,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -384,6 +391,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -423,6 +431,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -461,6 +470,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -516,6 +526,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -632,6 +643,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -709,6 +721,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -765,6 +778,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -833,6 +847,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -898,6 +913,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -987,6 +1003,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -1079,6 +1096,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -1156,6 +1174,7 @@ public class Disaster extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                                         disasterAdapter.Clear();
                                         button.setOnClickListener(v -> {
+                                            disasterAdapter.Clear();
                                             String str = adspin2.getItem(i).toString();
                                             switch (str) {
                                                 case "전체":
@@ -1218,7 +1237,13 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("136")){
+            if(row.location_id.equals("136") || row.location_id.equals("137") || row.location_id.equals("138") || row.location_id.equals("139")
+                    || row.location_id.equals("140") || row.location_id.equals("141") || row.location_id.equals("142") || row.location_id.equals("143")
+                    || row.location_id.equals("144") || row.location_id.equals("145") || row.location_id.equals("146") || row.location_id.equals("147")
+                    || row.location_id.equals("148") || row.location_id.equals("149") || row.location_id.equals("150") || row.location_id.equals("151")
+                    || row.location_id.equals("152") || row.location_id.equals("153") || row.location_id.equals("154") || row.location_id.equals("155")
+                    || row.location_id.equals("156") || row.location_id.equals("157") || row.location_id.equals("158") || row.location_id.equals("159")
+                    || row.location_id.equals("160") || row.location_id.equals("161")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -1557,7 +1582,11 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("119")){
+            if(row.location_id.equals("119") || row.location_id.equals("120")|| row.location_id.equals("121")|| row.location_id.equals("122")
+                    || row.location_id.equals("123") || row.location_id.equals("124")|| row.location_id.equals("125")|| row.location_id.equals("126")
+                    || row.location_id.equals("127") || row.location_id.equals("128")|| row.location_id.equals("129")|| row.location_id.equals("130")
+                    || row.location_id.equals("131") || row.location_id.equals("132")|| row.location_id.equals("133")|| row.location_id.equals("134")
+                    || row.location_id.equals("135")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -1779,7 +1808,9 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("104")){
+            if(row.location_id.equals("104") || row.location_id.equals("105") || row.location_id.equals("106") || row.location_id.equals("107")
+                    || row.location_id.equals("108") || row.location_id.equals("109") || row.location_id.equals("110") || row.location_id.equals("111")
+                    || row.location_id.equals("112")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -1897,7 +1928,9 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("168")){
+            if(row.location_id.equals("168") || row.location_id.equals("169") || row.location_id.equals("170") || row.location_id.equals("171")
+                    || row.location_id.equals("172") || row.location_id.equals("173") || row.location_id.equals("174") || row.location_id.equals("175")
+                    || row.location_id.equals("176") || row.location_id.equals("177") || row.location_id.equals("178")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -2041,7 +2074,8 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("98")){
+            if(row.location_id.equals("98") || row.location_id.equals("99") || row.location_id.equals("100") || row.location_id.equals("101")
+                    || row.location_id.equals("102") || row.location_id.equals("103")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -2120,7 +2154,8 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("113")){
+            if(row.location_id.equals("113") || row.location_id.equals("114") || row.location_id.equals("115") || row.location_id.equals("116")
+                    || row.location_id.equals("117") || row.location_id.equals("118")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -2199,7 +2234,8 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("162")){
+            if(row.location_id.equals("162") || row.location_id.equals("163") || row.location_id.equals("164") || row.location_id.equals("165")
+                    || row.location_id.equals("166") || row.location_id.equals("167")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -2292,7 +2328,15 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("21")){
+            if(row.location_id.equals("21") || row.location_id.equals("22") || row.location_id.equals("23") || row.location_id.equals("24")
+                    || row.location_id.equals("25") || row.location_id.equals("26") || row.location_id.equals("27") || row.location_id.equals("28")
+                    || row.location_id.equals("29") || row.location_id.equals("30") || row.location_id.equals("31") || row.location_id.equals("32")
+                    || row.location_id.equals("33") || row.location_id.equals("34") || row.location_id.equals("35") || row.location_id.equals("36")
+                    || row.location_id.equals("37") || row.location_id.equals("38") || row.location_id.equals("39") || row.location_id.equals("40")
+                    || row.location_id.equals("41") || row.location_id.equals("42") || row.location_id.equals("43") || row.location_id.equals("44")
+                    || row.location_id.equals("45") || row.location_id.equals("46") || row.location_id.equals("47") || row.location_id.equals("48")
+                    || row.location_id.equals("49") || row.location_id.equals("50") || row.location_id.equals("51") || row.location_id.equals("52")
+                    || row.location_id.equals("6487")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -2709,7 +2753,11 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("2")){
+            if(row.location_id.equals("2") || row.location_id.equals("3") || row.location_id.equals("4") || row.location_id.equals("5")
+                    || row.location_id.equals("6") || row.location_id.equals("7") || row.location_id.equals("8") || row.location_id.equals("9")
+                    || row.location_id.equals("10") || row.location_id.equals("11") || row.location_id.equals("12") || row.location_id.equals("13")
+                    || row.location_id.equals("14") || row.location_id.equals("15") || row.location_id.equals("16") || row.location_id.equals("17")
+                    || row.location_id.equals("18") || row.location_id.equals("19") || row.location_id.equals("20")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -2957,7 +3005,10 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("238")){
+            if(row.location_id.equals("238") || row.location_id.equals("239") || row.location_id.equals("240") || row.location_id.equals("241")
+                    || row.location_id.equals("242") || row.location_id.equals("243") || row.location_id.equals("244") || row.location_id.equals("245")
+                    || row.location_id.equals("246") || row.location_id.equals("248") || row.location_id.equals("249") || row.location_id.equals("250")
+                    || row.location_id.equals("6406")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -3114,7 +3165,10 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("222")){
+            if(row.location_id.equals("222") || row.location_id.equals("223") || row.location_id.equals("224") || row.location_id.equals("225")
+                    || row.location_id.equals("226") || row.location_id.equals("227") || row.location_id.equals("228") || row.location_id.equals("229")
+                    || row.location_id.equals("230") || row.location_id.equals("231") || row.location_id.equals("233") || row.location_id.equals("234")
+                    || row.location_id.equals("235") || row.location_id.equals("236") || row.location_id.equals("237")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -3323,7 +3377,10 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("202")){
+            if(row.location_id.equals("202") || row.location_id.equals("203") || row.location_id.equals("204") || row.location_id.equals("205")
+                    || row.location_id.equals("206") || row.location_id.equals("207") || row.location_id.equals("208") || row.location_id.equals("209")
+                    || row.location_id.equals("210") || row.location_id.equals("211") || row.location_id.equals("212") || row.location_id.equals("213")
+                    || row.location_id.equals("214") || row.location_id.equals("215") || row.location_id.equals("216")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -3519,7 +3576,12 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("179")){
+            if(row.location_id.equals("179") || row.location_id.equals("180") || row.location_id.equals("181") || row.location_id.equals("182")
+                    || row.location_id.equals("183") || row.location_id.equals("184") || row.location_id.equals("185") || row.location_id.equals("186")
+                    || row.location_id.equals("187") || row.location_id.equals("188") || row.location_id.equals("189") || row.location_id.equals("190")
+                    || row.location_id.equals("191") || row.location_id.equals("192") || row.location_id.equals("193") || row.location_id.equals("194")
+                    || row.location_id.equals("195") || row.location_id.equals("196") || row.location_id.equals("197") || row.location_id.equals("198")
+                    || row.location_id.equals("199") || row.location_id.equals("200") || row.location_id.equals("201")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -3819,7 +3881,12 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("74")){
+            if(row.location_id.equals("74") || row.location_id.equals("75") || row.location_id.equals("76") || row.location_id.equals("77")
+                    || row.location_id.equals("78") || row.location_id.equals("79") || row.location_id.equals("80") || row.location_id.equals("81")
+                    || row.location_id.equals("82") || row.location_id.equals("83") || row.location_id.equals("84") || row.location_id.equals("85")
+                    || row.location_id.equals("86") || row.location_id.equals("87") || row.location_id.equals("88") || row.location_id.equals("89")
+                    || row.location_id.equals("90") || row.location_id.equals("91") || row.location_id.equals("92") || row.location_id.equals("93")
+                    || row.location_id.equals("94") || row.location_id.equals("95") || row.location_id.equals("96") || row.location_id.equals("97")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -4132,7 +4199,11 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("53")){
+            if(row.location_id.equals("53") || row.location_id.equals("54") || row.location_id.equals("55") || row.location_id.equals("56")
+                    || row.location_id.equals("57") || row.location_id.equals("58") || row.location_id.equals("60") || row.location_id.equals("61")
+                    || row.location_id.equals("62") || row.location_id.equals("63") || row.location_id.equals("64") || row.location_id.equals("65")
+                    || row.location_id.equals("67") || row.location_id.equals("68") || row.location_id.equals("69") || row.location_id.equals("70")
+                    || row.location_id.equals("71") || row.location_id.equals("72") || row.location_id.equals("73")){
                 disasterAdapter.addItem(row);
             }
         }
@@ -4380,7 +4451,7 @@ public class Disaster extends AppCompatActivity {
         for(int i=0;i< disasterMsg.DisasterMsg.row.size(); i++){
             row = disasterMsg.DisasterMsg.row.get(i);
 
-            if(row.location_id.equals("217")){
+            if(row.location_id.equals("217") || row.location_id.equals("220") || row.location_id.equals("221")){
                 disasterAdapter.addItem(row);
             }
         }
