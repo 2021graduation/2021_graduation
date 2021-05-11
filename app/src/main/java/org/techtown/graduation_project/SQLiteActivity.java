@@ -1,23 +1,29 @@
 package org.techtown.graduation_project;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -28,6 +34,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
@@ -65,6 +73,8 @@ public class SQLiteActivity extends AppCompatActivity {
     SigunguDatabaseHelper sigunguDatabaseHelper = new SigunguDatabaseHelper(this);
     public DisasterRowData row;
     Button UpdateGeoDB;
+
+    AppCompatDialog progressDialog;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,12 +122,9 @@ public class SQLiteActivity extends AppCompatActivity {
                 Log.d(TAG, "현재시각: " + mDatabaseHelper.getDate());
                 Log.d(TAG, "onItemClick: You Clicked on " + tablename.getText());
                 AlertDialog.Builder ad = new AlertDialog.Builder(SQLiteActivity.this);
-                ad.setIcon(R.mipmap.ic_launcher_round);
-                ad.setTitle("제목");
+                ad.setIcon(R.drawable.warning);
+                ad.setTitle(row_data);
                 ad.setMessage("삭제하시겠습니까?");
-
-                final EditText et = new EditText(SQLiteActivity.this);
-                ad.setView(et);
 
                 ad.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
@@ -148,12 +155,9 @@ public class SQLiteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 geoDatabaseHelper.dropTable();
-
-                if (requestQueue == null){
-                    requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                    sendRequest();
-                }
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                progressON(SQLiteActivity.this, "환경에따라 수 분에서 몇십 초가 걸릴 수 있습니다.");
+                sendRequest();
             }
         });
 
@@ -274,7 +278,6 @@ public class SQLiteActivity extends AppCompatActivity {
     }
 
     public void sendRequest() {
-
         String url = "https://apixml-5d25d-default-rtdb.firebaseio.com/Msg.json";
 
         StringRequest request = new StringRequest(
@@ -362,6 +365,7 @@ public class SQLiteActivity extends AppCompatActivity {
         populateListView();
         TableAdapter.notifyDataSetChanged();
         refreshLayout.setRefreshing(false);
+        progressOFF();
     }
 
     public void getDisasterAddress(String Sigungu, String Msg) {
@@ -475,6 +479,62 @@ public class SQLiteActivity extends AppCompatActivity {
 
             geoDatabaseHelper.addterm(String.valueOf(calDateDays), Msg);
 
+        }
+    }
+
+    public void progressON(Activity activity, String message) {
+
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressSET(message);
+        } else {
+            progressDialog = new AppCompatDialog(activity);
+            progressDialog.setCancelable(false);
+            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            progressDialog.setContentView(R.layout.progress_loading);
+            progressDialog.show();
+
+        }
+
+
+        final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.iv_frame_loading);
+        final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
+        img_loading_frame.post(new Runnable() {
+            @Override
+            public void run() {
+                frameAnimation.start();
+            }
+        });
+
+        TextView tv_progress_message = (TextView) progressDialog.findViewById(R.id.tv_progress_message);
+        if (!TextUtils.isEmpty(message)) {
+            tv_progress_message.setText(message);
+        }
+
+
+    }
+
+    public void progressSET(String message) {
+
+        if (progressDialog == null || !progressDialog.isShowing()) {
+            return;
+        }
+
+
+        TextView tv_progress_message = (TextView) progressDialog.findViewById(R.id.tv_progress_message);
+        if (!TextUtils.isEmpty(message)) {
+            tv_progress_message.setText(message);
+        }
+
+    }
+
+    public void progressOFF() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 
