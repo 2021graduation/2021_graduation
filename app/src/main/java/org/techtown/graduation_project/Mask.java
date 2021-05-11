@@ -1,15 +1,18 @@
 package org.techtown.graduation_project;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -59,15 +62,29 @@ public class Mask extends AppCompatActivity {
 
         maskadapter.ClearMaskList(); // 초기화
 
+
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 getXmlMask();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        if(maskadapter.getItemCount() == 0){
+                            AlertDialog.Builder ad = new AlertDialog.Builder(Mask.this);
+                            ad.setIcon(R.mipmap.corona_round);
+                            ad.setTitle("결과 없음");
+                            ad.setMessage("다시 검색 하겠습니까?");
+                            ad.setNegativeButton("예", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            ad.show();
+                        }
                         maskadapter.notifyDataSetChanged();
                     }
                 });
@@ -76,7 +93,7 @@ public class Mask extends AppCompatActivity {
     }
 
     String getXmlMask(){
-        StringBuffer buffer=new StringBuffer();
+        StringBuffer buffer =new StringBuffer();
 
         String str = editText.getText().toString();
         String item_name = URLEncoder.encode(str);// 마스크 이름 검색
@@ -86,9 +103,8 @@ public class Mask extends AppCompatActivity {
         String queryUrl="http://apis.data.go.kr/1471057/NonMdcinPrductPrmisnInfoService/getNonMdcinPrductPrmisnInfoList?ServiceKey="+key
                 +"&class_no=32200&numOfRows=100&item_name="+item_name;
         try{
-            URL url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성.
+            URL url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성
             InputStream is= url.openStream(); //url위치로 입력스트림 연결
-
             XmlPullParserFactory factory= XmlPullParserFactory.newInstance();//xml파싱을 위한
             XmlPullParser xpp= factory.newPullParser();
             xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기
@@ -96,6 +112,7 @@ public class Mask extends AppCompatActivity {
             String tag;
 
             xpp.next();
+
             int eventType= xpp.getEventType();
             while( eventType != XmlPullParser.END_DOCUMENT ){
                 switch( eventType ){
@@ -105,7 +122,6 @@ public class Mask extends AppCompatActivity {
 
                     case XmlPullParser.START_TAG:
                         tag= xpp.getName();//테그 이름 얻어오기
-
                         if(tag.equals("item")) ;// 첫번째 검색결과
                         else if(tag.equals("ITEM_NAME")){
                             xpp.next();
@@ -141,7 +157,6 @@ public class Mask extends AppCompatActivity {
         } catch (Exception e){
             e.printStackTrace();
         }
-
         buffer.append("파싱 끝\n");
         return buffer.toString();//StringBuffer 문자열 객체 반환
 
