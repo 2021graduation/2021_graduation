@@ -83,8 +83,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:backgroundTint="#485598"
-                android:text="갱신"/>
+                android:background="@drawable/button_fill_color"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="갱신"
+                android:textColor="@color/click"
+                android:textSize="20sp"
+                app:backgroundTint="#00FFFFFF"
+                app:backgroundTintMode="add"/>
 
         </LinearLayout>
     </LinearLayout>
