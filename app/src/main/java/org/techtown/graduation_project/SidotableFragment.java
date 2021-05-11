@@ -63,13 +63,6 @@ public class SidotableFragment extends Fragment {
         /*clear id*/
         seoul_clear = view.findViewById(R.id.seoul_clear);gyeongi_clear = view.findViewById(R.id.gyeongi_clear);incheon_clear = view.findViewById(R.id.incheon_clear);busan_clear = view.findViewById(R.id.busan_clear);ulsan_clear = view.findViewById(R.id.ulsan_clear);daegu_clear = view.findViewById(R.id.daegu_clear);gyeongbuk_clear = view.findViewById(R.id.gyeongbuk_clear);gyeongnam_clear = view.findViewById(R.id.gyeongnam_clear);daegeon_clear = view.findViewById(R.id.daegeon_clear);sejong_clear = view.findViewById(R.id.sejong_clear);chungbuk_clear = view.findViewById(R.id.chungbuk_clear);chungnam_clear = view.findViewById(R.id.chungnam_clear);gwangju_clear = view.findViewById(R.id.gwangju_clear);jeonbuk_clear = view.findViewById(R.id.jeonbuk_clear);jeonnam_clear = view.findViewById(R.id.jeonnam_clear);jeju_clear = view.findViewById(R.id.jeju_clear);gangwon_clear = view.findViewById(R.id.gangwon_clear);geomyeog_clear = view.findViewById(R.id.geomyeog_clear);
 
-        seoul.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent seoul = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.seoul.go.kr/coronaV/coronaStatus.do"));
-                startActivity(seoul);
-            }
-        });
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         }
