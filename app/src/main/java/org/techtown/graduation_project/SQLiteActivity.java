@@ -34,8 +34,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
@@ -156,7 +154,7 @@ public class SQLiteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 geoDatabaseHelper.dropTable();
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
-                progressON(SQLiteActivity.this, "환경에따라 수 분에서 몇십 초가 걸릴 수 있습니다.");
+                progressON(SQLiteActivity.this, "환경에따라 수 분에서\n몇십 초가 걸릴 수 있습니다.");
                 sendRequest();
             }
         });
