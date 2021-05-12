@@ -74,6 +74,20 @@ public class SQLiteActivity extends AppCompatActivity {
 
     AppCompatDialog progressDialog;
 
+    public Date getDate() {
+        long time = System.currentTimeMillis();
+        SimpleDateFormat dayTime = new SimpleDateFormat("yyyy년MM월dd일");
+
+        String now = dayTime.format(new Date(time));
+        try {
+            Date today = dayTime.parse(now);
+            return today;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sqlite_tablename);
@@ -167,16 +181,37 @@ public class SQLiteActivity extends AppCompatActivity {
     private void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the View");
 
+        Date today = getDate();
+        Date tableDate = null;
         Cursor tCursor = mDatabaseHelper.getTableName();
         while (tCursor.moveToNext()) {
             tablename = tCursor.getString(0);
-
-
+            Log.d("테이블이름: ", tablename);
             if(tablename.equals("android_metadata")){
                 continue;
             }else if(tablename.equals("sqlite_sequence")){
                 continue;
             }else{
+                // tablename(사용자 동선이 기록된 날짜), 오늘 날짜를 비교해서 2주 이상의 데이터면 삭제하는 코드
+                SimpleDateFormat format = new SimpleDateFormat("yyyy년MM월dd일");
+                try {
+                    tableDate = format.parse(tablename);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                long calDate = today.getTime() - tableDate.getTime();   // 오늘날짜 - 기록날짜.
+                long calDateDays = calDate / ( 24*60*60*1000);
+                calDateDays = Math.abs(calDateDays);
+                Log.d("오늘과 테이블 날짜를 비교함: ", String.valueOf(calDateDays));
+                if(calDateDays > 14){
+                    mDatabaseHelper.deleteName(tablename);
+                    TableAdapter.notifyDataSetChanged();
+                    //TableAdapter.Clearmlist();
+                    continue;
+                    //populateListView();
+                }
+
+
                 latlng_count = String.valueOf(mDatabaseHelper.dbCheck(tablename));
                 disaster_count = String.valueOf(get_disaster_count(tablename));
                 Table data1 = new Table(tablename, latlng_count, disaster_count);
@@ -460,7 +495,7 @@ public class SQLiteActivity extends AppCompatActivity {
             flag += 1;
         }
         if(flag > 1){   // 최소 날짜가 2개 이상 기록됐다면
-            SimpleDateFormat format = new SimpleDateFormat("yyyy년mm월dd일");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy년MM월dd일");
             // startDay, endDay 두 날짜를 parse()를 통해 Date형으로 변환.
             Date FirstDate = format.parse(startDay);
             Date SecondDate = format.parse(endDay);
