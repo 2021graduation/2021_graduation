@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textStyle="bold"
-                android:textColor="#F1CF51"
+                android:textColor="#FFD740"
                 android:text="재난문자 위치" />
         </LinearLayout>
         <LinearLayout
@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_fill_color"
                 android:fontFamily="@font/bmjua_ttf"
-                android:text="갱신"
+                android:text="위치 비교"
                 android:textColor="@color/click"
                 android:textSize="20sp"
                 app:backgroundTint="#00FFFFFF"
