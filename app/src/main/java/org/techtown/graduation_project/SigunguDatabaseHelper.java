@@ -40,6 +40,7 @@ public class SigunguDatabaseHelper extends SQLiteOpenHelper {
     */
     public void addSigungu(String si, String gungu){
         SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("CREATE TABLE IF NOT EXISTS Address(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, si VARCHAR(30) NOT NULL, gungu VARCHAR(30) NOT NULL)");
         db.execSQL("INSERT INTO Address(si, gungu) VALUES ('" + si + "','" + gungu +"');");
     }
 
