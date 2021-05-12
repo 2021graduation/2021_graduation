@@ -85,9 +85,6 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-
-
     }
 
     public void sendRequest() {
@@ -202,7 +199,7 @@ public class MyService extends Service {
                     compareLocation(tmp_location, mCurrentLocation);
                     // 비교가 끝나면 현 위치를 이전 위치로 지정
                     tmp_location = mCurrentLocation;
-                    getMySigungu();
+
                 }
             }
         }
@@ -239,6 +236,7 @@ public class MyService extends Service {
                 } else {
                     Log.d(TAG, "데이터베이스에 현재 위치를 저장했습니다.");
                     mDatabaseHelper.addData(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), TABLE_NAME);
+                    getMySigungu();
                 }
             }
         } else {
@@ -280,6 +278,7 @@ public class MyService extends Service {
             Address address = addresses.get(0);
 //            Log.d("전체 주소: ", address.getAddressLine(0));
             String[] tmp = address.getAddressLine(0).split(" ");
+
 
             if(sigunguDatabaseHelper.Sigungu_Check(tmp[1], tmp[2]) == false){
                 Log.d("추가된 주소: ", tmp[1] + tmp[2]);
@@ -409,11 +408,11 @@ public class MyService extends Service {
     // 사용자 DB에서 사용자 위치의 행정구역을 뽑아내는 코드
     private void getMySigungu(){
         Cursor tCursor = mDatabaseHelper.getTableName();
-        String Usertable;   // 테이블 이름을 조회해
+        String Usertable;           // 테이블 이름을 조회해
         double db_latitude;         // 사용자 DB에서 조회한 위도
         double db_longitude;        // 사용자 DB에서 조회한 경도
         LatLng db_latlng;
-
+        sigunguDatabaseHelper.dropTable();
         while (tCursor.moveToNext()) {
             Usertable = tCursor.getString(0);
             if(Usertable.equals("android_metadata")){
@@ -458,7 +457,7 @@ public class MyService extends Service {
                 channelId
         );
         builder.setSmallIcon(R.mipmap.corona_round);
-        builder.setContentTitle("Location Service");
+        builder.setContentTitle("위치 정보를 수집 중입니다");
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setContentText("Running");
         builder.setContentIntent(pendingIntent);
@@ -470,7 +469,7 @@ public class MyService extends Service {
                     && notificationManager.getNotificationChannel(channelId) == null) {
                 NotificationChannel notificationChannel = new NotificationChannel(
                         channelId,
-                        "Location Service",
+                        "위치 정보 서비스",
                         NotificationManager.IMPORTANCE_HIGH
                 );
                 notificationChannel.setDescription("This channel is used by location service");
