@@ -64,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     */
     public void addData(LatLng Current, String date){
         SQLiteDatabase db = this.getWritableDatabase();
+
         db.execSQL("CREATE TABLE IF NOT EXISTS '" + date + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
         db.execSQL("INSERT INTO '" + date + "'(latitude, longitude) VALUES ("+Current.latitude+","+Current.longitude+")");
     }
@@ -95,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getLocation(String table){
         SQLiteDatabase db =this.getReadableDatabase();
         String query = "SELECT * FROM '" + table + "';";
-        db.execSQL("CREATE TABLE IF NOT EXISTS '" + TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
+        //db.execSQL("CREATE TABLE IF NOT EXISTS '" + TABLE_NAME + "'(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude decimal(18,10) NOT NULL, longitude decimal(18,10) NOT NULL)");
         Cursor data = db.rawQuery(query, null);
         return data;
     }
