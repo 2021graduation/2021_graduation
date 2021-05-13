@@ -47,7 +47,7 @@ public class Disaster extends AppCompatActivity {
         contactMsgFragment = new ContactMsgFragment();
 
         tran = fragmentManager.beginTransaction();
-        tran.replace(R.id.disaster_frame, alldisasterMsgFragment).commitAllowingStateLoss();
+        tran.replace(R.id.disaster_frame, contactMsgFragment).commitAllowingStateLoss();
 
         Button All_button = findViewById(R.id.All_button);
         All_button.setOnClickListener(new View.OnClickListener() {
