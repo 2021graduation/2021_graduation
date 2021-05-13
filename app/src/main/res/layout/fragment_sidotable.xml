@@ -63,7 +63,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -220,7 +222,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -385,7 +389,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -542,7 +548,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -706,7 +714,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -863,7 +873,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1027,7 +1039,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1184,7 +1198,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1348,7 +1364,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1505,7 +1523,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1669,7 +1689,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1826,7 +1848,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1990,7 +2014,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2147,7 +2173,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2311,7 +2339,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2468,7 +2498,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2632,7 +2664,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2789,7 +2823,9 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="#FF0000" />
+                            android:textColor="#FF0000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout

@@ -35,12 +35,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".CovidActivity"></activity>
-        <activity android:name=".Infection"></activity>
+        <activity android:name=".InfectionActivity"></activity>
         <activity
-            android:name=".Mask"
+            android:name=".MaskActivity"
             android:windowSoftInputMode="adjustNothing">
         </activity>
-        <activity android:name=".Disaster"></activity>
+        <activity android:name=".DisasterActivity"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".SQLiteActivity"></activity>
 

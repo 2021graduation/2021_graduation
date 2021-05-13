@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class Infection extends AppCompatActivity {
+public class InfectionActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction tran;

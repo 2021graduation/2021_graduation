@@ -11,8 +11,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -23,7 +21,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class Mask extends AppCompatActivity {
+public class MaskActivity extends AppCompatActivity {
 
     private ArrayList<MaskData> maskData;
     private MaskAdapter maskadapter;
@@ -73,7 +71,7 @@ public class Mask extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(maskadapter.getItemCount() == 0){
-                            AlertDialog.Builder ad = new AlertDialog.Builder(Mask.this);
+                            AlertDialog.Builder ad = new AlertDialog.Builder(MaskActivity.this);
                             ad.setIcon(R.mipmap.corona_round);
                             ad.setTitle("결과 없음");
                             ad.setMessage("다시 검색 하겠습니까?");

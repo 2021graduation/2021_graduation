@@ -10,11 +10,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +33,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
@@ -113,7 +110,7 @@ public class CovidActivity extends AppCompatActivity {
         infection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent infection_intent = new Intent(getApplicationContext(), Infection.class);
+                Intent infection_intent = new Intent(getApplicationContext(), InfectionActivity.class);
                 startActivity(infection_intent);
             }
         });
@@ -121,7 +118,7 @@ public class CovidActivity extends AppCompatActivity {
         mask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mask_intent = new Intent(getApplicationContext(), Mask.class);
+                Intent mask_intent = new Intent(getApplicationContext(), MaskActivity.class);
                 startActivity(mask_intent);
             }
         });
@@ -137,7 +134,7 @@ public class CovidActivity extends AppCompatActivity {
         disaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Disaster.class);
+                Intent intent = new Intent(getApplicationContext(), DisasterActivity.class);
                 startActivity(intent);
             }
         });

@@ -30,7 +30,7 @@ import java.util.Map;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
-public class Disaster extends AppCompatActivity {
+public class DisasterActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction tran;
     AlldisasterMsgFragment alldisasterMsgFragment;
