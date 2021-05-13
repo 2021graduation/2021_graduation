@@ -58,22 +58,16 @@ public class MyService extends Service {
     Location tmp_location = new Location("");
     Location mCurrentLocation = new Location("");
     private Location location;
-    int markcount = 0;
-    Location saveLocation = new Location("");
 
     double latitude;
     double longitude;
     LatLng latLng;
-    String date = getDate();
     Cursor db_cursor;
     String TABLE_NAME;
     DatabaseHelper mDatabaseHelper = new DatabaseHelper(this);
     GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
     SigunguDatabaseHelper sigunguDatabaseHelper = new SigunguDatabaseHelper(this);
 
-    public DisasterRowData row;
-
-    static RequestQueue requestQueue;
 
     public String getDate() {
         long time = System.currentTimeMillis();
@@ -85,93 +79,6 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-    }
-
-    public void sendRequest() {
-
-        String url = "https://apixml-5d25d-default-rtdb.firebaseio.com/Msg.json";
-
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                url,
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        processResponse(response);
-
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT);
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-
-                return params;
-            }
-        };
-
-        request.setShouldCache(false);
-        requestQueue.add(request);
-    }
-
-    public void processResponse(String response) {
-        List<List<Address>> list = null;
-        Geocoder geocoder = new Geocoder(this);
-
-        Gson gson = new Gson();
-        DisasterMsg disasterList = gson.fromJson(response, DisasterMsg.class);
-        for(int i=0;i< disasterList.DisasterMsg.row.size(); i++){
-            row = disasterList.DisasterMsg.row.get(i);
-            String str = row.getMsg();
-            // 요청하는 재난문자를 분류하기 위해 시군구 데이터베이스를 만들었음.
-            // 시군구 데이터베이스에는 사용자가 방문했던 장소들의 시군구가 기록되어있음.
-            Cursor sigunguCursor = sigunguDatabaseHelper.getSigungu();
-            while(sigunguCursor.moveToNext()) {
-                //Log.d("현재 파싱하는 테이블: ", sigunguCursor.getString(0) + " " + sigunguCursor.getString(1));
-                if (row.getLocation_name().equals(sigunguCursor.getString(0) + " 전체") ||
-                        row.getLocation_name().equals(sigunguCursor.getString(1))) {
-                    if (geoDatabaseHelper.GeoDB_Check(row.getMsg()) == false){
-                        Pattern pattern = Pattern.compile("[(](.*?)[)]");
-                        Matcher matcher = pattern.matcher(str);
-
-                        while (matcher.find()) {  // 일치하는 게 있다면
-                            //재난문자 ( ) 안 내용들 모두 들어옴
-
-                            if (matcher.group(1).length() > 2) {
-                                //요일제외 2글자 이상인 재난문자 선별
-                                Pattern pattern2 = Pattern.compile(".*?(길\\b|동\\b|대로\\b|로\\b).*");
-                                Matcher matcher2 = pattern2.matcher(matcher.group(1));
-                                while (matcher2.find()) {
-                                    // ~길, ~동, ~대로 ~로 글자 전후로 가져옴
-                                    String filter = matcher2.group();
-
-                                    int target_index;
-                                    if (filter.contains("소독완료")) {
-                                        target_index = filter.indexOf("소독완료");
-                                        filter = filter.replace(filter.substring(target_index), "");
-                                    } else if (filter.contains("방역완료")) {
-                                        target_index = filter.indexOf("방역완료");
-                                        filter = filter.replace(filter.substring(target_index), "");
-                                    }
-                                    filter = filter.replaceAll(".*감염경로.*", "");
-                                    getDisasterAddress(filter, str);
-                                }
-                            }
-                            if (matcher.group(1) == null)
-                                break;
-                        }
-                    }
-                }
-            }
-            sigunguCursor.close();
-        }
     }
 
     private LocationCallback locationCallback = new LocationCallback() {
@@ -291,120 +198,6 @@ public class MyService extends Service {
         }
     }
 
-    public void getDisasterAddress(String Sigungu, String Msg) {
-
-        //지오코더 주소를 GPS로 변환
-        Geocoder geocoder = new Geocoder(this);
-
-        List<Address> addresses;
-
-        try {
-            addresses = geocoder.getFromLocationName(
-                    Sigungu,
-                    1);
-        } catch (IOException ioException) {
-            //네트워크 문제
-            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            return;
-        } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-
-        if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-            return;
-
-        } else {
-
-            LatLng covidlatlng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            Msg = Msg.replaceAll("\'", "");
-            Log.d(TAG, Msg);
-            geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
-            try {
-                MsgDrawDate(Msg);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-//            if(geoDatabaseHelper.GeoDB_Check(Msg)){
-//                geoDatabaseHelper.addData(Sigungu, covidlatlng, Msg);
-//                Log.d(TAG, String.valueOf(addresses.get(0)));
-//            }
-            return;
-        }
-    }
-
-    public void MsgDrawDate(String Msg) throws ParseException {
-        Pattern datepattern = Pattern.compile("[0-9]+\\.[0-9]{1,2}|[0-9]\\월 +[0-9]{1,2}\\일|[0-9]\\월+[0-9]{1,2}\\일|[0-9]/[0-9]{1,2}");
-        Matcher datematcher = datepattern.matcher(Msg);
-        int flag = 0;
-        String startDay = null;
-        String endDay = null;
-        while (datematcher.find()){
-            if (flag == 0) {  // 날짜가 하나도 저장되어 있지 않으면
-                String datefilter = datematcher.group();
-                datefilter = datefilter.replaceAll("\\월|\\일|\\/", ".");
-                long time = System.currentTimeMillis();
-                SimpleDateFormat dayTime = new SimpleDateFormat("yyyy");
-                String now = dayTime.format(new Date(time));
-
-                SimpleDateFormat beforedayTime = new SimpleDateFormat("MM.dd");
-                SimpleDateFormat afterdayTime = new SimpleDateFormat(now + "년MM월dd일");
-                java.util.Date tempDate = null;
-                try {
-                    tempDate = beforedayTime.parse(datefilter);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                startDay = afterdayTime.format(tempDate);
-                Log.d("시작날짜: ", startDay);
-                geoDatabaseHelper.addstartDay(startDay, Msg);
-            }
-            else if (flag >= 1) {  // 이미 1개가 저장되어 있다면
-                String datefilter = datematcher.group();
-                datefilter = datefilter.replaceAll("\\월|\\일|\\/", ".");
-                long time = System.currentTimeMillis();
-                SimpleDateFormat dayTime = new SimpleDateFormat("yyyy");
-                String now = dayTime.format(new Date(time));
-
-                SimpleDateFormat beforedayTime = new SimpleDateFormat("MM.dd");
-                SimpleDateFormat afterdayTime = new SimpleDateFormat(now + "년MM월dd일");
-                java.util.Date tempDate = null;
-                try {
-                    tempDate = beforedayTime.parse(datefilter);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                endDay = afterdayTime.format(tempDate);
-                Log.d("끝 날짜: ", endDay);
-                // DB endDay 저장코드
-                geoDatabaseHelper.addendDay(endDay, Msg);
-            }
-            flag += 1;
-        }
-        if(flag > 1){   // 최소 날짜가 2개 이상 기록됐다면
-            SimpleDateFormat format = new SimpleDateFormat("yyyy년mm월dd일");
-            // startDay, endDay 두 날짜를 parse()를 통해 Date형으로 변환.
-            Date FirstDate = format.parse(startDay);
-            Date SecondDate = format.parse(endDay);
-
-            // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
-            // 연산결과 -950400000. long type 으로 return 된다.
-            long calDate = FirstDate.getTime() - SecondDate.getTime();
-
-            // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
-            // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
-            long calDateDays = calDate / ( 24*60*60*1000);
-
-            calDateDays = Math.abs(calDateDays);
-
-            geoDatabaseHelper.addterm(String.valueOf(calDateDays), Msg);
-
-        }
-    }
-
     // 사용자 DB에서 사용자 위치의 행정구역을 뽑아내는 코드
     private void getMySigungu(){
         Cursor tCursor = mDatabaseHelper.getTableName();
@@ -478,8 +271,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(4000);
-        //locationRequest.setInterval(600000);    // 10분 주기
+        //locationRequest.setInterval(4000);
+        locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -523,6 +316,7 @@ public class MyService extends Service {
             manager.createNotificationChannel(notificationChannel);
         }
     }
+
     @Override
     public void onDestroy() {
         stopForeground(true);
