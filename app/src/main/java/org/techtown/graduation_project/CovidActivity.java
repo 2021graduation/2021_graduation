@@ -97,18 +97,18 @@ public class CovidActivity extends AppCompatActivity {
         disaster = findViewById(R.id.table_button);
 
 
-        ///////////////////
-        dbSelect = findViewById(R.id.dbSelect);
-        dbSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor geodata = geoDatabaseHelper.getGeoDB();
-                while(geodata.moveToNext()){
-                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3) + " | " + geodata.getString(4) + " | " + geodata.getString(5));
-                }
-            }
-        });
-        ///////////////////
+//        ///////////////////
+//        dbSelect = findViewById(R.id.dbSelect);
+//        dbSelect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Cursor geodata = geoDatabaseHelper.getGeoDB();
+//                while(geodata.moveToNext()){
+//                    Log.d("GeoDB에서 가져온 정보: ", geodata.getString(0) + " | " +geodata.getString(1) + " | " + geodata.getString(2) + " | " + geodata.getString(3) + " | " + geodata.getString(4) + " | " + geodata.getString(5));
+//                }
+//            }
+//        });
+//        ///////////////////
 
         infection.setOnClickListener(new View.OnClickListener() {
             @Override

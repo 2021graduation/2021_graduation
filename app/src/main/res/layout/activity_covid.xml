@@ -392,14 +392,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.12" />
 
-        <Button
-            android:id="@+id/dbSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="디비조회"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.github.mikephil.charting.charts.LineChart
