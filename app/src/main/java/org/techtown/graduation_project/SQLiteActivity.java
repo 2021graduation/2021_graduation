@@ -356,9 +356,10 @@ public class SQLiteActivity extends AppCompatActivity {
             // 시군구 데이터베이스에는 사용자가 방문했던 장소들의 시군구가 기록되어있음.
             Cursor sigunguCursor = sigunguDatabaseHelper.getSigungu();
             while(sigunguCursor.moveToNext()) {
-                //Log.d("현재 파싱하는 테이블: ", sigunguCursor.getString(0) + " " + sigunguCursor.getString(1));
+                // ex) if(부산광역시 전체 || 부산광역시 사하구)
                 if (row.getLocation_name().equals(sigunguCursor.getString(0) + " 전체") ||
-                        row.getLocation_name().equals(sigunguCursor.getString(1))) {
+                        row.getLocation_name().equals(sigunguCursor.getString(0) + " "
+                                + sigunguCursor.getString(1))) {
                     if (geoDatabaseHelper.GeoDB_Check(row.getMsg()) == false){
                         Pattern pattern = Pattern.compile("[(](.*?)[)]");
                         Matcher matcher = pattern.matcher(str);
