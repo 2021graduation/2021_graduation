@@ -236,16 +236,17 @@ public class SQLiteActivity extends AppCompatActivity {
             tmp_endDay = data.getString(1);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년MM월dd일");
             try {
-                if(tmp_endDay == null){ // GeoDB에 endDay 가 없으면
+                if(tmp_startDay == null && tmp_endDay == null){ // 둘다 없으면
+                    disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
+                }
+                else if(tmp_endDay == null){ // GeoDB에 endDay 가 없으면
+                    Log.d("GeoDB에서 가져온 정보: ", data.getString(0) + " | " + data.getString(1) + " | " + data.getString(2) + " | " + data.getString(3) + " | " + data.getString(4) + " | " + data.getString(5));
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
                     Date UserDB_Date = simpleDateFormat.parse(tablename);
                     if(UserDB_Date.after(startDate) || UserDB_Date.compareTo(startDate) == 0){
                         // 유저 디비에 저장된 날짜가 재난문자의 시작 날짜보다 뒤에 있거나 같으면
                         disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
                     }
-                }
-                else if(tmp_startDay == null && tmp_endDay == null){ // 둘다 없으면
-                    disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
                 }
                 else if(tmp_startDay != null && tmp_endDay != null){   // GeoDB에 endDay 가 존재한다면
                     Date startDate = simpleDateFormat.parse(tmp_startDay);

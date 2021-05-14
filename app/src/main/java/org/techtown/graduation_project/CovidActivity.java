@@ -61,10 +61,7 @@ public class CovidActivity extends AppCompatActivity {
     Button infection; // 코로나19 시도 발생 현황 검색 버튼
     Button mask; // 마스크 검색 버튼
     Button MyLocation; // 내 위치 조회 버튼
-    Button dbSelect;
     Button disaster;
-
-    GeoDatabaseHelper geoDatabaseHelper = new GeoDatabaseHelper(this);
 
     private static final int REQUEST_CODE_LOCATION_PERMISSIONS = 1;
     static RequestQueue requestQueue; // 요청 큐
@@ -199,7 +196,7 @@ public class CovidActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 ContextCompat.startForegroundService(this, intent);
             }
-            Toast.makeText(this,"Location service started", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"위치 정보 수집이 시작되었습니다.", Toast.LENGTH_LONG).show();
         }
     }
 

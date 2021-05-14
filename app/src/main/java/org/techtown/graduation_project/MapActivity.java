@@ -248,15 +248,15 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년MM월dd일");
 
             try {
-                if(tmp_endDay == null) { // GeoDB에 endDay 가 없으면
+                if(tmp_startDay == null && tmp_endDay == null){ // 둘다 없으면
+                    CompareWithGeoDB(data, tablename);
+                }
+                else if(tmp_endDay == null) { // GeoDB에 endDay 가 없으면
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
                     Date UserDB_Date = simpleDateFormat.parse(tablename);
                     if (UserDB_Date.after(startDate) || UserDB_Date.compareTo(startDate) == 0) {
                         CompareWithGeoDB(data, tablename);
                     }
-                }
-                else if(tmp_startDay == null && tmp_endDay == null){ // 둘다 없으면
-                    CompareWithGeoDB(data, tablename);
                 }
                 else if(tmp_startDay != null && tmp_endDay != null){   // GeoDB에 endDay 가 존재한다면
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
