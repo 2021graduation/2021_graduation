@@ -272,6 +272,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                 e.printStackTrace();
             }
         }
+        data.close();
     }
 
     private void CompareWithGeoDB(Cursor data, String tablename){
@@ -310,6 +311,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                 addWarningMarkers(tmp_LatLng, data.getString(2), data.getString(5));
             }
         }
+        db_cursor.close();
     }
 
     // 위치를 호출
@@ -357,6 +359,7 @@ public class MapActivity<tmp_locaiton, tmp_location> extends AppCompatActivity
                     + " 경도:" + String.valueOf(latLng.longitude);
             addMarkers(latLng, markerTitle, markerSnippet);
         }
+        data.close();
     }
 
     private void addMarkers(LatLng latLng, String markerTitle, String markerSnippet) {

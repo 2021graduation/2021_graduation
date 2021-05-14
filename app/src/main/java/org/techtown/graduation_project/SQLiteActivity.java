@@ -306,6 +306,7 @@ public class SQLiteActivity extends AppCompatActivity {
                 disaster_count++;
             }
         }
+        db_cursor.close();
 
         return disaster_count;
     }
@@ -470,7 +471,7 @@ public class SQLiteActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 startDay = afterdayTime.format(tempDate);
-                Log.d("시작날짜: ", startDay);
+                //Log.d("시작날짜: ", startDay);
                 geoDatabaseHelper.addstartDay(startDay, Msg);
             }
             else if (flag >= 1) {  // 이미 1개가 저장되어 있다면
@@ -489,7 +490,7 @@ public class SQLiteActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 endDay = afterdayTime.format(tempDate);
-                Log.d("끝 날짜: ", endDay);
+                //Log.d("끝 날짜: ", endDay);
                 // DB endDay 저장코드
                 geoDatabaseHelper.addendDay(endDay, Msg);
             }
@@ -501,12 +502,10 @@ public class SQLiteActivity extends AppCompatActivity {
             Date FirstDate = format.parse(startDay);
             Date SecondDate = format.parse(endDay);
 
-            // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
-            // 연산결과 -950400000. long type 으로 return 된다.
+            // Date로 변환된 두 날짜를 계산
             long calDate = FirstDate.getTime() - SecondDate.getTime();
 
-            // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
-            // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
+            // 24*60*60*1000 = day
             long calDateDays = calDate / ( 24*60*60*1000);
 
             calDateDays = Math.abs(calDateDays);

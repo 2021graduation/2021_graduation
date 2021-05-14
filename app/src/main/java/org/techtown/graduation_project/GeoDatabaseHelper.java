@@ -64,7 +64,7 @@ public class GeoDatabaseHelper extends SQLiteOpenHelper {
     public void addData(String address, LatLng Current, String dMsg){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO GeoDB(address, latitude, longitude, dMsg) VALUES ('"+address+"',"+Current.latitude+","+Current.longitude+",'"+dMsg+"')");
-        Log.d("저장 작업이 끝났슴", "ㅇㅇ");
+        Log.d(TAG, "저장 작업이 끝났습니다: " + address);
     }
 
     public void addstartDay(String startDay, String Msg){
