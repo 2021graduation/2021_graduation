@@ -26,6 +26,7 @@ public class SigunguDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "Sigungu 데이터베이스 생성됨");
         db.execSQL("CREATE TABLE IF NOT EXISTS Address(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, si VARCHAR(30) NOT NULL, gungu VARCHAR(30) NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS disasterMsg(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, dMsg TEXT)");
     }
 
     @Override
@@ -99,5 +100,34 @@ public class SigunguDatabaseHelper extends SQLiteOpenHelper {
 //            Log.d(TAG, "데이터 존재함 @!##!@");
 //            return true;
 //        }
+    }
+
+    public boolean SigungudMsg_Check(String Msg){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT dMsg FROM disasterMsg";
+        Cursor data = db.rawQuery(query, null);
+        Msg = Msg.replaceAll("\'", "");
+        while (data.moveToNext()) {
+            if (data.getString(0).equals(Msg)) {
+                Log.d(TAG, data.getString(0) +","+Msg);
+                return true;
+            }
+        }
+        //data.close();
+        return false;
+    }
+
+    public void SigunguAddMsg(String Msg){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Msg = Msg.replaceAll("\'", "");
+        db.execSQL("INSERT INTO disasterMsg(dMsg) VALUES ('" + Msg + "');");
+    }
+
+    public void SigungudMsg_dropTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DROP TABLE disasterMsg";
+        db.execSQL(query);
+        onCreate(db);
     }
 }
