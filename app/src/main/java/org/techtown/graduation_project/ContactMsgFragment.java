@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,13 +113,13 @@ public class ContactMsgFragment extends Fragment {
     }
 
     public void processResponse(String response) {
+        sigunguDatabaseHelper.SigungudMsg_dropTable();
         List<List<Address>> list = null;
 
         Gson gson = new Gson();
         DisasterMsg disasterList = gson.fromJson(response, DisasterMsg.class);
         for(int i=0;i< disasterList.DisasterMsg.row.size(); i++){
             row = disasterList.DisasterMsg.row.get(i);
-            String str = row.getMsg();
             // 요청하는 재난문자를 분류하기 위해 시군구 데이터베이스를 만들었음.
             // 시군구 데이터베이스에는 사용자가 방문했던 장소들의 시군구가 기록되어있음.
             Cursor sigunguCursor = sigunguDatabaseHelper.getSigungu();
@@ -126,7 +127,20 @@ public class ContactMsgFragment extends Fragment {
                 if (row.getLocation_name().equals(sigunguCursor.getString(0) + " 전체") ||
                         row.getLocation_name().equals(sigunguCursor.getString(0) + " "
                                 + sigunguCursor.getString(1))) {
-                    disasterAdapter.addItem(row);
+                    //Log.d("메세지 받아오는 장소: ", sigunguCursor.getString(0) + " 전체" + sigunguCursor.getString(0) + " "
+//                            + sigunguCursor.getString(1));
+                    //Log.d("받아오는 메세지: ", row.getMsg());
+                    if (sigunguDatabaseHelper.SigungudMsg_Check(row.getMsg()) == false){
+                        // 메세지가 저장되어 있지 않으면
+                        // 메세지를 저장하고
+                        // 어댑터에 해당 메세지 정보를 전달해라
+                        sigunguDatabaseHelper.SigunguAddMsg(row.getMsg());
+                        disasterAdapter.addItem(row);
+                    }else{
+                        // 저장되어 있으면
+                        // 아무것도 하지 말고 넘어가라
+                        continue;
+                    }
                 }
             }
             sigunguCursor.close();
