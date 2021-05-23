@@ -134,24 +134,24 @@ public class SidotableFragment extends Fragment {
             cle_data[i] = Integer.parseInt((String) clearList.get(i));
 
             /*daily_def*/
-            println(df.format(inc_data[0]),geomyeog_daily);
-            println(df.format(inc_data[1]),jeju_daily);
-            println(df.format(inc_data[2]),gyeongnam_daily);
-            println(df.format(inc_data[3]),gyeongbuk_daily);
-            println(df.format(inc_data[4]),jeonnam_daily);
-            println(df.format(inc_data[5]),jeonbuk_daily);
-            println(df.format(inc_data[6]),chungnam_daily);
-            println(df.format(inc_data[7]),chungbuk_daily);
-            println(df.format(inc_data[8]),gangwon_daily);
-            println(df.format(inc_data[9]),gyeongi_daily);
-            println(df.format(inc_data[10]),sejong_daily);
-            println(df.format(inc_data[11]),ulsan_daily);
-            println(df.format(inc_data[12]),daegeon_daily);
-            println(df.format(inc_data[13]),gwangju_daily);
-            println(df.format(inc_data[14]),incheon_daily);
-            println(df.format(inc_data[15]),daegu_daily);
-            println(df.format(inc_data[16]),busan_daily);
-            println(df.format(inc_data[17]),seoul_daily);
+            println(df.format(def_data[0] - def_data[19]),geomyeog_daily);
+            println(df.format(def_data[1] - def_data[20]),jeju_daily);
+            println(df.format(def_data[2] - def_data[21]),gyeongnam_daily);
+            println(df.format(def_data[3] - def_data[22]),gyeongbuk_daily);
+            println(df.format(def_data[4] - def_data[23]),jeonnam_daily);
+            println(df.format(def_data[5] - def_data[24]),jeonbuk_daily);
+            println(df.format(def_data[6] - def_data[25]),chungnam_daily);
+            println(df.format(def_data[7] - def_data[26]),chungbuk_daily);
+            println(df.format(def_data[8] - def_data[27]),gangwon_daily);
+            println(df.format(def_data[9] - def_data[28]),gyeongi_daily);
+            println(df.format(def_data[10] - def_data[29]),sejong_daily);
+            println(df.format(def_data[11] - def_data[30]),ulsan_daily);
+            println(df.format(def_data[12] - def_data[31]),daegeon_daily);
+            println(df.format(def_data[13] - def_data[32]),gwangju_daily);
+            println(df.format(def_data[14] - def_data[33]),incheon_daily);
+            println(df.format(def_data[15] - def_data[34]),daegu_daily);
+            println(df.format(def_data[16] - def_data[35]),busan_daily);
+            println(df.format(def_data[17] - def_data[36]),seoul_daily);
 
             /*def*/
             println(df.format(def_data[0]),geomyeog_def);

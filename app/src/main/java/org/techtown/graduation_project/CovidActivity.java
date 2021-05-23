@@ -261,6 +261,7 @@ public class CovidActivity extends AppCompatActivity {
         CovidSidoItem item4 = covidList.response.body.items.item.get(94);  // 4일전
         CovidSidoItem item5 = covidList.response.body.items.item.get(113); // 5일전
         CovidSidoItem item6 = covidList.response.body.items.item.get(132); // 6일전
+        CovidSidoItem item7 = covidList.response.body.items.item.get(151);
 
         DecimalFormat df = new DecimalFormat("#,###"); // 표현 패턴 설정
 
@@ -287,11 +288,13 @@ public class CovidActivity extends AppCompatActivity {
         String create = item0.createDt.substring(0, 10).replace("-","."); // 발생 날짜
 
         /*전일 코로나19현황 데이터*/
+        int yesterday_defcnt = Integer.parseInt(item1.defCnt);
         int yesterday_ingcnt = Integer.parseInt(item1.isolIngCnt);
         int yesterday_clearcnt = Integer.parseInt(item1.isolClearCnt);
         int yesterday_deathcnt = Integer.parseInt(item1.deathCnt);
 
         /*전일 대비 증감 코로나19현황 데이터*/
+        int daily_defcnt = defcnt - yesterday_defcnt;
         int daily_ingcnt = ingcnt - yesterday_ingcnt;
         int daily_clearcnt = clearcnt - yesterday_clearcnt;
         int daily_deathcnt = deatcnt - yesterday_deathcnt;
@@ -309,13 +312,13 @@ public class CovidActivity extends AppCompatActivity {
         int red = ContextCompat.getColor(getApplicationContext(), R.color.red);   // 증가하였을 경우
 
         /*전일 대비 코로나19현황 데이터*/
-        if(incDec_inter < 0){ // 총 일일 확진자가 0보다 작을 경우 파란색설정
+        if(daily_defcnt < 0){ // 총 일일 확진자가 0보다 작을 경우 파란색설정
             Daily_decide.setTextColor(blue);
-            println(df.format(incDec_inter), Daily_decide);
+            println(df.format(daily_defcnt), Daily_decide);
         }
-        else if(incDec_inter > 0){ // 총 일일 확진자가 0보다 클 경우 빨간색설정
+        else if(daily_defcnt > 0){ // 총 일일 확진자가 0보다 클 경우 빨간색설정
             Daily_decide.setTextColor(red);
-            println(df.format(incDec_inter), Daily_decide);
+            println(df.format(daily_defcnt), Daily_decide);
         }
         if(daily_ingcnt < 0) // 격리 중 환자의 수가 0 보다 작을 경우 파란색설정
         {
@@ -355,13 +358,14 @@ public class CovidActivity extends AppCompatActivity {
         /************차트시작************/
         /*일주일치 일일 확진자의 수를 구하기 위한 리스트*/
         ArrayList dailyList = new ArrayList();
-        dailyList.add(item0.incDec);
-        dailyList.add(item1.incDec);
-        dailyList.add(item2.incDec);
-        dailyList.add(item3.incDec);
-        dailyList.add(item4.incDec);
-        dailyList.add(item5.incDec);
-        dailyList.add(item6.incDec);
+        dailyList.add(item0.defCnt);
+        dailyList.add(item1.defCnt);
+        dailyList.add(item2.defCnt);
+        dailyList.add(item3.defCnt);
+        dailyList.add(item4.defCnt);
+        dailyList.add(item5.defCnt);
+        dailyList.add(item6.defCnt);
+        dailyList.add(item7.defCnt);
 
         /*일주일치 발생 시간을 구하기 위한 리스트*/
         ArrayList creatdt = new ArrayList();
@@ -372,6 +376,7 @@ public class CovidActivity extends AppCompatActivity {
         creatdt.add(item4.createDt);
         creatdt.add(item5.createDt);
         creatdt.add(item6.createDt);
+        creatdt.add(item7.createDt);
 
         String[] cre = new String[creatdt.size()]; // 발생 시간을 담는 배열 선언
         int[] inc = new int[dailyList.size()]; // 일일 확진자를 담는 배열 선언
@@ -390,13 +395,13 @@ public class CovidActivity extends AppCompatActivity {
         lineChart.setDescription(description);
 
         ArrayList incData = new ArrayList();
-        incData.add(new BarEntry(0, inc[6]));
-        incData.add(new BarEntry(1, inc[5]));
-        incData.add(new BarEntry(2, inc[4]));
-        incData.add(new BarEntry(3, inc[3]));
-        incData.add(new BarEntry(4, inc[2]));
-        incData.add(new BarEntry(5, inc[1]));
-        incData.add(new BarEntry(6, inc[0]));
+        incData.add(new BarEntry(0, inc[6] - inc[7]));
+        incData.add(new BarEntry(1, inc[5] - inc[6]));
+        incData.add(new BarEntry(2, inc[4] - inc[5]));
+        incData.add(new BarEntry(3, inc[3] - inc[4]));
+        incData.add(new BarEntry(4, inc[2] - inc[3]));
+        incData.add(new BarEntry(5, inc[1] - inc[2]));
+        incData.add(new BarEntry(6, inc[0] - inc[1]));
 
 
 
