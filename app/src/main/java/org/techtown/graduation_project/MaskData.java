@@ -1,6 +1,7 @@
 package org.techtown.graduation_project;
 
-public class MaskData {private int iv_profile;
+public class MaskData {
+    private int iv_profile;
     private String ITEM_NAME;
     private String ENTP_NAME;
     private String ITEM_PERMIT_DATE;

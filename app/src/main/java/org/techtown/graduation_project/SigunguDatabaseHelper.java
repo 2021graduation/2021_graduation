@@ -126,6 +126,7 @@ public class SigunguDatabaseHelper extends SQLiteOpenHelper {
 
     public void SigungudMsg_dropTable(){
         SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("CREATE TABLE IF NOT EXISTS disasterMsg(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, dMsg TEXT)");
         String query = "DROP TABLE disasterMsg";
         db.execSQL(query);
         onCreate(db);
