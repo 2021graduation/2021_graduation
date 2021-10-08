@@ -440,12 +440,40 @@ public class CovidActivity extends AppCompatActivity {
         });
 
         /*****************************************************/
+        /*Y축 왼쪽 설정*/
+        /*Y축 맥스값 설정하기*/
+        int[] max = new int[inc.length];
+        max[0] = inc[6] - inc[7];
+        max[1] = inc[5] - inc[6];
+        max[3] = inc[4] - inc[5];
+        max[4] = inc[3] - inc[4];
+        max[5] = inc[2] - inc[3];
+        max[6] = inc[1] - inc[2];
+        max[7] = inc[0] - inc[1];
 
+        /* 7일치 일일 확진자의 맥스값 찾기*/
+        int maxy = max[0];
+        for(int i=0;i<max.length;i++) {
+            if (maxy < max[i]) {
+                maxy = max[i];
+            }
+        }
+        /*찾은 맥스값을 구간별로 올림 연산하여 Y축의 맥스값으로 나타내기*/
+        float yAxisL = 0f;
+        if (maxy > 10001) {
+            yAxisL = (float) Math.ceil((maxy / 10000) * 10000) + 10000f;
+        }
+        else if (maxy > 1001 && maxy <10000){
+           yAxisL = (float) Math.ceil((maxy/1000)*1000) + 1000;
+        }
+        else {
+            yAxisL = (float) Math.ceil((maxy / 100) * 100)+ 100f;
+        }
         /*Y축 왼쪽 설정*/
         YAxis yAxisLeft = lineChart.getAxisLeft();
         yAxisLeft.setTextSize(12f);
         yAxisLeft.setAxisMinimum(0f);
-        yAxisLeft.setAxisMaximum(1000f);
+        yAxisLeft.setAxisMaximum(yAxisL);
         //yAxisLeft.setLabelCount(11,true);
 
         /*Y축 오른쪽 설정*/
