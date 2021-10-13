@@ -243,7 +243,8 @@ public class SQLiteActivity extends AppCompatActivity {
                     Log.d("GeoDB에서 가져온 정보: ", data.getString(0) + " | " + data.getString(1) + " | " + data.getString(2) + " | " + data.getString(3) + " | " + data.getString(4) + " | " + data.getString(5));
                     Date startDate = simpleDateFormat.parse(tmp_startDay);
                     Date UserDB_Date = simpleDateFormat.parse(tablename);
-                    if(UserDB_Date.after(startDate) || UserDB_Date.compareTo(startDate) == 0){
+                    //UserDB_Date.after(startDate) ||
+                    if(UserDB_Date.compareTo(startDate) == 0){
                         // 유저 디비에 저장된 날짜가 재난문자의 시작 날짜보다 뒤에 있거나 같으면
                         disaster_count = CompareWithGeoDB(data, tablename, disaster_count);
                     }
@@ -362,6 +363,7 @@ public class SQLiteActivity extends AppCompatActivity {
                 if (row.getLocation_name().equals(sigunguCursor.getString(0) + " 전체") ||
                         row.getLocation_name().equals(sigunguCursor.getString(0) + " "
                                 + sigunguCursor.getString(1))) {
+
                     if (geoDatabaseHelper.GeoDB_Check(row.getMsg()) == false){
                         Pattern pattern = Pattern.compile("[(](.*?)[)]");
                         Matcher matcher = pattern.matcher(str);
@@ -450,7 +452,7 @@ public class SQLiteActivity extends AppCompatActivity {
     }
 
     public void MsgDrawDate(String Msg) throws ParseException {
-        Pattern datepattern = Pattern.compile("[0-9]+\\.[0-9]{1,2}|[0-9]\\월 +[0-9]{1,2}\\일|[0-9]\\월+[0-9]{1,2}\\일|[0-9]/[0-9]{1,2}");
+        Pattern datepattern = Pattern.compile("[0-9]+\\.[0-9]{1,2}|[0-9]\\월 +[0-9]{1,2}\\일|[0-9]\\월+[0-9]{1,2}\\일|[0-9]{1,2}\\.[0-9]{1,2}");
         Matcher datematcher = datepattern.matcher(Msg);
         int flag = 0;
         String startDay = null;

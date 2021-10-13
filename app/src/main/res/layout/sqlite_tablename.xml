@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_fill_color"
                 android:fontFamily="@font/bmjua_ttf"
-                android:text="위치비교"
+                android:text="업데이트"
                 android:textColor="@color/click"
                 android:textSize="20sp"
                 app:backgroundTint="#00FFFFFF"

@@ -183,7 +183,7 @@ public class MyService extends Service {
 
         } else {
             Address address = addresses.get(0);
-//            Log.d("전체 주소: ", address.getAddressLine(0));
+            Log.d("전체 주소: ", address.getAddressLine(0));
             String[] tmp = address.getAddressLine(0).split(" ");
 
 
@@ -271,8 +271,8 @@ public class MyService extends Service {
         }
 
         LocationRequest locationRequest = new LocationRequest();
-        //locationRequest.setInterval(4000);
-        locationRequest.setInterval(600000);    // 10분 주기
+        locationRequest.setInterval(4000);
+        //locationRequest.setInterval(600000);    // 10분 주기
         //locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
